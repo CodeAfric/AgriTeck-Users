@@ -47,7 +47,6 @@ class filter extends StatelessWidget{
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
-      color: primaryLight,
       padding: EdgeInsets.only(top: 10),
       height:115,
           child: Expanded(

@@ -45,15 +45,15 @@ class filter extends StatelessWidget{
     Size size = MediaQuery.of(context).size;
     return Container(
         color: primaryLight,
-        padding: EdgeInsets.only(top: 10),
+        padding: EdgeInsets.all(5),
         height:115,
         child: Expanded(
           child: Container(
-            //margin: EdgeInsets.symmetric(horizontal: 10),
+            color: Colors.white,
             child: ListView(
               scrollDirection: Axis.horizontal,
               shrinkWrap: true,
-              padding: EdgeInsets.fromLTRB(0, 0, 10, 10),
+              padding: EdgeInsets.fromLTRB(0, 5, 5, 5),
               children: [
                 InkWell(
                   child: filter_Buttons(btnText: 'CROPS',btnIcon: 'assets/diseases/tomatoes.jpg',),

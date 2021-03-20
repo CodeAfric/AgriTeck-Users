@@ -15,6 +15,7 @@ class _vondors_listState extends State<vondors_list> {
         padding: const EdgeInsets.only(bottom: 10),
         child: Column(
           children: [
+            Divider(color: primaryDark,thickness: 2,),
             Container(
               padding: EdgeInsets.all(15),
               alignment: Alignment.centerLeft,
@@ -26,7 +27,6 @@ class _vondors_listState extends State<vondors_list> {
                 child: ListView(
                   scrollDirection: Axis.vertical,
                   children: [
-
                     Container(
                       padding: EdgeInsets.only(bottom: 10),
                       child: listItems(user_Image: 'assets/diseases/farmer1.jpg', user_Name: "Benson Bentum Bruz",
