@@ -23,6 +23,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  carousel_pro: ^0.0.13
+  flutter_staggered_grid_view: ^0.3.4
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -45,7 +47,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
+  assets:
+    - assets/diseases/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
