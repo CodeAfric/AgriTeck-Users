@@ -2,38 +2,21 @@ import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:flutter/material.dart';
 import 'package:agriteck_user/Diseases/diseases.dart';
 
-class Diseases extends StatelessWidget {
+class DiseasesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Material(
-      child: PageView(
-        scrollDirection: Axis.vertical,
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height-61,
+      color: primaryLight.withOpacity(0.1),
+      child:Column(
         children: [
-          Scaffold(
-            resizeToAvoidBottomPadding: false,
-            backgroundColor: Colors.white,
-            appBar: buildAppBar(),
-            body: SafeArea(
-              child: Column(
-                children: [
-                  Filter(),
-                  diseases_list(),
-                ],
-              ),
-
-            ),
-          ),
+          Filter(),
+          // diseases_list(),
         ],
       ),
     );
+
   }
-  AppBar buildAppBar(){
-    return AppBar(
-      elevation: 0,
-      backgroundColor: primaryDark,
-      title: Text('Diseases', style: TextStyle(fontWeight: FontWeight.bold,
-          fontSize: 22,color: Colors.white)),
-    );
-  }
+
 }

@@ -10,7 +10,7 @@ class cropsHome extends StatefulWidget {
 class _cropsHomeState extends State<cropsHome> {
   int CurrentIndex = 0;
   final List<Widget> pages = [
-    cropsPage(),
+    CropScreen(),
     Text('1'),
     Text('2'),
     Text('3'),

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:agriteck_user/Diseases/diseases.dart';
 import 'package:agriteck_user/Usable_classes/filter_buttons.dart';
 
-class Farms extends StatelessWidget {
+class FarmsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

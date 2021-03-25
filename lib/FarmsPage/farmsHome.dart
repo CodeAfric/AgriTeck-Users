@@ -10,7 +10,7 @@ class farms_Home extends StatefulWidget {
 class _farms_HomeState extends State<farms_Home> {
   int CurrentIndex = 0;
   final List<Widget> pages = [
-    Farms(),
+    FarmsScreen(),
     Text('1'),
     Text('2'),
     Text('3'),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:agriteck_user/DiseasesDetails/details_of_disease.dart';
 
-class diseases_details_Screen extends StatelessWidget {
+class DiseaseDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -12,7 +12,7 @@ class diseases_details_Screen extends StatelessWidget {
         scrollDirection: Axis.vertical,
         children: [
           Scaffold(
-            resizeToAvoidBottomPadding: false,
+            //resizeToAvoidBottomPadding: false,
             backgroundColor: Colors.white,
             body: SafeArea(
               child: SingleChildScrollView(

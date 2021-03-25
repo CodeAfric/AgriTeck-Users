@@ -178,7 +178,7 @@ Future NavigateToCrops(context)async{
 
 Future NavigateToDiseasesDetails(context)async{
   Navigator.push(context, MaterialPageRoute(builder: (context)
-  => diseases_details_Screen()));
+  => DiseaseDetails()));
 }
 Future NavigateToFarms(context)async{
   Navigator.push(context, MaterialPageRoute(builder: (context)

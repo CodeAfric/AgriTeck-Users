@@ -93,7 +93,7 @@ Future NavigateToCrops(context)async{
 
 Future NavigateToDiseases(context)async{
   Navigator.push(context, MaterialPageRoute(builder: (context)
-  => diseases_HomeScreen()));
+  => HomePage()));
 }
 Future NavigateToFarms(context)async{
   Navigator.push(context, MaterialPageRoute(builder: (context)
