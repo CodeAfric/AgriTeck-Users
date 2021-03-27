@@ -5,6 +5,7 @@ import 'package:agriteck_user/common%20UI/bottom-icons.dart';
 import 'package:flutter/material.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:agriteck_user/CommunityPage/Commuinity.dart';
+import 'package:agriteck_user/Diseases-Training/TrainingScreen.dart';
 
 enum BottomButtons{Crops,Farms,Home,Vendors,Market,Investors,Community}
 class HomePage extends StatefulWidget {
@@ -41,7 +42,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Container(
         child:
-        selectedPage==BottomButtons.Home?DiseasesScreen():
+        selectedPage==BottomButtons.Home?Training():
         selectedPage==BottomButtons.Community?CommunityScreen():
         selectedPage==BottomButtons.Crops?CropScreen():
         selectedPage==BottomButtons.Farms?FarmScreen():
