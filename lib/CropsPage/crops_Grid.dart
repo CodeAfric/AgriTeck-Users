@@ -66,19 +66,14 @@ class crop_grid  extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
-      height: size.height * 0.70,
+      height: size.height * 0.60,
       child: Column(
         children: [
           Container(
            // padding: EdgeInsets.all(20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  padding: EdgeInsets.only(top: 20,bottom: 5,left: 20),
-                  child: Text('CROPS',style:  TextStyle(fontWeight: FontWeight.w500,fontSize: 18, color: primary),),
-                )
-              ],
+            child: Container(
+              padding: EdgeInsets.only(top: 20,bottom: 5,left: 20),
+              child: Text('CROPS',style:  TextStyle(fontWeight: FontWeight.w500,fontSize: 18, color: primary),),
             ),
           ),
          Container(

@@ -106,14 +106,17 @@ class Details extends StatelessWidget{
                   Divider(color: primaryLight,),
                   SingleChildScrollView(
                     child: Container(
-                      height: size.height * 1.0,
-                      child: ListView(
-                          //physics: const NeverScrollableScrollPhysics(),
-                        children: [
-                          Coments(),
-                          Coments(),
-                        ],
-                    )
+                      color: primaryLight.withOpacity(0.1),
+                      height: size.height * 0.45,
+                      child: Expanded(
+                        child: ListView(
+                            //physics: const NeverScrollableScrollPhysics(),
+                          children: [
+                            Coments(),
+                            Coments(),
+                          ],
+                    ),
+                      )
                     ),
                   ),
                 ],
@@ -174,9 +177,9 @@ class Coments extends StatelessWidget{
                         borderRadius: BorderRadius.circular(50),
                         child: Image.asset(comm.comenterImage, height: 45, width: 45, fit: BoxFit.fill,),
                       ),
-                      title: Text(comm.comenterName, style: TextStyle(fontSize: 16,color:primary, fontWeight:FontWeight.w400 ),
+                      title: Text(comm.comenterName, style: TextStyle(fontSize: 16,color:Colors.black87, fontWeight:FontWeight.w400 ),
                         maxLines:   1,),
-                      subtitle: Text(comm.comenterTime, style: TextStyle(fontSize: 14,color:primaryLight, fontWeight:FontWeight.w400 ),),
+                      subtitle: Text(comm.comenterTime, style: TextStyle(fontSize: 14,color:Colors.black38, fontWeight:FontWeight.w400 ),),
                     ),
                   ),
                 ),
@@ -197,9 +200,9 @@ class Coments extends StatelessWidget{
              child: ListTile(
                contentPadding: EdgeInsets.only(bottom: 10, left: 10, right: 10),
                minVerticalPadding: 5,
-               title: Text(comm.comenterName+"'s"+ ' '+'response', style: TextStyle(fontSize: 14, color: Colors.black45,
+               title: Text(comm.comenterName+"'s"+ ' '+'response', style: TextStyle(fontSize: 14, color: primaryLight,
                fontStyle: FontStyle.italic),),
-               subtitle: Text(comm.coment, style: TextStyle(fontSize: 16, color: primary, fontWeight: FontWeight.w400,
+               subtitle: Text(comm.coment, style: TextStyle(fontSize: 16, color: Colors.black54, fontWeight: FontWeight.w400,
                height: 1.5)),
              ),
             )

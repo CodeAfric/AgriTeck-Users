@@ -1,10 +1,11 @@
 import 'package:agriteck_user/CropsPage/crops_screen.dart';
 import 'package:agriteck_user/Diseases/Diseases_Screen.dart';
-import 'package:agriteck_user/FarmsPage/farm_list.dart';
+import 'file:///C:/Users/Big%20Dave/AndroidStudioProjects/AgriTeck-Users/lib/LoginScreen/farmer-login/SignInPage.dart';
 import 'package:agriteck_user/common%20UI/bottom-icons.dart';
 import 'package:flutter/material.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:agriteck_user/CommunityPage/Commuinity.dart';
+import 'package:agriteck_user/Diseases-Training/TrainingScreen.dart';
 
 enum BottomButtons{Crops,Farms,Home,Vendors,Market,Investors,Community}
 class HomePage extends StatefulWidget {
@@ -35,16 +36,15 @@ class _HomePageState extends State<HomePage> {
         ),
         actions: [
           IconButton(icon:Icon(Icons.more_vert,size: 32,color: Colors.white,), onPressed: (){
-
           })
         ],
       ),
       body: Container(
         child:
-        selectedPage==BottomButtons.Home?DiseasesScreen():
+        selectedPage==BottomButtons.Home?Training():
         selectedPage==BottomButtons.Community?CommunityScreen():
         selectedPage==BottomButtons.Crops?CropScreen():
-        selectedPage==BottomButtons.Farms?FarmScreen():
+        selectedPage==BottomButtons.Farms?
         selectedPage==BottomButtons.Market?DiseasesScreen():
         Container(),
       ),
@@ -105,3 +105,4 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
