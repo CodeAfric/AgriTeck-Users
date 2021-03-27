@@ -6,36 +6,13 @@ class CropScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Material(
-      child: PageView(
-        scrollDirection: Axis.vertical,
+    return Container(
+      child: Column(
         children: [
-          Scaffold(
-            appBar: buildAppBar(),
-            backgroundColor: Colors.white,
-            body: SafeArea(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    SearchBar(),
-                    crop_grid()
-                  ],
-                ),
-              ),
-            ),
-
-          )
+          SearchBar(),
+          crop_grid(),
         ],
       ),
-    );
-  }
-  AppBar buildAppBar(){
-    return AppBar(
-      elevation: 0,
-      backgroundColor: primaryDark,
-      title: Text('Crops'.toUpperCase(), style: TextStyle(
-          fontSize: 18,color: Colors.white), textAlign: TextAlign.center,),
-      centerTitle: true,
 
     );
   }

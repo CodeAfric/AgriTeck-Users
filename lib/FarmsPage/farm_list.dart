@@ -2,12 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 
-class farmList extends StatefulWidget {
+class FarmScreen extends StatefulWidget {
   @override
-  _farmListState createState() => _farmListState();
+  _FarmScreenState createState() => _FarmScreenState();
 }
 
-class _farmListState extends State<farmList> {
+class _FarmScreenState extends State<FarmScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

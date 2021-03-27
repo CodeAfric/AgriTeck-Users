@@ -1,10 +1,10 @@
 import 'package:agriteck_user/CropsPage/crops_screen.dart';
 import 'package:agriteck_user/Diseases/Diseases_Screen.dart';
-import 'package:agriteck_user/FarmsPage/farms_Screen.dart';
+import 'package:agriteck_user/FarmsPage/farm_list.dart';
 import 'package:agriteck_user/common%20UI/bottom-icons.dart';
 import 'package:flutter/material.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:agriteck_user/CommunityPage/Commuinity.dart';
 
 enum BottomButtons{Crops,Farms,Home,Vendors,Market,Investors,Community}
 class HomePage extends StatefulWidget {
@@ -42,9 +42,9 @@ class _HomePageState extends State<HomePage> {
       body: Container(
         child:
         selectedPage==BottomButtons.Home?DiseasesScreen():
-        selectedPage==BottomButtons.Community?DiseasesScreen():
+        selectedPage==BottomButtons.Community?CommunityScreen():
         selectedPage==BottomButtons.Crops?CropScreen():
-        selectedPage==BottomButtons.Farms?FarmsScreen():
+        selectedPage==BottomButtons.Farms?FarmScreen():
         selectedPage==BottomButtons.Market?DiseasesScreen():
         Container(),
       ),

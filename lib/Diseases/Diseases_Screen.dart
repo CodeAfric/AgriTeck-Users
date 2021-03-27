@@ -11,8 +11,8 @@ class DiseasesScreen extends StatelessWidget {
       color: primaryLight.withOpacity(0.1),
       child:Column(
         children: [
-          Filter(),
-          // diseases_list(),
+          //Filter(),
+          diseases_list(),
         ],
       ),
     );

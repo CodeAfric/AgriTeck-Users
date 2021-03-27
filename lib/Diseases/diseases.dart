@@ -1,59 +1,7 @@
-import 'package:agriteck_user/CropsPage/crops_home.dart';
 import 'package:agriteck_user/DiseasesDetails/diseases_details_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:agriteck_user/Usable_classes/filter_buttons.dart';
-import 'package:agriteck_user/FarmsPage/farmsHome.dart';
-import 'package:agriteck_user/Vendors/vendorsHome.dart';
-
-
-class Filter extends StatefulWidget {
-  @override
-  _FilterState createState() => _FilterState();
-}
-
-class _FilterState extends State<Filter> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        padding: EdgeInsets.only(top: 10),
-        height:115,
-        child: Expanded(
-          child: Container(
-            //margin: EdgeInsets.symmetric(horizontal: 10),
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              shrinkWrap: true,
-              padding: EdgeInsets.fromLTRB(0, 0, 10, 10),
-              children: [
-                InkWell(
-                  child: filter_Buttons(btnText: 'CROPS',btnIcon: 'assets/diseases/tomatoes.jpg',),
-                  onTap: (){
-                    NavigateToCrops(context);
-                  },
-                ),
-                InkWell(
-                  onTap: (){
-                    NavigateToFarms(context);
-                  },
-                  child: filter_Buttons(btnText: 'FARMMS',btnIcon: 'assets/diseases/farm2.jpg',),
-                ),
-                InkWell(
-                  onTap: (){
-                    NavigateToVendors(context);
-                  },
-                  child: filter_Buttons(btnText: 'VENDORS',btnIcon: 'assets/diseases/disease1.jpg',),
-                ),
-                InkWell(
-                  onTap: (){},
-                  child: filter_Buttons(btnText: 'MARKET',btnIcon: 'assets/diseases/disease1.jpg',),),
-              ],
-            ),
-          ),
-        )
-    );
-  }
-}
 
 
 class diseases_list extends StatelessWidget {
@@ -171,21 +119,8 @@ class listItems extends StatelessWidget{
   }
 }
 
-Future NavigateToCrops(context)async{
-  Navigator.push(context, MaterialPageRoute(builder: (context)
-  => cropsHome()));
-}
 
 Future NavigateToDiseasesDetails(context)async{
   Navigator.push(context, MaterialPageRoute(builder: (context)
   => DiseaseDetails()));
-}
-Future NavigateToFarms(context)async{
-  Navigator.push(context, MaterialPageRoute(builder: (context)
-  => farms_Home()));
-}
-
-Future NavigateToVendors(context)async{
-  Navigator.push(context, MaterialPageRoute(builder: (context)
-  => vendors_Home()));
 }
