@@ -80,6 +80,9 @@ class _TrainingState extends State<Training> {
         color: Colors.white,
         child: Column(
           children: [
+            SizedBox(
+              height: 30.0,
+            ),
             //buttons container
             Container(
               //color: primaryLight,

@@ -1,9 +1,10 @@
-import 'package:agriteck_user/DiseasesDetails/diseases_details_Screen.dart';
+import 'package:agriteck_user/products/product-details.dart';
+import 'package:agriteck_user/products/product-details-screen.dart';
 import 'package:flutter/material.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:agriteck_user/Usable_classes/filter_buttons.dart';
 
-class DiseasesList extends StatelessWidget {
+class ProductList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -21,7 +22,7 @@ class DiseasesList extends StatelessWidget {
               padding: EdgeInsets.all(10),
               alignment: Alignment.centerLeft,
               child: Text(
-                'Plant diseases'.toUpperCase(),
+                'Product List'.toUpperCase(),
                 style: TextStyle(
                     color: primaryDark,
                     fontWeight: FontWeight.w600,
@@ -42,7 +43,7 @@ class DiseasesList extends StatelessWidget {
                       ),
                     ),
                     onTap: () {
-                      navigateToDiseasesDetails(context);
+                      navigateToProductDetails(context);
                     },
                   );
                 },
@@ -148,7 +149,7 @@ class ListItems extends StatelessWidget {
   }
 }
 
-Future navigateToDiseasesDetails(context) async {
+Future navigateToProductDetails(context) async {
   Navigator.push(
-      context, MaterialPageRoute(builder: (context) => DiseaseDetails()));
+      context, MaterialPageRoute(builder: (context) => ProductDetailsScreen()));
 }

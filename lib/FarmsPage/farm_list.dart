@@ -13,64 +13,46 @@ class _FarmScreenState extends State<FarmScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Container(
-      child: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.all(10),
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'Farms'.toUpperCase(),
-              style: TextStyle(
-                  color: primaryDark,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16),
-            ),
-          ),
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 5.0),
-              child: ListView.builder(
-                  itemCount: 8,
-                  itemBuilder: (context, index) {
-                    return ListItems(
-                      farmImage: 'assets/diseases/farm1.jpeg',
-                      farmName: "Attah Boakye's farm",
-                      farmLocation: 'Kwadaso Municipal',
-                    );
-                  }),
-              // child: ListView(
-              //   scrollDirection: Axis.vertical,
-              //   children: [
-              //     Container(
-              //       padding: EdgeInsets.only(bottom: 10),
-              //       child: ListItems(
-              //         farmImage: 'assets/diseases/farm1.jpeg',
-              //         farmName: "Attah Boakye's farm",
-              //         farmLocation: 'Kwadaso Municipal',
-              //       ),
-              //     ),
-              //     Container(
-              //       padding: EdgeInsets.only(bottom: 10),
-              //       child: ListItems(
-              //         farmImage: 'assets/diseases/farm2.jpg',
-              //         farmName: "Attah Boakye's farm",
-              //         farmLocation: 'Kwadaso Municipal',
-              //       ),
-              //     ),
-              //     Container(
-              //       padding: EdgeInsets.only(bottom: 10),
-              //       child: ListItems(
-              //         farmImage: 'assets/diseases/farm1.jpeg',
-              //         farmName: "Attah Boakye's farm",
-              //         farmLocation: 'Kwadaso Municipal',
-              //       ),
-              //     ),
-              //   ],
-              // ),
-            ),
-          ),
-        ],
-      ),
+      padding: EdgeInsets.symmetric(horizontal: 5.0),
+      child: ListView.builder(
+          padding: EdgeInsets.only(bottom: 80),
+          itemCount: 8,
+          itemBuilder: (context, index) {
+            return ListItems(
+              farmImage: 'assets/diseases/farm1.jpeg',
+              farmName: "Attah Boakye's farm",
+              farmLocation: 'Kwadaso Municipal',
+            );
+          }),
+      // child: ListView(
+      //   scrollDirection: Axis.vertical,
+      //   children: [
+      //     Container(
+      //       padding: EdgeInsets.only(bottom: 10),
+      //       child: ListItems(
+      //         farmImage: 'assets/diseases/farm1.jpeg',
+      //         farmName: "Attah Boakye's farm",
+      //         farmLocation: 'Kwadaso Municipal',
+      //       ),
+      //     ),
+      //     Container(
+      //       padding: EdgeInsets.only(bottom: 10),
+      //       child: ListItems(
+      //         farmImage: 'assets/diseases/farm2.jpg',
+      //         farmName: "Attah Boakye's farm",
+      //         farmLocation: 'Kwadaso Municipal',
+      //       ),
+      //     ),
+      //     Container(
+      //       padding: EdgeInsets.only(bottom: 10),
+      //       child: ListItems(
+      //         farmImage: 'assets/diseases/farm1.jpeg',
+      //         farmName: "Attah Boakye's farm",
+      //         farmLocation: 'Kwadaso Municipal',
+      //       ),
+      //     ),
+      //   ],
+      // ),
     );
   }
 }
@@ -92,70 +74,76 @@ class ListItems extends StatelessWidget {
         onTap: () {
           showToast(content: 'view farms in details');
         },
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Container(
-              child: Image.asset(
-                farmImage,
-                width: 125,
-                height: 100,
-                fit: BoxFit.cover,
-              ),
-            ),
-            SizedBox(
-              width: 20,
-            ),
-            Expanded(
-              child: Container(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      farmName,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: primary,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      farmLocation,
-                      style: TextStyle(
-                          fontSize: 14,
-                          color: primary,
-                          fontWeight: FontWeight.w400),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
+        child: Container(
+          padding: EdgeInsets.all(3.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(3)),
+                  child: Image.asset(
+                    farmImage,
+                    width: 125,
+                    height: 100,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
-            ),
-            Container(
-              padding: EdgeInsets.only(left: 5),
-              alignment: Alignment.centerLeft,
-              height: 40,
-              width: 50,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(10.0),
-                      topLeft: Radius.circular(10.0)),
-                  color: primaryDark),
-              child: Text(
-                'Details',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 12, color: Colors.white, letterSpacing: .1),
+              SizedBox(
+                width: 10,
               ),
-            )
-          ],
+              Expanded(
+                child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        farmName,
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: primary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        farmLocation,
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: primary,
+                            fontWeight: FontWeight.w400),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(left: 5),
+                alignment: Alignment.centerLeft,
+                height: 40,
+                width: 50,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(10.0),
+                        topLeft: Radius.circular(10.0)),
+                    color: primaryDark),
+                child: Text(
+                  'Details',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 12, color: Colors.white, letterSpacing: .1),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

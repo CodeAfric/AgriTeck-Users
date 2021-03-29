@@ -72,82 +72,57 @@ class _SearchBarState extends State<SearchBar> {
 class CropGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    // Size size = MediaQuery.of(context).size;
     return Expanded(
       child: Container(
-        height: size.height * 0.70,
-        child: Column(
-          children: [
-            Container(
-              // padding: EdgeInsets.all(20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    padding: EdgeInsets.only(top: 20, bottom: 5, left: 20),
-                    child: Text(
-                      'CROPS',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
-                          color: primary),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Expanded(
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 5),
-                child: ListView.builder(
-                    itemCount: 5,
-                    itemBuilder: (context, index) {
-                      return CropItems(
-                        cropName: 'Tomatoes',
-                        cropImage: 'assets/diseases/tomatoes.jpg',
-                      );
-                    }),
-                // child: ListView(
-                //   scrollDirection: Axis.vertical,
-                //   children: [
-                //     Center(
-                //       child: Wrap(
-                //         spacing: 5,
-                //         runSpacing: 5,
-                //         children: [
-                //           Container(
-                //             child: CropItems(
-                //               cropName: 'Tomatoes',
-                //               cropImage: 'assets/diseases/tomatoes.jpg',
-                //             ),
-                //           ),
-                //           Container(
-                //             child: CropItems(
-                //               cropName: 'Cabbage',
-                //               cropImage: 'assets/diseases/Cabbage.jpg',
-                //             ),
-                //           ),
-                //           Container(
-                //             child: CropItems(
-                //               cropName: 'Tomatoes',
-                //               cropImage: 'assets/diseases/tomatoes.jpg',
-                //             ),
-                //           ),
-                //           Container(
-                //             child: CropItems(
-                //               cropName: 'Cabbage',
-                //               cropImage: 'assets/diseases/Cabbage.jpg',
-                //             ),
-                //           ),
-                //         ],
-                //       ),
-                //     ),
-                //   ],
-                // ),
-              ),
-            )
-          ],
+        padding: EdgeInsets.symmetric(horizontal: 5.0),
+        child: ListView.builder(
+          padding: EdgeInsets.only(bottom: 80.0),
+          itemCount: 10,
+          itemBuilder: (context, index) {
+            return CropItems(
+              cropName: 'Tomatoes',
+              cropImage: 'assets/diseases/tomatoes.jpg',
+            );
+          },
         ),
+        // child: ListView(
+        //   scrollDirection: Axis.vertical,
+        //   children: [
+        //     Center(
+        //       child: Wrap(
+        //         spacing: 5,
+        //         runSpacing: 5,
+        //         children: [
+        //           Container(
+        //             child: CropItems(
+        //               cropName: 'Tomatoes',
+        //               cropImage: 'assets/diseases/tomatoes.jpg',
+        //             ),
+        //           ),
+        //           Container(
+        //             child: CropItems(
+        //               cropName: 'Cabbage',
+        //               cropImage: 'assets/diseases/Cabbage.jpg',
+        //             ),
+        //           ),
+        //           Container(
+        //             child: CropItems(
+        //               cropName: 'Tomatoes',
+        //               cropImage: 'assets/diseases/tomatoes.jpg',
+        //             ),
+        //           ),
+        //           Container(
+        //             child: CropItems(
+        //               cropName: 'Cabbage',
+        //               cropImage: 'assets/diseases/Cabbage.jpg',
+        //             ),
+        //           ),
+        //         ],
+        //       ),
+        //     ),
+        //   ],
+        // ),
       ),
     );
   }
@@ -176,11 +151,15 @@ class CropItems extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Container(
-              child: Image.asset(
-                cropImage,
-                width: 145,
-                height: 100,
-                fit: BoxFit.cover,
+              padding: EdgeInsets.all(5.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.all(Radius.circular(3)),
+                child: Image.asset(
+                  cropImage,
+                  width: 100,
+                  height: 70,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             SizedBox(
@@ -195,7 +174,7 @@ class CropItems extends StatelessWidget {
                     Text(
                       cropName,
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 20,
                         color: primary,
                         fontWeight: FontWeight.bold,
                       ),

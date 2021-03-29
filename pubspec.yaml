@@ -18,6 +18,7 @@ dependencies:
   image_picker: ^0.7.3
   image_cropper: ^1.4.0
   fluttertoast: ^8.0.3
+  floating_action_bubble: ^1.1.2
 
 dev_dependencies:
   flutter_test:

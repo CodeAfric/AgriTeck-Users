@@ -2,6 +2,9 @@ import 'package:agriteck_user/CropsPage/crops_screen.dart';
 import 'package:agriteck_user/Diseases/Diseases_Screen.dart';
 import 'package:agriteck_user/FarmsPage/farm_list.dart';
 import 'package:agriteck_user/common%20UI/bottom-icons.dart';
+import 'package:agriteck_user/common%20UI/floating-buttton.dart';
+import 'package:agriteck_user/common%20UI/floating-menu.dart';
+import 'package:agriteck_user/products/products.dart';
 import 'package:flutter/material.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:agriteck_user/CommunityPage/Commuinity.dart';
@@ -25,35 +28,76 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
+  Widget setAppBar(selectedPage) {
+    return selectedPage != BottomButtons.Home
+        ? AppBar(
+            backgroundColor: primaryLight,
+            title: Text(
+              selectedPage == BottomButtons.Market
+                  ? 'Market'
+                  : selectedPage == BottomButtons.Farms
+                      ? 'Farms'
+                      : selectedPage == BottomButtons.Crops
+                          ? 'Crops'
+                          : selectedPage == BottomButtons.Community
+                              ? 'Community'
+                              : '',
+              style:
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            ),
+            actions: [
+              IconButton(
+                  icon: Icon(
+                    Icons.more_vert,
+                    size: 32,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {})
+            ],
+          )
+        : null;
+  }
+
+  Widget setFloatBott(selectedPage) {
+    return selectedPage == BottomButtons.Farms
+        ? FloatingButton(
+            label: 'Add Fram',
+            icon: Icons.add,
+            onPressHandler: () {},
+          )
+        : selectedPage == BottomButtons.Community ||
+                selectedPage == BottomButtons.Crops
+            ? FloatingButton(
+                label: 'Ask Community',
+                icon: Icons.edit,
+                onPressHandler: () {},
+              )
+            : selectedPage == BottomButtons.Market
+                ? FloatingMenu(
+                    // label: 'Post Product',
+                    animatedIcon: AnimatedIcons.menu_close,
+                    menuItems: [
+                      BubbleMenuItem.create(
+                        label: 'View Vendors',
+                        icon: Icons.remove_red_eye,
+                        onPress: () {},
+                      ),
+                      BubbleMenuItem.create(
+                        label: 'Post Products',
+                        icon: Icons.add,
+                        onPress: () {},
+                      ),
+                    ],
+                    // onPressHandler: () {},
+                  )
+                : null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: selectedPage == BottomButtons.Home
-            ? primaryLight.withOpacity(0.5)
-            : primaryDark,
-        title: Text(
-          selectedPage == BottomButtons.Market
-              ? 'Market'
-              : selectedPage == BottomButtons.Farms
-                  ? 'Farms'
-                  : selectedPage == BottomButtons.Crops
-                      ? 'Crops'
-                      : selectedPage == BottomButtons.Community
-                          ? 'Community'
-                          : '',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-        actions: [
-          IconButton(
-              icon: Icon(
-                Icons.more_vert,
-                size: 32,
-                color: Colors.white,
-              ),
-              onPressed: () {})
-        ],
-      ),
+      appBar: setAppBar(selectedPage),
+      floatingActionButton: setFloatBott(selectedPage),
       body: Container(
         child: selectedPage == BottomButtons.Home
             ? Training()
@@ -64,7 +108,7 @@ class _HomePageState extends State<HomePage> {
                     : selectedPage == BottomButtons.Farms
                         ? FarmScreen()
                         : selectedPage == BottomButtons.Market
-                            ? DiseasesScreen()
+                            ? ProductScreen()
                             : Container(),
       ),
       bottomNavigationBar: Container(
