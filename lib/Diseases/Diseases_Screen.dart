@@ -7,16 +7,14 @@ class DiseasesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height-61,
+      height: MediaQuery.of(context).size.height - 61,
       color: primaryLight.withOpacity(0.1),
-      child:Column(
+      child: Column(
         children: [
           //Filter(),
-          diseases_list(),
+          DiseasesList(),
         ],
       ),
     );
-
   }
-
 }

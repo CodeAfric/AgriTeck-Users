@@ -1,3 +1,4 @@
+import 'package:agriteck_user/Toast/show_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -15,8 +16,10 @@ class _SearchBarState extends State<SearchBar> {
       children: [
         Container(
           height: size.height * 0.10,
-          decoration: BoxDecoration(color: primary,
-            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(36),
+          decoration: BoxDecoration(
+            color: primary,
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(36),
               bottomRight: Radius.circular(36),
             ),
           ),
@@ -28,18 +31,20 @@ class _SearchBarState extends State<SearchBar> {
                 right: 0,
                 child: Container(
                   alignment: Alignment.centerRight,
-                  margin: EdgeInsets.symmetric(horizontal: 20),
+                  margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   height: size.height * 0.05,
-                  decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(20),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
                       boxShadow: [
-                        BoxShadow(offset: Offset(0,10),
-                            blurRadius: 50, color: primaryLight.withOpacity(0.23)
-                        ),
-                      ]
-                  ),
+                        BoxShadow(
+                            offset: Offset(0, 10),
+                            blurRadius: 50,
+                            color: primaryLight.withOpacity(0.23)),
+                      ]),
                   //......creating search bar
                   child: TextField(
-                    onChanged: (value){},
+                    onChanged: (value) {},
                     decoration: InputDecoration(
                       hintText: 'Search',
                       contentPadding: EdgeInsets.all(10),
@@ -48,7 +53,10 @@ class _SearchBarState extends State<SearchBar> {
                       ),
                       enabledBorder: InputBorder.none,
                       focusedBorder: InputBorder.none,
-                      suffixIcon: Icon(Icons.search, color: primaryLight,),
+                      suffixIcon: Icon(
+                        Icons.search,
+                        color: primaryLight,
+                      ),
                     ),
                   ),
                 ),
@@ -61,107 +69,200 @@ class _SearchBarState extends State<SearchBar> {
   }
 }
 
-class crop_grid  extends StatelessWidget {
+class CropGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Container(
-      height: size.height * 0.70,
-      child: Column(
-        children: [
-          Container(
-           // padding: EdgeInsets.all(20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  padding: EdgeInsets.only(top: 20,bottom: 5,left: 20),
-                  child: Text('CROPS',style:  TextStyle(fontWeight: FontWeight.w500,fontSize: 18, color: primary),),
-                )
-              ],
+    return Expanded(
+      child: Container(
+        height: size.height * 0.70,
+        child: Column(
+          children: [
+            Container(
+              // padding: EdgeInsets.all(20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    padding: EdgeInsets.only(top: 20, bottom: 5, left: 20),
+                    child: Text(
+                      'CROPS',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                          color: primary),
+                    ),
+                  )
+                ],
+              ),
             ),
-          ),
-         Container(
-           child: Expanded(
-             child: ListView(
-               scrollDirection: Axis.vertical,
-               children: [
-                 Center(
-                   child: Wrap(
-                     spacing: 5,
-                     runSpacing: 5,
-                     children: [
-                       Container(
-                         child: crop_Items(crop_name: 'Tomatoes', crop_image: 'assets/diseases/tomatoes.jpg',),
-                       ),
-                       Container(
-                         child: crop_Items(crop_name: 'Cabbage', crop_image: 'assets/diseases/Cabbage.jpg',),
-                       ),
-                       Container(
-                         child: crop_Items(crop_name: 'Tomatoes', crop_image: 'assets/diseases/tomatoes.jpg',),
-                       ),
-                       Container(
-                         child: crop_Items(crop_name: 'Cabbage', crop_image: 'assets/diseases/Cabbage.jpg',),
-                       ),
-                     ],
-                   ),
-                 ),
-               ],
-             ),
-           ),
-         )
-        ],
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 5),
+                child: ListView.builder(
+                    itemCount: 5,
+                    itemBuilder: (context, index) {
+                      return CropItems(
+                        cropName: 'Tomatoes',
+                        cropImage: 'assets/diseases/tomatoes.jpg',
+                      );
+                    }),
+                // child: ListView(
+                //   scrollDirection: Axis.vertical,
+                //   children: [
+                //     Center(
+                //       child: Wrap(
+                //         spacing: 5,
+                //         runSpacing: 5,
+                //         children: [
+                //           Container(
+                //             child: CropItems(
+                //               cropName: 'Tomatoes',
+                //               cropImage: 'assets/diseases/tomatoes.jpg',
+                //             ),
+                //           ),
+                //           Container(
+                //             child: CropItems(
+                //               cropName: 'Cabbage',
+                //               cropImage: 'assets/diseases/Cabbage.jpg',
+                //             ),
+                //           ),
+                //           Container(
+                //             child: CropItems(
+                //               cropName: 'Tomatoes',
+                //               cropImage: 'assets/diseases/tomatoes.jpg',
+                //             ),
+                //           ),
+                //           Container(
+                //             child: CropItems(
+                //               cropName: 'Cabbage',
+                //               cropImage: 'assets/diseases/Cabbage.jpg',
+                //             ),
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //   ],
+                // ),
+              ),
+            )
+          ],
+        ),
       ),
-
     );
   }
 }
 
+class CropItems extends StatelessWidget {
+  final String cropImage;
+  final String cropName;
 
-class crop_Items extends StatelessWidget{
-  final String crop_image;
-  final String crop_name;
-
-  const crop_Items({Key key, this.crop_image, this.crop_name,}) : super(key: key);
+  const CropItems({
+    Key key,
+    this.cropImage,
+    this.cropName,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 180,
-      child: Expanded(
-        child: Card(
-          elevation: 10,
-          child: Column(
-            children: [
-              Container(
-                margin: EdgeInsets.only(top: 10),
-                width: 145, height: 100,
-                decoration:  BoxDecoration(border: Border.all(color: primaryDark),
-                    borderRadius: BorderRadius.circular(10)),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(10),),
-                  child: Image.asset(crop_image, width: 145, height: 100, fit: BoxFit.cover,),
-                ),
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      elevation: 2.0,
+      child: InkWell(
+        onTap: () {
+          showToast(content: 'view crops in details');
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              child: Image.asset(
+                cropImage,
+                width: 145,
+                height: 100,
+                fit: BoxFit.cover,
               ),
-              Container(
-                alignment: Alignment.center,
-                padding: EdgeInsets.all(10),
+            ),
+            SizedBox(
+              width: 15,
+            ),
+            Expanded(
+              child: Container(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      child: Text(crop_name, style: TextStyle(fontSize: 16,color: primary,
-                        fontWeight: FontWeight.bold,),
-                        maxLines: 1,
+                    Text(
+                      cropName,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: primary,
+                        fontWeight: FontWeight.bold,
                       ),
-                    ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    )
                   ],
                 ),
               ),
-            ],
-          ),
+            ),
+            Container(
+              alignment: Alignment.centerRight,
+              child: Icon(
+                Icons.chevron_right_outlined,
+                color: primaryLight,
+                size: 40,
+              ),
+            ),
+          ],
         ),
       ),
     );
+    // return Card(
+    //   elevation: 10,
+    //   child: Column(
+    //     children: [
+    //       Container(
+    //         margin: EdgeInsets.only(top: 10),
+    //         width: 145,
+    //         height: 100,
+    //         decoration: BoxDecoration(
+    //             border: Border.all(color: primaryDark),
+    //             borderRadius: BorderRadius.circular(10)),
+    //         child: ClipRRect(
+    //           borderRadius: BorderRadius.all(
+    //             Radius.circular(10),
+    //           ),
+    //           child: Image.asset(
+    //             cropImage,
+    //             width: 145,
+    //             height: 100,
+    //             fit: BoxFit.cover,
+    //           ),
+    //         ),
+    //       ),
+    //       Container(
+    //         alignment: Alignment.center,
+    //         padding: EdgeInsets.all(10),
+    //         child: Column(
+    //           mainAxisAlignment: MainAxisAlignment.start,
+    //           children: [
+    //             Container(
+    //               child: Text(
+    //                 cropName,
+    //                 style: TextStyle(
+    //                   fontSize: 16,
+    //                   color: primary,
+    //                   fontWeight: FontWeight.bold,
+    //                 ),
+    //                 maxLines: 1,
+    //               ),
+    //             ),
+    //           ],
+    //         ),
+    //       ),
+    //     ],
+    //   ),
+    // );
   }
 }

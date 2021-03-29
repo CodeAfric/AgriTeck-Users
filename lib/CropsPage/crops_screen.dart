@@ -10,10 +10,9 @@ class CropScreen extends StatelessWidget {
       child: Column(
         children: [
           SearchBar(),
-          crop_grid(),
+          CropGrid(),
         ],
       ),
-
     );
   }
 }
