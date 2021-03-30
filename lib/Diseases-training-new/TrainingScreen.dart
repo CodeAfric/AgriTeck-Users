@@ -227,29 +227,28 @@ class DiseaseCapture extends StatelessWidget {
                 borderRadius: BorderRadius.circular(25),
                 color: primary,
               ),
-              child: GestureDetector(
-                onTap: () {
-                  showCameraDialog(context);
-                },
-                child: Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        child: Icon(
-                          Icons.camera_alt,
-                          color: Colors.white,
-                        ),
+              child: Center(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      child: Icon(
+                        Icons.camera_alt,
+                        color: Colors.white,
                       ),
-                      Container(
-                        padding: EdgeInsets.only(left: 10),
-                        child: Text(
-                          'Point and Capture',
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                    InkWell(
+                      onTap: () async {
+                        await showCameraDialog(context);
+                      },
+                      child: Container(
+                          padding: EdgeInsets.only(left: 10),
+                          child: Text(
+                            'Point and Capture',
+                            style: TextStyle(color: Colors.white),
+                          )),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -308,6 +307,7 @@ class Weather extends StatelessWidget {
                         ),
                       ),
                       Container(
+                        padding: EdgeInsets.only(top: 5),
                         alignment: Alignment.centerLeft,
                         child: Text(
                           date,
@@ -324,9 +324,9 @@ class Weather extends StatelessWidget {
               Expanded(
                 flex: 1,
                 child: Container(
-                  height: 100,
-                  width: 120,
-                  padding: EdgeInsets.all(15),
+                  height: 110,
+                  width: 150,
+                  padding: EdgeInsets.all(5),
                   child: Image.asset(
                     'assets/icons/weather.jpg',
                     fit: BoxFit.fill,
