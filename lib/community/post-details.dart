@@ -2,7 +2,6 @@ import 'package:agriteck_user/model-data/DataModels.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
-import 'package:agriteck_user/community/Commuinity.dart';
 
 class PostDetailScreen extends StatefulWidget {
   @override
@@ -21,7 +20,9 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
               fontWeight: FontWeight.w600, fontSize: 18, color: Colors.white),
         ),
       ),
-      body: SafeArea(
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
         child: SingleChildScrollView(
           child: Details(),
         ),
@@ -39,144 +40,129 @@ class Details extends StatelessWidget {
     return Container(
       height: size.height,
       color: Colors.white,
-      child: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(10),
-                    bottomLeft: Radius.circular(10),
-                  ),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                        offset: Offset(0, 8),
-                        blurRadius: 15,
-                        color: primaryLight.withOpacity(0.5)),
-                  ]),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    height: 200,
-                    width: size.width,
-                    child: ImageCarousel(),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: 70,
-                        width: size.width * 0.65,
-                        child: ListTile(
-                          leading: ClipRRect(
-                            borderRadius: BorderRadius.circular(50),
-                            child: Image.asset(
-                              comm.userImage,
-                              height: 45,
-                              width: 45,
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                          title: Text(
-                            comm.userName,
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: primary,
-                                fontWeight: FontWeight.w400),
-                            maxLines: 1,
-                          ),
-                          subtitle: Text(
-                            comm.postTime,
-                            style: TextStyle(
-                                fontSize: 14,
-                                color: primaryLight,
-                                fontWeight: FontWeight.w400),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        height: 70,
-                        width: size.width * 0.35,
-                        child: ListTile(
-                          title: Text(
-                            comm.userLocation,
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: primary,
-                                fontWeight: FontWeight.w400),
-                            maxLines: 1,
-                          ),
-                          subtitle: Text(
-                            comm.cropName,
-                            style: TextStyle(
-                                fontSize: 14,
-                                color: primaryLight,
-                                fontWeight: FontWeight.w300),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Container(
+            height: (size.height*.55),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  bottomRight: Radius.circular(10),
+                  bottomLeft: Radius.circular(10),
+                ),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                      offset: Offset(0, 8),
+                      blurRadius: 15,
+                      color: primaryLight.withOpacity(0.5)),
+                ]),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ImageCarousel(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: 70,
+                      width: size.width * 0.65,
                       child: ListTile(
+                        leading: ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: Image.asset(
+                            comm.userImage,
+                            height: 45,
+                            width: 45,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
                         title: Text(
-                          comm.postTitle,
+                          comm.userName,
                           style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: primaryDark,
-                              fontSize: 18,
-                              height: 1.5),
+                              fontSize: 16,
+                              color: primary,
+                              fontWeight: FontWeight.w400),
+                          maxLines: 1,
                         ),
                         subtitle: Text(
-                          comm.postDescription,
+                          comm.postTime,
                           style: TextStyle(
-                              fontSize: 15,
+                              fontSize: 14,
                               color: primaryLight,
-                              fontWeight: FontWeight.w400,
-                              height: 1.5),
-                          maxLines: 2,
+                              fontWeight: FontWeight.w400),
                         ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      alignment: Alignment.centerRight,
-                      child: Text(
-                        'Translate',
+                    Container(
+                      height: 70,
+                      width: size.width * 0.35,
+                      child: ListTile(
+                        title: Text(
+                          comm.userLocation,
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: primary,
+                              fontWeight: FontWeight.w400),
+                          maxLines: 1,
+                        ),
+                        subtitle: Text(
+                          comm.cropName,
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: primaryLight,
+                              fontWeight: FontWeight.w300),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Container(
+                    child: ListTile(
+                      title: Text(
+                        comm.postTitle,
                         style: TextStyle(
-                            color: primary,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400),
+                            fontWeight: FontWeight.w600,
+                            color: primaryDark,
+                            fontSize: 18,
+                            height: 1.5),
+                      ),
+                      subtitle: Text(
+                        comm.postDescription,
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: primaryLight,
+                            fontWeight: FontWeight.w400,
+                            height: 1.5),
                       ),
                     ),
                   ),
-                  Divider(
-                    color: primaryLight,
-                  ),
-                  SingleChildScrollView(
-                    child: Container(
-                        height: size.height * 1.0,
-                        child: ListView(
-                          //physics: const NeverScrollableScrollPhysics(),
-                          children: [
-                            Coments(),
-                            Coments(),
-                          ],
-                        )),
-                  ),
+                ),
+              ],
+            ),
+          ),
+          ListTile(
+            title: Text('Comments',style: TextStyle(fontWeight: FontWeight.bold,color: primary,fontSize: 16),),
+            subtitle: Container(
+              width:MediaQuery.of(context).size.width ,
+              height:size.height*.4 ,
+              constraints: BoxConstraints(
+                maxWidth: MediaQuery.of(context).size.width,
+                minHeight: size.height*.4
+            ),
+              child: ListView(
+                //physics: NeverScrollableScrollPhysics(),
+                children: [
+                  Coments(),
+                  Coments()
                 ],
               ),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }

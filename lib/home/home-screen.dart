@@ -1,3 +1,5 @@
+import 'package:agriteck_user/common-functions/helper-functions.dart';
+import 'package:agriteck_user/community/commuinity-page.dart';
 import 'package:agriteck_user/crops/crops_screen.dart';
 import 'package:agriteck_user/farms/farm_list.dart';
 import 'package:agriteck_user/common%20UI/bottom-icons.dart';
@@ -6,10 +8,12 @@ import 'package:agriteck_user/common%20UI/floating-menu.dart';
 import 'package:agriteck_user/investors/investor.dart';
 import 'package:agriteck_user/products/products.dart';
 import 'package:agriteck_user/vendors/vendor.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
-import 'package:agriteck_user/community/commuinity.dart';
 import 'package:agriteck_user/Diseases-Training/TrainingScreen.dart';
+
+import '../user-services.dart';
 
 enum BottomButtons { Crops, Farms, Home, Vendors, Market, Investors, Community }
 
@@ -22,11 +26,34 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   BottomButtons selectedPage;
-
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
+    testFirebase();
     selectedPage = widget.initPaage;
     super.initState();
+  }
+  testFirebase()async{
+    await FirebaseAuth.instance.verifyPhoneNumber(
+      phoneNumber:'+233248485308',
+      verificationCompleted: (PhoneAuthCredential credential) {
+        print('=========================');
+        print('${credential.asMap()}');
+        print('=========================');
+      },
+      verificationFailed: (FirebaseAuthException e) {},
+      codeSent: (String verificationId, int resendToken) {
+        print('=========================');
+        print('$verificationId=================$resendToken');
+        print('=========================');
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {},
+    );
+   UserCredential data= await UserServices.createUser("email", "password", _scaffoldKey.currentState);
+   if(data!=null){
+     showSnackBar("Working from here", _scaffoldKey.currentState);
+   }
+
   }
 
   Widget setAppBar(selectedPage) {
@@ -121,6 +148,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: setAppBar(selectedPage),
       floatingActionButton: setFloatBott(selectedPage),
       body: Container(
@@ -140,7 +168,8 @@ class _HomePageState extends State<HomePage> {
                             : Container(),
       ),
       bottomNavigationBar: Container(
-        height: 60,
+        height: 70,
+        width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           color: primaryLight.withOpacity(0.9),
           boxShadow: [
@@ -153,86 +182,84 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-        child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              BottomIcons(
-                iconColor: primaryDark,
-                text: 'Home',
-                bottomIcons: selectedPage == BottomButtons.Home ? true : false,
-                icons: 'assets/icons/home.png',
-                textColor: Colors.white,
-                onPressed: () {
-                  setState(() {
-                    selectedPage = BottomButtons.Home;
-                  });
-                },
-                activeColor: primary,
-                activeIconColor: Colors.white,
-              ),
-              BottomIcons(
-                iconColor: primaryDark,
-                text: 'Crops',
-                bottomIcons: selectedPage == BottomButtons.Crops ? true : false,
-                icons: 'assets/icons/cultivate.png',
-                textColor: Colors.white,
-                onPressed: () {
-                  setState(() {
-                    selectedPage = BottomButtons.Crops;
-                  });
-                },
-                activeColor: primary,
-                activeIconColor: Colors.white,
-              ),
-              BottomIcons(
-                iconColor: primaryDark,
-                text: 'Farms',
-                bottomIcons: selectedPage == BottomButtons.Farms ? true : false,
-                icons: 'assets/icons/farm.png',
-                textColor: Colors.white,
-                onPressed: () {
-                  setState(() {
-                    selectedPage = BottomButtons.Farms;
-                  });
-                },
-                activeColor: primary,
-                activeIconColor: Colors.white,
-              ),
-              BottomIcons(
-                iconColor: primaryDark,
-                text: 'Community',
-                bottomIcons:
-                    selectedPage == BottomButtons.Community ? true : false,
-                icons: 'assets/icons/community.png',
-                textColor: Colors.white,
-                onPressed: () {
-                  setState(() {
-                    selectedPage = BottomButtons.Community;
-                  });
-                },
-                activeColor: primary,
-                activeIconColor: Colors.white,
-              ),
-              BottomIcons(
-                iconColor: primaryDark,
-                text: 'Market',
-                bottomIcons:
-                    selectedPage == BottomButtons.Market ? true : false,
-                icons: 'assets/icons/market.png',
-                textColor: Colors.white,
-                onPressed: () {
-                  setState(() {
-                    selectedPage = BottomButtons.Market;
-                  });
-                },
-                activeColor: primary,
-                activeIconColor: Colors.white,
-              ),
-            ],
-          ),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            BottomIcons(
+              iconColor: primaryDark,
+              text: 'Home',
+              bottomIcons: selectedPage == BottomButtons.Home ? true : false,
+              icons: 'assets/icons/home.png',
+              textColor: Colors.white,
+              onPressed: () {
+                setState(() {
+                  selectedPage = BottomButtons.Home;
+                });
+              },
+              activeColor: primary,
+              activeIconColor: Colors.white,
+            ),
+            BottomIcons(
+              iconColor: primaryDark,
+              text: 'Crops',
+              bottomIcons: selectedPage == BottomButtons.Crops ? true : false,
+              icons: 'assets/icons/cultivate.png',
+              textColor: Colors.white,
+              onPressed: () {
+                setState(() {
+                  selectedPage = BottomButtons.Crops;
+                });
+              },
+              activeColor: primary,
+              activeIconColor: Colors.white,
+            ),
+            BottomIcons(
+              iconColor: primaryDark,
+              text: 'Farms',
+              bottomIcons: selectedPage == BottomButtons.Farms ? true : false,
+              icons: 'assets/icons/farm.png',
+              textColor: Colors.white,
+              onPressed: () {
+                setState(() {
+                  selectedPage = BottomButtons.Farms;
+                });
+              },
+              activeColor: primary,
+              activeIconColor: Colors.white,
+            ),
+            BottomIcons(
+              iconColor: primaryDark,
+              text: 'Community',
+              bottomIcons:
+                  selectedPage == BottomButtons.Community ? true : false,
+              icons: 'assets/icons/community.png',
+              textColor: Colors.white,
+              onPressed: () {
+                setState(() {
+                  selectedPage = BottomButtons.Community;
+                });
+              },
+              activeColor: primary,
+              activeIconColor: Colors.white,
+            ),
+            BottomIcons(
+              iconColor: primaryDark,
+              text: 'Market',
+              bottomIcons:
+                  selectedPage == BottomButtons.Market ? true : false,
+              icons: 'assets/icons/market.png',
+              textColor: Colors.white,
+              onPressed: () {
+                setState(() {
+                  selectedPage = BottomButtons.Market;
+                });
+              },
+              activeColor: primary,
+              activeIconColor: Colors.white,
+            ),
+          ],
         ),
       ),
     );

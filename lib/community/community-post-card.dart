@@ -1,53 +1,18 @@
-import 'package:agriteck_user/community/post-details.dart';
 import 'package:agriteck_user/model-data/DataModels.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
-import 'package:carousel_pro/carousel_pro.dart';
-
-class CommunityPostList extends StatefulWidget {
-  @override
-  _CommunityPostListState createState() => _CommunityPostListState();
-}
-
-class _CommunityPostListState extends State<CommunityPostList> {
-  @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Container(
-      height: size.height,
-      child: Expanded(
-        child: ListView.builder(
-          padding: EdgeInsets.only(bottom: 80.0),
-          itemCount: 10,
-          itemBuilder: (context, index) {
-            return InkWell(
-              child: Container(
-                child: CommunityItems(),
-              ),
-              onTap: () {
-                navigateToPostDetails(context);
-              },
-            );
-          },
-        ),
-      ),
-    );
-  }
-}
 
 class CommunityItems extends StatelessWidget {
   final CommunityData data = new CommunityData();
-
   @override
   Widget build(BuildContext context) {
     var comm = GenerateData().community()[0];
     Size size = MediaQuery.of(context).size;
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 5.0),
-      child: Card(
-        elevation: 5,
-        child: Container(
+      child: Container(
+        child: Card(
+          elevation: 5,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -166,7 +131,3 @@ class CommunityItems extends StatelessWidget {
   }
 }
 
-Future navigateToPostDetails(context) async {
-  Navigator.push(
-      context, MaterialPageRoute(builder: (context) => PostDetailScreen()));
-}

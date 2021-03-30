@@ -1,3 +1,4 @@
+import 'package:agriteck_user/common-functions/helper-functions.dart';
 import 'package:agriteck_user/disease-details/diseases_details_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
@@ -5,9 +6,7 @@ import 'package:agriteck_user/styles/app-colors.dart';
 class DiseasesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Expanded(
-      //height: size.height * 0.70,
       child: Container(
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
@@ -41,7 +40,7 @@ class DiseasesList extends StatelessWidget {
                       ),
                     ),
                     onTap: () {
-                      navigateToDiseasesDetails(context);
+                      sendToPage(context, DiseaseDetails());
                     },
                   );
                 },
@@ -147,7 +146,4 @@ class ListItems extends StatelessWidget {
   }
 }
 
-Future navigateToDiseasesDetails(context) async {
-  Navigator.push(
-      context, MaterialPageRoute(builder: (context) => DiseaseDetails()));
-}
+
