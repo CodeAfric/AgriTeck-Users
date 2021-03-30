@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1000659171158",
+    "project_id": "agriteck-38b85",
+    "storage_bucket": "agriteck-38b85.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1000659171158:android:4888f60c03a898d25f48f7",
+        "android_client_info": {
+          "package_name": "com.agriteck.agriteck_user"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1000659171158-5ahdct6e7nujrp7mjr3ide02ps4p82jc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEUBFF9hgMf7lTsh4tG4DMFdLGbecJhxo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1000659171158-5ahdct6e7nujrp7mjr3ide02ps4p82jc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

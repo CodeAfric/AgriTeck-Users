@@ -36,11 +36,10 @@ class _BottomIconsState extends State<BottomIcons> {
             ? Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
-                  color: widget.activeColor
                 ),
                 padding:
-                    EdgeInsets.only(left: 18, right: 18, top: 7, bottom: 7),
-                child: Row(
+                    EdgeInsets.only(left: 2, right: 2, top: 3, bottom: 3),
+                child: Column(
                   children: <Widget>[
                     Image.asset(
                       widget.icons,
@@ -49,7 +48,7 @@ class _BottomIconsState extends State<BottomIcons> {
                       height: 30,
                     ),
                     SizedBox(
-                      width: 8,
+                      height: 3,
                     ),
                     Text(
                       widget.text,
@@ -62,18 +61,31 @@ class _BottomIconsState extends State<BottomIcons> {
                 ),
               )
             : Container(
-                padding:
-                    EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 8),
-                child: Row(
-                  children: <Widget>[
-                    Image.asset(
-                      widget.icons,
-                      color: widget.iconColor,
-                      width: 30,
-                      height: 30,
-                    ),
-                  ],
-                ),
-              ));
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          padding:
+          EdgeInsets.only(left: 2, right: 2, top: 3, bottom: 3),
+          child: Column(
+            children: <Widget>[
+              Image.asset(
+                widget.icons,
+                color: widget.iconColor,
+                width: 25,
+                height: 25,
+              ),
+              SizedBox(
+                height: 3,
+              ),
+              Text(
+                widget.text,
+                style: TextStyle(
+                    color: Colors.black26,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15),
+              ),
+            ],
+          ),
+        ));
   }
 }
