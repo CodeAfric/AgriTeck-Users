@@ -1,6 +1,5 @@
-import 'package:agriteck_user/Home_Page/HomeScreen.dart';
+import 'package:agriteck_user/home/home-screen.dart';
 import 'package:flutter/material.dart';
-import 'package:agriteck_user/Home_Page/HomeScreen.dart';
 
 void main() {
   runApp(MyApp());

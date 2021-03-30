@@ -77,7 +77,6 @@ class _TrainingState extends State<Training> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        color: Colors.white,
         child: Column(
           children: [
             SizedBox(

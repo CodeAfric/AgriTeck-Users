@@ -1,4 +1,4 @@
-import 'package:agriteck_user/DiseasesDetails/diseases_details_Screen.dart';
+import 'package:agriteck_user/DiseasesDetails%20copy/diseases_details_Screen.dart';
 import 'package:flutter/material.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:agriteck_user/Usable_classes/filter_buttons.dart';

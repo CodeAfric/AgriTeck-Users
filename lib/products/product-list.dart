@@ -12,10 +12,6 @@ class ProductList extends StatelessWidget {
       //height: size.height * 0.70,
       child: Container(
         padding: const EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          color: primaryLight.withOpacity(0.3),
-        ),
         child: Column(
           children: [
             Container(
