@@ -19,8 +19,8 @@ dependencies:
   image_cropper: ^1.4.0
   fluttertoast: ^8.0.3
   floating_action_bubble: ^1.1.2
-  tflite_flutter: ^0.6.0
   intl: ^0.16.1
+  tflite: ^1.1.1
 
 dev_dependencies:
   flutter_test:
@@ -41,6 +41,8 @@ flutter:
   assets:
     - assets/diseases/
     - assets/icons/
+    - assets/model.tflite
+    - assets/labels.txt
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

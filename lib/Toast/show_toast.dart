@@ -2,5 +2,5 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 showToast({@required String content}) {
-  Fluttertoast.showToast(msg: content);
+  Fluttertoast.showToast(msg: content, toastLength: Toast.LENGTH_LONG);
 }

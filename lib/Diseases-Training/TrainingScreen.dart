@@ -1,6 +1,15 @@
+import 'dart:io';
+import 'dart:async';
+import 'package:agriteck_user/Toast/show_toast.dart';
 import 'package:agriteck_user/common%20UI/open-camera.dart';
+import 'package:agriteck_user/community/post-details.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:tflite/tflite.dart';
+import 'package:agriteck_user/diseases/disease_detection_details.dart';
 
 class Training extends StatefulWidget {
   @override
@@ -8,6 +17,33 @@ class Training extends StatefulWidget {
 }
 
 class _TrainingState extends State<Training> {
+  List _output;
+  File image;
+  bool _loading;
+
+  static Future loadModel() async {
+    Tflite.close();
+    try {
+      String res = await Tflite.loadModel(
+        model: "assets/model.tflite",
+        labels:
+            "assets/labels.txt", // defaults to false, set to true to use GPU delegate
+      );
+      print('=================================' + res);
+    } catch (e) {
+      print('Failed to load model. $e');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    loadModel().then((val) {
+      print('object Model Loaded');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -77,7 +113,6 @@ class Buttonts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Container(
       height: 90,
       decoration: BoxDecoration(
@@ -115,10 +150,68 @@ class Buttonts extends StatelessWidget {
   }
 }
 
-class DiseaseCapture extends StatelessWidget {
+class DiseaseCapture extends StatefulWidget {
+  @override
+  _DiseaseCaptureState createState() => _DiseaseCaptureState();
+}
+
+class _DiseaseCaptureState extends State<DiseaseCapture> {
+  ImagePicker _picker = ImagePicker();
+  File cropImage;
+
+  Future recognizeImage(var image, BuildContext context) async {
+    _TrainingState.loadModel().then((val) {
+      print('object Model Loaded');
+    });
+    int startTime = new DateTime.now().millisecondsSinceEpoch;
+    var recognitions = await Tflite.runModelOnImage(
+      path: image.path,
+      numResults: 1,
+      threshold: 0.05,
+      imageMean: 255.0,
+      imageStd: 255.0,
+    );
+    print(recognitions);
+
+    showToast(
+        content: recognitions[0]["label"].toString() +
+            '\n' +
+            (recognitions[0]["confidence"] * 100).round().toString() +
+            '%');
+    int endTime = new DateTime.now().millisecondsSinceEpoch;
+    print("Inference took ${endTime - startTime}ms");
+    Tflite.close();
+  }
+
+  Future getImage() async {
+    var imageFile = await _picker.getImage(source: ImageSource.gallery);
+    if (imageFile != null) {
+      setState(() {
+        cropImage = File(imageFile.path);
+
+        //detect the crop disease
+        recognizeImage(cropImage, context).then((value) => {
+              print(value),
+            });
+
+        //show the details of the crop
+        showCropDiseaseDetails();
+      });
+    } else {
+      showToast(content: 'No Image Selected');
+    }
+  }
+
+  Future showCropDiseaseDetails() async {
+    await Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return DiseaseDetectionDetails(imagePath: cropImage);
+    }));
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
     return Card(
       elevation: 10,
       child: Column(
@@ -146,7 +239,17 @@ class DiseaseCapture extends StatelessWidget {
                       child: OutlineButton(
                           borderSide: BorderSide(
                               color: primary.withOpacity(0.8), width: 2.0),
-                          onPressed: () {},
+                          onPressed: () async {
+                            print(
+                                '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+
+                            //get image from gallery
+                            getImage();
+
+                            //   print("IMAGE PATH: ${imageFile.path}");
+                            print(
+                                '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+                          },
                           child: ListTile(
                             title: Icon(
                               Icons.camera_alt_outlined,

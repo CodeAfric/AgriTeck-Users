@@ -1,9 +1,11 @@
 import 'dart:io';
 
+import 'package:agriteck_user/disease-details/diseases_details_Screen.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tflite/tflite.dart';
 
 ImagePicker _picker = ImagePicker();
 Future<File> showCameraDialog(BuildContext context) {
@@ -39,6 +41,13 @@ Future<File> showCameraDialog(BuildContext context) {
                   onTap: () async {
                     imageFile =
                         await _picker.getImage(source: ImageSource.gallery);
+                    () async {
+                      var output =
+                          await Tflite.runModelOnImage(path: imageFile.path);
+                      print(
+                          '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+                      print(output);
+                    }();
                   },
                 ),
                 // Padding(padding: const EdgeInsets.all(8)),
