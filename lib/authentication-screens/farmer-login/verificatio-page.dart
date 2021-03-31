@@ -186,14 +186,17 @@ class _OTPScreenState extends State<OTPScreen> {
             if(value!=null){
               await showToast(context, fToast, Icons.check, primaryDark,
                   "Telephone number verified");
-              //print('==============user=============${value.user.phoneNumber}');
-              Map<String,dynamic>data=await UserServices.querySingleUser(value.user.uid);
-              if(data==null){
-                newUserDialog();
-              }else{
-                await showSnackBar("Log in successful...", _scaffoldKey.currentState);
-                sendToPage(context, HomePage(initPaage: BottomButtons.Home,));
-              }
+              print('==============user=============${value.user.uid}');
+              await UserServices.querySingleUser(value.user.uid).then((value){
+                print('=========================================data===========$value');
+              });
+
+              // if(data==null){
+              //   newUserDialog();
+              // }else{
+              //   await showSnackBar("Log in successful...", _scaffoldKey.currentState);
+              //   sendToPage(context, HomePage(initPaage: BottomButtons.Home,));
+              // }
                 //sendToPage(context, UserForms(widget.phone));
             }
       });

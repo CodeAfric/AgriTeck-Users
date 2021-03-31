@@ -1,4 +1,4 @@
-import 'package:agriteck_user/common%20UI/Open_Camera.dart';
+import 'package:agriteck_user/common%20UI/open-camera.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:flutter/material.dart';
 
@@ -97,7 +97,8 @@ import 'package:flutter/material.dart';
   }
  }
 
- class DiseaseCapture extends StatelessWidget{
+
+class DiseaseCapture extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -110,7 +111,7 @@ import 'package:flutter/material.dart';
             padding: EdgeInsets.all(10),
             alignment: Alignment.centerLeft,
             child: Text('Detect Disease'.toUpperCase(), style: TextStyle(fontSize: 20, color: primary,
-            fontWeight: FontWeight.w400),),
+                fontWeight: FontWeight.w400),),
           ),
           Container(
             child: Row(
@@ -123,12 +124,12 @@ import 'package:flutter/material.dart';
                       height: 100,
                       width: 120,
                       child: OutlineButton(
-                        borderSide: BorderSide(color: primary.withOpacity(0.8), width: 2.0),
-                        onPressed: (){},
-                        child: ListTile(
-                          title: Icon(Icons.camera_alt_outlined, size: 45, color: primaryDark,),
-                          subtitle: Text('Open Camera', style: TextStyle(fontSize: 12, color: primaryLight),),
-                        )
+                          borderSide: BorderSide(color: primary.withOpacity(0.8), width: 2.0),
+                          onPressed: (){},
+                          child: ListTile(
+                            title: Icon(Icons.camera_alt_outlined, size: 45, color: primaryDark,),
+                            subtitle: Text('Open Camera', style: TextStyle(fontSize: 12, color: primaryLight),),
+                          )
                       ),
                     ),
                   ),
@@ -190,8 +191,8 @@ import 'package:flutter/material.dart';
                         await showCameraDialog(context);
                       },
                       child: Container(
-                        padding: EdgeInsets.only(left: 10),
-                        child: Text('Point and Capture', style: TextStyle(color: Colors.white),)
+                          padding: EdgeInsets.only(left: 10),
+                          child: Text('Point and Capture', style: TextStyle(color: Colors.white),)
                       ),
                     ),
                   ],
@@ -204,7 +205,7 @@ import 'package:flutter/material.dart';
     );
   }
 
- }
+}
 
  class Weather extends StatelessWidget{
    final String location;

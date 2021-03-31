@@ -30,9 +30,8 @@ class UserServices {
 
   static Future<Map<String, dynamic>> querySingleUser(String userId) async {
     Map<String, dynamic> data;
-    CollectionReference users = FirebaseFirestore.instance.collection("Users");
-    users.doc(userId).get().then((value) {
-      data = value.data();
+    FirebaseFirestore.instance.collection('Users').doc(userId).get().then((value){
+      data=value.data();
     });
     return data;
   }

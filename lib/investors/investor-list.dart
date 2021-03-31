@@ -1,7 +1,7 @@
 import 'package:agriteck_user/investors/investor-details-screen.dart';
 import 'package:flutter/material.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
-import 'package:agriteck_user/Usable_classes/filter_buttons.dart';
+import 'file:///C:/Users/emman/StudioProjects/AgriTeck-Users/lib/common%20UI/filter_buttons.dart';
 
 class InvestorList extends StatelessWidget {
   @override

@@ -1,4 +1,3 @@
-import 'package:agriteck_user/common-functions/helper-functions.dart';
 import 'package:agriteck_user/community/commuinity-page.dart';
 import 'package:agriteck_user/crops/crops_screen.dart';
 import 'package:agriteck_user/farms/farm_list.dart';
@@ -8,12 +7,10 @@ import 'package:agriteck_user/common%20UI/floating-menu.dart';
 import 'package:agriteck_user/investors/investor.dart';
 import 'package:agriteck_user/products/products.dart';
 import 'package:agriteck_user/vendors/vendor.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:agriteck_user/Diseases-Training/TrainingScreen.dart';
 
-import '../services/user-services.dart';
 
 enum BottomButtons { Crops, Farms, Home, Vendors, Market, Investors, Community }
 
