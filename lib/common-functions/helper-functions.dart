@@ -1,5 +1,11 @@
+
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:steel_crypt/steel_crypt.dart';
 import 'transparent-page.dart';
 
 
@@ -64,4 +70,43 @@ Future<void> showSnackBar(
   );
   state.showSnackBar(_snackBar);
   await Future.delayed(Duration(seconds: 1));
+}
+
+String encryptString(String data){
+  // Key generator
+  var keyGen = CryptKey();
+  //generate 32 byte key using Fortuna
+  var key32 = keyGen.genFortuna(len: 32);
+  var iv16 = keyGen.genDart(len: 16);
+  // generated AES encrypter with key + padding
+  var aes = AesCrypt(key: key32, padding: PaddingAES.pkcs7);
+
+  var crypted = aes.gcm.encrypt(inp: data, iv: iv16); //encrypt
+  return crypted;
+}
+
+String decryptString(String data){
+  // Key generator
+  var keyGen = CryptKey();
+  //generate 32 byte key using Fortuna
+  var key32 = keyGen.genFortuna(len: 32);
+  var iv16 = keyGen.genDart(len: 16);
+  // generated AES encrypter with key + padding
+  var aes = AesCrypt(key: key32, padding: PaddingAES.pkcs7);
+
+  var planeText =aes.gcm.decrypt(enc: data, iv: iv16); //encrypt
+  return planeText;
+}
+
+Future<File> getImageFileFromAssets(String path) async {
+  final byteData = await rootBundle.load(path);
+  final file = File('${(await getTemporaryDirectory()).path}/$path');
+  await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+  return file;
+}
+
+int getYears(DateTime date){
+  Duration dur =  DateTime.now().difference(date);
+  int differenceInYears = (dur.inDays/365).floor();
+  return differenceInYears;
 }

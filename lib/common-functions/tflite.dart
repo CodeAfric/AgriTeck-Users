@@ -1,5 +1,3 @@
-import 'package:agriteck_user/Toast/show_toast.dart';
-import 'package:flutter/material.dart';
 import 'package:tflite/tflite.dart';
 
 Future loadModel() async {
