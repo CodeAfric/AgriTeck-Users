@@ -77,8 +77,8 @@ class FarmDetails extends StatelessWidget {
             children: [
               Container(
                 child: Details(
-                  nameOfCrop: 'Managing Director (Ecom)',
-                  plantTypes: 'Kwadaso Municipal',
+                  farmId: 'F1001',
+                  location: 'Kwadaso Municipal',
                   diseaseSymptoms: '0248569654',
                   causesOfCrop:
                       'Aphids, these are soft bodied insects with long legs',
@@ -93,8 +93,8 @@ class FarmDetails extends StatelessWidget {
 }
 
 class Details extends StatelessWidget {
-  final String nameOfCrop;
-  final String plantTypes;
+  final String farmId;
+  final String location;
   final String diseaseSymptoms;
   final String diseasePrevention;
   final String diseaseTreatment;
@@ -102,8 +102,8 @@ class Details extends StatelessWidget {
 
   Details(
       {Key key,
-      this.nameOfCrop,
-      this.plantTypes,
+      this.farmId,
+      this.location,
       this.diseaseSymptoms,
       this.diseasePrevention,
       this.diseaseTreatment,
@@ -128,11 +128,11 @@ class Details extends StatelessWidget {
                     vertical: 4,
                   ),
                   title: Text(
-                    'Elorm Amantefi',
+                    'Farm ID',
                     style: titleFontStyle,
                   ),
                   subtitle: Text(
-                    nameOfCrop,
+                    farmId,
                     style: textFontStyle,
                   ),
                 ),
@@ -142,22 +142,78 @@ class Details extends StatelessWidget {
                       vertical: 4,
                     ),
                     title: Text(
-                      'Age',
+                      'Farm Size',
                       style: titleFontStyle,
                     ),
-                    subtitle: Text('42 years')),
+                    subtitle: Text('20.6')),
                 ListTile(
                   contentPadding: EdgeInsets.symmetric(
                     horizontal: 20,
                     vertical: 4,
                   ),
                   title: Text(
-                    'Contact',
+                    'Crop Type',
                     style: titleFontStyle,
                   ),
-                  subtitle: Text(
-                    '0248569654',
-                    style: textFontStyle,
+                  subtitle: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 2),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Row(
+                              children: [
+                                CircleAvatar(
+                                  radius: 3,
+                                  backgroundColor: Colors.grey,
+                                ),
+                                SizedBox(
+                                  width: 2,
+                                ),
+                                Text(
+                                  'Cabbage',
+                                  style: textFontStyle,
+                                ),
+                              ],
+                            ),
+                            SizedBox(width: 6),
+                            Row(
+                              children: [
+                                CircleAvatar(
+                                  radius: 3,
+                                  backgroundColor: Colors.grey,
+                                ),
+                                SizedBox(
+                                  width: 2,
+                                ),
+                                Text(
+                                  'Green Pepper',
+                                  style: textFontStyle,
+                                ),
+                              ],
+                            ),
+                            SizedBox(width: 4),
+                            Row(
+                              children: [
+                                CircleAvatar(
+                                  radius: 3,
+                                  backgroundColor: Colors.grey,
+                                ),
+                                SizedBox(
+                                  width: 2,
+                                ),
+                                Text(
+                                  'Watermelon',
+                                  style: textFontStyle,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 ListTile(
@@ -180,84 +236,125 @@ class Details extends StatelessWidget {
                     vertical: 4,
                   ),
                   title: Text(
-                    'Speciality',
+                    'Description',
                     style: titleFontStyle,
                   ),
-                  subtitle: Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.start,
-                    alignment: WrapAlignment.start,
-                    children: List.generate(
-                      5,
-                      (index) => Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            CircleAvatar(
-                              backgroundColor: Colors.grey,
-                              radius: 5,
-                            ),
-                            SizedBox(
-                              width: 4,
-                            ),
-                            Text(
-                              'NO. Plot:',
-                              style: textFontStyle,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                  subtitle: Text(
+                    'The public is providing more thatn 1m per minute in global farm subsidies, much of which is driving the climate crisis and destruction of wildlife, according to a new report',
+                    maxLines: 5,
+                    overflow: TextOverflow.ellipsis,
+                    style: textFontStyle,
                   ),
                 ),
                 ListTile(
-                  contentPadding: EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 4,
-                  ),
-                  title: Text(
-                    '',
-                    style: titleFontStyle,
-                  ),
-                  subtitle: Column(
-                    children: [
-                      ...List.generate(
-                        5,
-                        (index) => Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 5.0),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 10.0),
-                                child: Icon(
-                                  Icons.fiber_manual_record,
-                                  size: 16,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 5.0,
-                              ),
-                              Expanded(
-                                child: Text(
-                                  diseaseSymptoms,
-                                  style: textFontStyle,
-                                ),
-                              ),
-                            ],
-                          ),
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 4,
+                    ),
+                    title: Text(
+                      'Farm State',
+                      style: titleFontStyle,
+                    ),
+                    subtitle: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'stamp: 20/02/21',
+                              style: textFontStyle,
+                            ),
+                            SizedBox(height: 4),
+                            Text('state: Land Clearing', style: textFontStyle),
+                            SizedBox(height: 4),
+                            Text('input: Cutlass, herbicide',
+                                style: textFontStyle),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
-                ),
+                        Divider(
+                          color: Colors.red,
+                        ),
+                        SizedBox(height: 10),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'stamp: 03/03/21',
+                              style: textFontStyle,
+                            ),
+                            SizedBox(height: 4),
+                            Text('state: Planting', style: textFontStyle),
+                          ],
+                        ),
+                        Divider(
+                          color: Colors.red,
+                        ),
+                        SizedBox(height: 10),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'stamp: 14/04/21',
+                              style: textFontStyle,
+                            ),
+                            SizedBox(height: 4),
+                            Text('state: First Fertilizer',
+                                style: textFontStyle),
+                            SizedBox(height: 4),
+                            Text('input: N:P:K 15, 15, 15',
+                                style: textFontStyle),
+                          ],
+                        ),
+                        Divider(
+                          color: Colors.red,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'stamp: 20/05/21',
+                              style: textFontStyle,
+                            ),
+                            SizedBox(height: 4),
+                            Text('state: First Fertilizer',
+                                style: textFontStyle),
+                            SizedBox(height: 4),
+                            Text('input: Asaasewura Fertilizer',
+                                style: textFontStyle),
+                          ],
+                        ),
+                        Divider(
+                          color: Colors.red,
+                        ),
+                        SizedBox(height: 10),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'stamp: 20/05/21',
+                              style: textFontStyle,
+                            ),
+                            SizedBox(height: 4),
+                            Text('state: Harvesting', style: textFontStyle),
+                            SizedBox(height: 4),
+                            Text('input: Combine Harvester',
+                                style: textFontStyle),
+                          ],
+                        ),
+                      ],
+                    )),
               ],
             ),
-            SizedBox(
-              height: 50.0,
-            )
           ],
         ),
       ),
