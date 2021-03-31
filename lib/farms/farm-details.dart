@@ -1,10 +1,8 @@
-import 'package:agriteck_user/disease-details/details_of_disease.dart';
-import 'package:agriteck_user/diseases/disease_detection_details.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 
-class CropDetailsScreen extends StatelessWidget {
+class FarmDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,7 +13,7 @@ class CropDetailsScreen extends StatelessWidget {
           child: Column(
             children: [
               ImageCarousel(),
-              CropDetails(),
+              FarmDetails(),
             ],
           ),
         ),
@@ -44,7 +42,7 @@ class ImageCarousel extends StatelessWidget {
   }
 }
 
-class CropDetails extends StatelessWidget {
+class FarmDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

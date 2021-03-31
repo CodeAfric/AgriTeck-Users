@@ -126,7 +126,7 @@ class DiseaseDetectionDetails extends StatelessWidget {
                     ),
                   ),
                 ),
-                GestureDetector(
+                InkWell(
                   onTap: () {
                     print('object');
                   },

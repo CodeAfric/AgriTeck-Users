@@ -147,30 +147,31 @@ class _DiseaseCaptureState extends State<DiseaseCapture> {
   Future getImage() async {
     var imageFile = await _picker.getImage(source: ImageSource.gallery);
     if (imageFile != null) {
-      setState(() {
-        cropImage = File(imageFile.path);
-
-        //detect the crop disease
-        predictDesease(cropImage).then((value) {
-          print(value);
-          predictionOutCome = value;
-          //show the details of the crop
-          showCropDiseaseDetails();
-        });
+      //detect the crop disease
+      predictDesease(imageFile).then((predictions) async {
+        print(predictions);
+        //show the details of the crop
+        Navigator.of(context).pop();
+        await Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return DiseaseDetection(
+            imagePath: File(imageFile.path),
+            predictions: predictions,
+          );
+        }));
       });
     } else {
       showToast(content: 'No Image Selected');
     }
   }
 
-  Future showCropDiseaseDetails() async {
-    await Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return DiseaseDetectionDetails(
-        imagePath: cropImage,
-        predictions: predictionOutCome,
-      );
-    }));
-  }
+  // Future showCropDiseaseDetails() async {
+  //   await Navigator.push(context, MaterialPageRoute(builder: (context) {
+  //     return DiseaseDetectionDetails(
+  //       imagePath: cropImage,
+  //       predictions: predictionOutCome,
+  //     );
+  //   }));
+  // }
 
   @override
   Widget build(BuildContext context) {

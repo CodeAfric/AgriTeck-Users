@@ -1,4 +1,6 @@
 import 'package:agriteck_user/Toast/show_toast.dart';
+import 'package:agriteck_user/common-functions/helper-functions.dart';
+import 'package:agriteck_user/farms/farm-details.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
@@ -71,9 +73,7 @@ class ListItems extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       elevation: 2.0,
       child: InkWell(
-        onTap: () {
-          showToast(content: 'view farms in details');
-        },
+        onTap: () => sendToPage(context, FarmDetailsScreen()),
         child: Container(
           padding: EdgeInsets.all(3.0),
           child: Row(

@@ -88,43 +88,6 @@ class CropGrid extends StatelessWidget {
             );
           },
         ),
-        // child: ListView(
-        //   scrollDirection: Axis.vertical,
-        //   children: [
-        //     Center(
-        //       child: Wrap(
-        //         spacing: 5,
-        //         runSpacing: 5,
-        //         children: [
-        //           Container(
-        //             child: CropItems(
-        //               cropName: 'Tomatoes',
-        //               cropImage: 'assets/diseases/tomatoes.jpg',
-        //             ),
-        //           ),
-        //           Container(
-        //             child: CropItems(
-        //               cropName: 'Cabbage',
-        //               cropImage: 'assets/diseases/Cabbage.jpg',
-        //             ),
-        //           ),
-        //           Container(
-        //             child: CropItems(
-        //               cropName: 'Tomatoes',
-        //               cropImage: 'assets/diseases/tomatoes.jpg',
-        //             ),
-        //           ),
-        //           Container(
-        //             child: CropItems(
-        //               cropName: 'Cabbage',
-        //               cropImage: 'assets/diseases/Cabbage.jpg',
-        //             ),
-        //           ),
-        //         ],
-        //       ),
-        //     ),
-        //   ],
-        // ),
       ),
     );
   }
