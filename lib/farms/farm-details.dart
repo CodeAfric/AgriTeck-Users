@@ -1,24 +1,34 @@
+import 'package:agriteck_user/common%20UI/floating-buttton.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 
 class FarmDetailsScreen extends StatelessWidget {
+  final String farmImage;
+  final String farmName;
+  final String farmLocation;
+  const FarmDetailsScreen(
+      {Key key, this.farmImage, this.farmName, this.farmLocation})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //resizeToAvoidBottomPadding: false,
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              ImageCarousel(),
-              FarmDetails(),
-            ],
+        //resizeToAvoidBottomPadding: false,
+        backgroundColor: Colors.white,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                ImageCarousel(),
+                FarmDetails(),
+              ],
+            ),
           ),
         ),
-      ),
-    );
+        floatingActionButton: FloatingButton(
+            label: 'Request Investment',
+            icon: Icons.person,
+            onPressHandler: () {}));
   }
 }
 
@@ -67,24 +77,11 @@ class FarmDetails extends StatelessWidget {
             children: [
               Container(
                 child: Details(
-                  nameOfCrop: 'Curly Yellows',
-                  plantTypes: 'Miaze, Banana, Barley, Bean, Bitter Gourd',
-                  diseaseSymptoms:
-                      'Curled and deformed leaves, Small Insects under leaves and shoots, Stunted growth',
+                  nameOfCrop: 'Managing Director (Ecom)',
+                  plantTypes: 'Kwadaso Municipal',
+                  diseaseSymptoms: '0248569654',
                   causesOfCrop:
                       'Aphids, these are soft bodied insects with long legs',
-                  diseasePrevention:
-                      'For example if one is coming out with a theory that '
-                      'cannibals lives longer than normal human beings, the researcher will use '
-                      'qualitative research to seek peoples belief on cannibalism, '
-                      'analyze the data and formulate his theory. After that the researcher'
-                      ' can use the quantitative research to deduce from people’s beliefs and arguments, '
-                      'express their views, test and come out with figures to prove his theory that really people '
-                      'who practice cannibalism live much longer than people who do not practice it.',
-                  diseaseTreatment:
-                      'For example if one is coming out with a theory that cannibals lives longer than normal'
-                      ' human beings, the researcher will use qualitative research to seek '
-                      'peoples belief on cannibalism, analyze',
                 ),
               )
             ],
@@ -131,7 +128,7 @@ class Details extends StatelessWidget {
                     vertical: 4,
                   ),
                   title: Text(
-                    'Name of Crop',
+                    'Attah Boakye',
                     style: titleFontStyle,
                   ),
                   subtitle: Text(
@@ -140,48 +137,22 @@ class Details extends StatelessWidget {
                   ),
                 ),
                 ListTile(
-                  contentPadding: EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 4,
-                  ),
-                  title: Text(
-                    'Species',
-                    style: titleFontStyle,
-                  ),
-                  subtitle: Wrap(
-                    crossAxisAlignment: WrapCrossAlignment.start,
-                    alignment: WrapAlignment.start,
-                    children: List.generate(
-                      5,
-                      (index) => Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            CircleAvatar(
-                              backgroundColor: Colors.grey,
-                              radius: 5,
-                            ),
-                            SizedBox(
-                              width: 4,
-                            ),
-                            Text(
-                              'Disease',
-                              style: textFontStyle,
-                            ),
-                          ],
-                        ),
-                      ),
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 4,
                     ),
-                  ),
-                ),
+                    title: Text(
+                      'Age',
+                      style: titleFontStyle,
+                    ),
+                    subtitle: Text('42 years')),
                 ListTile(
                   contentPadding: EdgeInsets.symmetric(
                     horizontal: 20,
                     vertical: 4,
                   ),
                   title: Text(
-                    'Prefere Soil',
+                    'Contact',
                     style: titleFontStyle,
                   ),
                   subtitle: Text(
@@ -195,7 +166,7 @@ class Details extends StatelessWidget {
                     vertical: 4,
                   ),
                   title: Text(
-                    'Description',
+                    'Location',
                     style: titleFontStyle,
                   ),
                   subtitle: Text(
@@ -209,7 +180,7 @@ class Details extends StatelessWidget {
                     vertical: 4,
                   ),
                   title: Text(
-                    'Pets And Diseases',
+                    'Speciality',
                     style: titleFontStyle,
                   ),
                   subtitle: Wrap(
@@ -230,7 +201,7 @@ class Details extends StatelessWidget {
                               width: 4,
                             ),
                             Text(
-                              'Disease',
+                              'NO. Plot:',
                               style: textFontStyle,
                             ),
                           ],
@@ -245,7 +216,7 @@ class Details extends StatelessWidget {
                     vertical: 4,
                   ),
                   title: Text(
-                    'Tips',
+                    '',
                     style: titleFontStyle,
                   ),
                   subtitle: Column(
