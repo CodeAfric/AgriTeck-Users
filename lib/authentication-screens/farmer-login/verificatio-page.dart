@@ -206,7 +206,6 @@ class _OTPScreenState extends State<OTPScreen> {
             }
       });
 
-
     } on FirebaseAuthException catch (e) {
       await showSnackBar(e.message, _scaffoldKey.currentState);
 

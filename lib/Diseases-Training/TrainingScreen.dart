@@ -32,6 +32,7 @@ class _TrainingState extends State<Training> {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
+      height: MediaQuery.of(context).size.height,
       child: Column(
         children: [
           Container(
@@ -163,15 +164,6 @@ class _DiseaseCaptureState extends State<DiseaseCapture> {
       showToast(content: 'No Image Selected');
     }
   }
-
-  // Future showCropDiseaseDetails() async {
-  //   await Navigator.push(context, MaterialPageRoute(builder: (context) {
-  //     return DiseaseDetectionDetails(
-  //       imagePath: cropImage,
-  //       predictions: predictionOutCome,
-  //     );
-  //   }));
-  // }
 
   @override
   Widget build(BuildContext context) {
