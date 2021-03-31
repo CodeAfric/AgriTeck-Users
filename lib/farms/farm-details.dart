@@ -128,7 +128,7 @@ class Details extends StatelessWidget {
                     vertical: 4,
                   ),
                   title: Text(
-                    'Attah Boakye',
+                    'Elorm Amantefi',
                     style: titleFontStyle,
                   ),
                   subtitle: Text(
@@ -156,7 +156,7 @@ class Details extends StatelessWidget {
                     style: titleFontStyle,
                   ),
                   subtitle: Text(
-                    diseaseSymptoms,
+                    '0248569654',
                     style: textFontStyle,
                   ),
                 ),
@@ -170,7 +170,7 @@ class Details extends StatelessWidget {
                     style: titleFontStyle,
                   ),
                   subtitle: Text(
-                    plantTypes,
+                    'Old Edubiase',
                     style: textFontStyle,
                   ),
                 ),
