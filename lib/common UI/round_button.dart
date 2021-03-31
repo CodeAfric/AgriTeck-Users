@@ -16,7 +16,7 @@ class RoundedButton extends StatelessWidget {
       this.press,
       this.color,
       this.textColor,
-      this.verticalPadding = 10,
+      this.verticalPadding = 5,
       this.horizontalPadding = 20,
       this.fontSize = 16,
       this.isLoading})
@@ -30,7 +30,7 @@ class RoundedButton extends StatelessWidget {
       ),
       hoverColor: color.withOpacity(0.4),
       splashColor: color.withOpacity(0.3),
-      padding: EdgeInsets.symmetric(vertical: 25, horizontal: 50),
+      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 50),
       onPressed: press,
       highlightColor: primaryLight,
       color: color,
