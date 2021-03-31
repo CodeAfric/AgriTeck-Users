@@ -30,7 +30,6 @@ class _HomePageState extends State<HomePage> {
     super.initState();
   }
 
-
   Widget setAppBar(selectedPage) {
     return selectedPage != BottomButtons.Home
         ? AppBar(
@@ -60,7 +59,10 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () {})
             ],
           )
-        : AppBar(backgroundColor: Colors.white,elevation: 0,);
+        : AppBar(
+            backgroundColor: Colors.white,
+            elevation: 0,
+          );
   }
 
   Widget setFloatBott(selectedPage) {
@@ -222,8 +224,7 @@ class _HomePageState extends State<HomePage> {
             BottomIcons(
               iconColor: primaryDark,
               text: 'Market',
-              bottomIcons:
-                  selectedPage == BottomButtons.Market ? true : false,
+              bottomIcons: selectedPage == BottomButtons.Market ? true : false,
               icons: 'assets/icons/market.png',
               textColor: Colors.white,
               onPressed: () {

@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:agriteck_user/common%20UI/custom-drop-down.dart';
@@ -237,11 +236,11 @@ import '../welcome-screen.dart';
 //other forms
 
 class UserForms extends StatefulWidget {
- final String phoneNumber;
+  final String phoneNumber;
 
- UserForms(this.phoneNumber);
+  UserForms(this.phoneNumber);
 
- @override
+  @override
   _UserFormsState createState() => _UserFormsState();
 }
 
@@ -277,7 +276,7 @@ class _UserFormsState extends State<UserForms> {
             builder: (BuildContext context) {
               return CustomDialogBox(
                 title: 'Leave !',
-                descriptions: 'Are you Sure you wan to leave this page ?',
+                descriptions: 'Are you Sure you want to leave this page ?',
                 btn1Text: 'No',
                 btn2Text: 'Yes',
                 img: 'assets/images/warning.png',
@@ -406,8 +405,8 @@ class _UserFormsState extends State<UserForms> {
                                   InputTextField(
                                     withDecoration: true,
                                     onSave: (value) {
-                                      setState(()  {
-                                        _location=value;
+                                      setState(() {
+                                        _location = value;
                                       });
                                     },
                                     type: TextInputType.text,
@@ -436,16 +435,13 @@ class _UserFormsState extends State<UserForms> {
                                     },
                                   ),
                                   SizedBox(height: 20.0),
-
                                   InputTextField(
                                     withDecoration: true,
                                     onSave: (value) {
-                                      setState(()  {
+                                      setState(() {
                                         try {
                                           _numFarms = int.parse(value);
-                                        } catch (e) {
-
-                                        }
+                                        } catch (e) {}
                                       });
                                     },
                                     type: TextInputType.number,
@@ -466,12 +462,10 @@ class _UserFormsState extends State<UserForms> {
                                   InputTextField(
                                     withDecoration: true,
                                     onSave: (value) {
-                                      setState(()  {
+                                      setState(() {
                                         try {
                                           _farmSize = double.parse(value);
-                                        } catch (e) {
-
-                                        }
+                                        } catch (e) {}
                                       });
                                     },
                                     type: TextInputType.text,
@@ -654,33 +648,32 @@ class _UserFormsState extends State<UserForms> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
         //margin: EdgeInsets.only(left: 70, right: 20),
         child: TextFormField(
-          onTap: ()async {
-               await showDatePicker(
-                context: context,
-                initialDate: DateTime(1900, 1, 1),
-                firstDate: DateTime(1900, 1, 1),
-                lastDate: DateTime.now(),
-                initialDatePickerMode: DatePickerMode.year,
-                builder: (BuildContext context, Widget child) {
-                  return Theme(
-                    data: ThemeData(
-                      primaryColor: primary,
-                      accentColor: primaryLight,
-                      buttonBarTheme: ButtonBarThemeData(
-                        buttonTextTheme: ButtonTextTheme.accent,
-                      ),
+          onTap: () async {
+            await showDatePicker(
+              context: context,
+              initialDate: DateTime(1900, 1, 1),
+              firstDate: DateTime(1900, 1, 1),
+              lastDate: DateTime.now(),
+              initialDatePickerMode: DatePickerMode.year,
+              builder: (BuildContext context, Widget child) {
+                return Theme(
+                  data: ThemeData(
+                    primaryColor: primary,
+                    accentColor: primaryLight,
+                    buttonBarTheme: ButtonBarThemeData(
+                      buttonTextTheme: ButtonTextTheme.accent,
                     ),
-                    child: child,
-                  );
-                },
-              ).then((value) {
-                if (value != null) {
-                  _dateTime=value;
-                  var formatter = new DateFormat('MM/dd/yyyy');
-                  _pickDateController.text = formatter.format(value);
-                }
-              });
-
+                  ),
+                  child: child,
+                );
+              },
+            ).then((value) {
+              if (value != null) {
+                _dateTime = value;
+                var formatter = new DateFormat('MM/dd/yyyy');
+                _pickDateController.text = formatter.format(value);
+              }
+            });
           },
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.all(16.0),
@@ -716,20 +709,20 @@ class _UserFormsState extends State<UserForms> {
 
   getImageFromGallery() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
+    if (pickedFile != null) {
+      _image = File(pickedFile.path);
+    } else {
+      print('No image selected.');
+    }
   }
 
   getImageFromCamera() async {
     final pickedFile = await picker.getImage(source: ImageSource.camera);
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
-      } else {
-        await showSnackBar('No image selected.', _scaffoldKey.currentState);
-      }
+    if (pickedFile != null) {
+      _image = File(pickedFile.path);
+    } else {
+      await showSnackBar('No image selected.', _scaffoldKey.currentState);
+    }
   }
 
   void _showPicker(context) {
@@ -748,7 +741,6 @@ class _UserFormsState extends State<UserForms> {
                           getImageFromGallery();
                           Navigator.of(context).pop();
                         });
-
                       }),
                   new ListTile(
                     leading: new Icon(Icons.photo_camera),
@@ -758,7 +750,6 @@ class _UserFormsState extends State<UserForms> {
                         getImageFromCamera();
                         Navigator.of(context).pop();
                       });
-
                     },
                   ),
                 ],
@@ -769,28 +760,29 @@ class _UserFormsState extends State<UserForms> {
   }
 
   saveData() async {
-    if(mounted){
+    if (mounted) {
       setState(() {
-        isLoading=true;
+        isLoading = true;
       });
     }
     if (_formKey.currentState.validate()) {
-      if(_gender.isEmpty){
+      if (_gender.isEmpty) {
         await showSnackBar("Please choose gender", _scaffoldKey.currentState);
-      }else if(_dateTime==null){
-        await showSnackBar("Please select you Date of Birth", _scaffoldKey.currentState);
-      }else{
-       // print('working from here---------------------------------------');
+      } else if (_dateTime == null) {
+        await showSnackBar(
+            "Please select you Date of Birth", _scaffoldKey.currentState);
+      } else {
+        // print('working from here---------------------------------------');
         _formKey.currentState.save();
-        try{
-          _age=getYears(_dateTime);
+        try {
+          _age = getYears(_dateTime);
           User user = FirebaseAuth.instance.currentUser;
           if (user != null) {
             String photoUrl;
             if (_image != null) {
               photoUrl = await UserServices.uploadPic(_image, user.uid);
             }
-            Farmers farmers=new Farmers(
+            Farmers farmers = new Farmers(
                 farmerId: _nationalId,
                 farmSize: _farmSize,
                 numFarms: _numFarms,
@@ -800,23 +792,27 @@ class _UserFormsState extends State<UserForms> {
                 age: _age,
                 img: photoUrl,
                 telephone: widget.phoneNumber,
-                location:_location
-            );
-             await UserServices.saveUserInfo(user.uid,farmers);
-            await FirebaseAuth.instance.currentUser.updateProfile(displayName:_name,photoURL: photoUrl);
+                location: _location);
+            await UserServices.saveUserInfo(user.uid, farmers);
+            await FirebaseAuth.instance.currentUser
+                .updateProfile(displayName: _name, photoURL: photoUrl);
             isLoading = false;
-            await showToast(context, fToast, Icons.check, primaryDark,
-                "User data Saved");
+            await showToast(
+                context, fToast, Icons.check, primaryDark, "User data Saved");
 
-            sendToPage(context, HomePage(initPaage: BottomButtons.Home,));
+            sendToPage(
+                context,
+                HomePage(
+                  initPaage: BottomButtons.Home,
+                ));
           }
-        }catch(error){
+        } catch (error) {
           setState(() {
             isLoading = false;
             print('[$error]');
           });
         }
-             }
+      }
 
       if (mounted) {
         setState(() {
