@@ -166,7 +166,11 @@ class Details extends StatelessWidget {
                             Row(
                               children: [
                                 CircleAvatar(
+                                  radius: 3,
                                   backgroundColor: Colors.grey,
+                                ),
+                                SizedBox(
+                                  width: 2,
                                 ),
                                 Text(
                                   'Cabbage',
@@ -178,7 +182,11 @@ class Details extends StatelessWidget {
                             Row(
                               children: [
                                 CircleAvatar(
+                                  radius: 3,
                                   backgroundColor: Colors.grey,
+                                ),
+                                SizedBox(
+                                  width: 2,
                                 ),
                                 Text(
                                   'Green Pepper',
@@ -190,7 +198,11 @@ class Details extends StatelessWidget {
                             Row(
                               children: [
                                 CircleAvatar(
+                                  radius: 3,
                                   backgroundColor: Colors.grey,
+                                ),
+                                SizedBox(
+                                  width: 2,
                                 ),
                                 Text(
                                   'Watermelon',
