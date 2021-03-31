@@ -33,9 +33,10 @@ class _HomePageState extends State<HomePage> {
     selectedPage = widget.initPaage;
     super.initState();
   }
-  testFirebase()async{
+
+  testFirebase() async {
     await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber:'+233248485308',
+      phoneNumber: '+233248485308',
       verificationCompleted: (PhoneAuthCredential credential) {
         print('=========================');
         print('${credential.asMap()}');
@@ -49,11 +50,11 @@ class _HomePageState extends State<HomePage> {
       },
       codeAutoRetrievalTimeout: (String verificationId) {},
     );
-   UserCredential data= await UserServices.createUser("email", "password", _scaffoldKey.currentState);
-   if(data!=null){
-     showSnackBar("Working from here", _scaffoldKey.currentState);
-   }
-
+    UserCredential data = await UserServices.createUser(
+        "email", "password", _scaffoldKey.currentState);
+    if (data != null) {
+      showSnackBar("Working from here", _scaffoldKey.currentState);
+    }
   }
 
   Widget setAppBar(selectedPage) {
@@ -247,8 +248,7 @@ class _HomePageState extends State<HomePage> {
             BottomIcons(
               iconColor: primaryDark,
               text: 'Market',
-              bottomIcons:
-                  selectedPage == BottomButtons.Market ? true : false,
+              bottomIcons: selectedPage == BottomButtons.Market ? true : false,
               icons: 'assets/icons/market.png',
               textColor: Colors.white,
               onPressed: () {

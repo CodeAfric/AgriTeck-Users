@@ -64,7 +64,7 @@ class _TrainingState extends State<Training> {
                   child: Container(
                       padding: EdgeInsets.only(left: 5),
                       child: Buttonts(
-                        btnText: 'Good Farming Tips',
+                        btnText: 'Good Farming',
                         btnIcon: 'assets/icons/tips.png',
                       )),
                 ),
