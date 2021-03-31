@@ -63,7 +63,7 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () {})
             ],
           )
-        : null;
+        : AppBar(backgroundColor: Colors.white,elevation: 0,);
   }
 
   Widget setFloatBott(selectedPage) {
