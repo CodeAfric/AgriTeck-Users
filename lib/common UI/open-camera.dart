@@ -1,11 +1,11 @@
 import 'dart:io';
-
-import 'package:agriteck_user/disease-details/diseases_details_Screen.dart';
+import 'package:agriteck_user/Toast/show_toast.dart';
+import 'package:agriteck_user/diseases/disease_detection_details.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:tflite/tflite.dart';
+import 'package:agriteck_user/common-functions/tflite.dart';
 
 ImagePicker _picker = ImagePicker();
 Future<File> showCameraDialog(BuildContext context) {
@@ -41,13 +41,23 @@ Future<File> showCameraDialog(BuildContext context) {
                   onTap: () async {
                     imageFile =
                         await _picker.getImage(source: ImageSource.gallery);
-                    () async {
-                      var output =
-                          await Tflite.runModelOnImage(path: imageFile.path);
-                      print(
-                          '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
-                      print(output);
-                    }();
+                    if (imageFile != null) {
+                      //detect the crop disease
+                      predictDesease(imageFile).then((predictions) async {
+                        print(predictions);
+                        //show the details of the crop
+                        Navigator.of(context).pop();
+                        await Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return DiseaseDetectionDetails(
+                            imagePath: File(imageFile.path),
+                            predictions: predictions,
+                          );
+                        }));
+                      });
+                    } else {
+                      showToast(content: 'No Image Selected');
+                    }
                   },
                 ),
                 // Padding(padding: const EdgeInsets.all(8)),
@@ -69,6 +79,23 @@ Future<File> showCameraDialog(BuildContext context) {
                   onTap: () async {
                     imageFile =
                         await _picker.getImage(source: ImageSource.camera);
+                    if (imageFile != null) {
+                      //detect the crop disease
+                      predictDesease(imageFile).then((predictions) async {
+                        print(predictions);
+                        //show the details of the crop
+                        Navigator.of(context).pop();
+                        await Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return DiseaseDetectionDetails(
+                            imagePath: File(imageFile.path),
+                            predictions: predictions,
+                          );
+                        }));
+                      });
+                    } else {
+                      showToast(content: 'No Image Selected');
+                    }
                   },
                 ),
                 Divider(
@@ -100,4 +127,13 @@ Future<File> showCameraDialog(BuildContext context) {
           ),
         );
       });
+}
+
+Future getImage({ImageSource source}) async {
+  var imageFile = await _picker.getImage(source: source);
+  if (imageFile != null) {
+    return imageFile;
+  } else {
+    showToast(content: 'No Image Selected');
+  }
 }

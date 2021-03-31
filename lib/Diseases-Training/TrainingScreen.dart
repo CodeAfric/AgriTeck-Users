@@ -2,13 +2,11 @@ import 'dart:io';
 import 'dart:async';
 import 'package:agriteck_user/Toast/show_toast.dart';
 import 'package:agriteck_user/common%20UI/open-camera.dart';
-import 'package:agriteck_user/community/post-details.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
+import 'package:agriteck_user/common-functions/tflite.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:tflite/tflite.dart';
+
 import 'package:agriteck_user/diseases/disease_detection_details.dart';
 
 class Training extends StatefulWidget {
@@ -20,20 +18,6 @@ class _TrainingState extends State<Training> {
   List _output;
   File image;
   bool _loading;
-
-  static Future loadModel() async {
-    Tflite.close();
-    try {
-      String res = await Tflite.loadModel(
-        model: "assets/model.tflite",
-        labels:
-            "assets/labels.txt", // defaults to false, set to true to use GPU delegate
-      );
-      print('=================================' + res);
-    } catch (e) {
-      print('Failed to load model. $e');
-    }
-  }
 
   @override
   void initState() {
@@ -158,30 +142,7 @@ class DiseaseCapture extends StatefulWidget {
 class _DiseaseCaptureState extends State<DiseaseCapture> {
   ImagePicker _picker = ImagePicker();
   File cropImage;
-
-  Future recognizeImage(var image, BuildContext context) async {
-    _TrainingState.loadModel().then((val) {
-      print('object Model Loaded');
-    });
-    int startTime = new DateTime.now().millisecondsSinceEpoch;
-    var recognitions = await Tflite.runModelOnImage(
-      path: image.path,
-      numResults: 1,
-      threshold: 0.05,
-      imageMean: 255.0,
-      imageStd: 255.0,
-    );
-    print(recognitions);
-
-    showToast(
-        content: recognitions[0]["label"].toString() +
-            '\n' +
-            (recognitions[0]["confidence"] * 100).round().toString() +
-            '%');
-    int endTime = new DateTime.now().millisecondsSinceEpoch;
-    print("Inference took ${endTime - startTime}ms");
-    Tflite.close();
-  }
+  var predictionOutCome;
 
   Future getImage() async {
     var imageFile = await _picker.getImage(source: ImageSource.gallery);
@@ -190,12 +151,12 @@ class _DiseaseCaptureState extends State<DiseaseCapture> {
         cropImage = File(imageFile.path);
 
         //detect the crop disease
-        recognizeImage(cropImage, context).then((value) => {
-              print(value),
-            });
-
-        //show the details of the crop
-        showCropDiseaseDetails();
+        predictDesease(cropImage).then((value) {
+          print(value);
+          predictionOutCome = value;
+          //show the details of the crop
+          showCropDiseaseDetails();
+        });
       });
     } else {
       showToast(content: 'No Image Selected');
@@ -204,7 +165,10 @@ class _DiseaseCaptureState extends State<DiseaseCapture> {
 
   Future showCropDiseaseDetails() async {
     await Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return DiseaseDetectionDetails(imagePath: cropImage);
+      return DiseaseDetectionDetails(
+        imagePath: cropImage,
+        predictions: predictionOutCome,
+      );
     }));
   }
 
