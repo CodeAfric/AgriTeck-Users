@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:agriteck_user/Diseases-Training/TrainingScreen.dart';
 
-import '../user-services.dart';
+import '../services/user-services.dart';
 
 enum BottomButtons { Crops, Farms, Home, Vendors, Market, Investors, Community }
 
@@ -29,32 +29,10 @@ class _HomePageState extends State<HomePage> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
-    testFirebase();
     selectedPage = widget.initPaage;
     super.initState();
   }
-  testFirebase()async{
-    await FirebaseAuth.instance.verifyPhoneNumber(
-      phoneNumber:'+233248485308',
-      verificationCompleted: (PhoneAuthCredential credential) {
-        print('=========================');
-        print('${credential.asMap()}');
-        print('=========================');
-      },
-      verificationFailed: (FirebaseAuthException e) {},
-      codeSent: (String verificationId, int resendToken) {
-        print('=========================');
-        print('$verificationId=================$resendToken');
-        print('=========================');
-      },
-      codeAutoRetrievalTimeout: (String verificationId) {},
-    );
-   UserCredential data= await UserServices.createUser("email", "password", _scaffoldKey.currentState);
-   if(data!=null){
-     showSnackBar("Working from here", _scaffoldKey.currentState);
-   }
 
-  }
 
   Widget setAppBar(selectedPage) {
     return selectedPage != BottomButtons.Home

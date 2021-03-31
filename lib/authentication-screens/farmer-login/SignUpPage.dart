@@ -1,4 +1,4 @@
-import 'package:agriteck_user/LoginScreen/farmer-login/NextPage1.dart';
+
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -107,7 +107,6 @@ class SignUp extends StatelessWidget {
                     SizedBox(height: 5.0),
                     InkWell(
                       onTap: () {
-                        NavigateToNextPage(context);
                       },
                       child: Container(
                         height: 55,
@@ -232,7 +231,3 @@ class _DatePickerState extends State<DatePicker> {
   }
 }
 
-Future NavigateToNextPage(context) async {
-  Navigator.push(
-      context, MaterialPageRoute(builder: (context) => ContinueSignUp()));
-}
