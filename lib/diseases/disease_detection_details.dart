@@ -1,19 +1,21 @@
 import 'dart:io';
+import 'package:agriteck_user/common%20UI/floating-menu.dart';
+import 'package:agriteck_user/community/commuinity-page.dart';
 import 'package:agriteck_user/community/post-details.dart';
+import 'package:agriteck_user/diseases/diseases-screen.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:flutter/material.dart';
 
-class DiseaseDetectionDetails extends StatefulWidget {
+class DiseaseDetection extends StatefulWidget {
   final File imagePath;
   final List predictions;
 
-  DiseaseDetectionDetails({this.imagePath, this.predictions});
+  DiseaseDetection({this.imagePath, this.predictions});
   @override
-  _DiseaseDetectionDetailsState createState() =>
-      _DiseaseDetectionDetailsState();
+  _DiseaseDetectionState createState() => _DiseaseDetectionState();
 }
 
-class _DiseaseDetectionDetailsState extends State<DiseaseDetectionDetails> {
+class _DiseaseDetectionState extends State<DiseaseDetection> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,9 +27,32 @@ class _DiseaseDetectionDetailsState extends State<DiseaseDetectionDetails> {
               fontWeight: FontWeight.w600, fontSize: 18, color: Colors.white),
         ),
       ),
+      floatingActionButton: FloatingMenu(
+        // label: 'Post Product',
+        animatedIcon: AnimatedIcons.menu_close,
+        menuItems: [
+          BubbleMenuItem.create(
+            label: 'View More Diseases',
+            icon: Icons.remove_red_eye,
+            onPress: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => DiseasesScreen()));
+            },
+          ),
+          BubbleMenuItem.create(
+            label: 'Ask Community',
+            icon: Icons.edit,
+            onPress: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => CommunityScreen()));
+            },
+          ),
+        ],
+        // onPressHandler: () {},
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: DiseaseDetails(
+          child: DiseaseDetectionDetails(
             imagePath: widget.imagePath,
             predictions: widget.predictions,
           ),
@@ -37,10 +62,10 @@ class _DiseaseDetectionDetailsState extends State<DiseaseDetectionDetails> {
   }
 }
 
-class DiseaseDetails extends StatelessWidget {
+class DiseaseDetectionDetails extends StatelessWidget {
   final File imagePath;
   final List predictions;
-  DiseaseDetails({this.imagePath, this.predictions});
+  DiseaseDetectionDetails({this.imagePath, this.predictions});
 
   @override
   Widget build(BuildContext context) {

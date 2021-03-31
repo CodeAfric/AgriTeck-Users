@@ -21,7 +21,7 @@ Future<File> showCameraDialog(BuildContext context) {
           content: SingleChildScrollView(
             child: ListBody(
               children: [
-                GestureDetector(
+                InkWell(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -49,7 +49,7 @@ Future<File> showCameraDialog(BuildContext context) {
                         Navigator.of(context).pop();
                         await Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return DiseaseDetectionDetails(
+                          return DiseaseDetection(
                             imagePath: File(imageFile.path),
                             predictions: predictions,
                           );
@@ -61,7 +61,7 @@ Future<File> showCameraDialog(BuildContext context) {
                   },
                 ),
                 // Padding(padding: const EdgeInsets.all(8)),
-                GestureDetector(
+                InkWell(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -87,7 +87,7 @@ Future<File> showCameraDialog(BuildContext context) {
                         Navigator.of(context).pop();
                         await Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return DiseaseDetectionDetails(
+                          return DiseaseDetection(
                             imagePath: File(imageFile.path),
                             predictions: predictions,
                           );
@@ -101,7 +101,7 @@ Future<File> showCameraDialog(BuildContext context) {
                 Divider(
                   color: primaryLight,
                 ),
-                GestureDetector(
+                InkWell(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [

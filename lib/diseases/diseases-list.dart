@@ -1,5 +1,5 @@
 import 'package:agriteck_user/common-functions/helper-functions.dart';
-import 'package:agriteck_user/disease-details/diseases_details_Screen.dart';
+import 'package:agriteck_user/disease-details/diseases_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 
@@ -13,40 +13,27 @@ class DiseasesList extends StatelessWidget {
           borderRadius: BorderRadius.circular(10.0),
           color: primaryLight.withOpacity(0.3),
         ),
-        child: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.all(10),
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Plant diseases'.toUpperCase(),
-                style: TextStyle(
-                    color: primaryDark,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16),
+        child: ListView.builder(
+          padding: EdgeInsets.only(bottom: 80.0),
+          itemCount: 10,
+          itemBuilder: (context, index) {
+            return InkWell(
+              child: Container(
+                child: ListItems(
+                  diseaseImage: 'assets/diseases/disease1.jpg',
+                  diseaseName: 'Curly flew Shoot',
+                  plantType: 'general grass',
+                ),
               ),
-            ),
-            Expanded(
-              child: ListView.builder(
-                padding: EdgeInsets.only(bottom: 80.0),
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    child: Container(
-                      child: ListItems(
-                        diseaseImage: 'assets/diseases/disease1.jpg',
-                        diseaseName: 'Curly flew Shoot',
-                        plantType: 'general grass',
-                      ),
-                    ),
-                    onTap: () {
-                      sendToPage(context, DiseaseDetails());
-                    },
-                  );
-                },
-              ),
-            ),
-          ],
+              onTap: () {
+                sendToPage(
+                    context,
+                    DiseaseDetailsScreen(
+                      diseaseName: 'Curly flew Shoot',
+                    ));
+              },
+            );
+          },
         ),
       ),
     );
@@ -145,5 +132,3 @@ class ListItems extends StatelessWidget {
     );
   }
 }
-
-

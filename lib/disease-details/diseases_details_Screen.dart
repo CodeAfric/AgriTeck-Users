@@ -1,27 +1,31 @@
+import 'package:agriteck_user/disease-details/details_of_disease.dart';
+import 'package:agriteck_user/diseases/disease_detection_details.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 
-class DiseaseDetails extends StatelessWidget {
+class DiseaseDetailsScreen extends StatelessWidget {
+  final String diseaseName;
+  final String diseaseId;
+  DiseaseDetailsScreen({
+    this.diseaseName,
+    this.diseaseId,
+  });
+
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Material(
-      child: PageView(
-        scrollDirection: Axis.vertical,
-        children: [
-          Scaffold(
-            //resizeToAvoidBottomPadding: false,
-            backgroundColor: Colors.white,
-            body: SafeArea(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [ImageCarousel(), DiseaseDetails()],
-                ),
-              ),
-            ),
+    return Scaffold(
+      //resizeToAvoidBottomPadding: false,
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              ImageCarousel(),
+              DiseaseDetails(),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

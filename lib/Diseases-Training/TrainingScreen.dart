@@ -294,7 +294,7 @@ class _DiseaseCaptureState extends State<DiseaseCapture> {
                 borderRadius: BorderRadius.circular(25),
                 color: primary,
               ),
-              child: GestureDetector(
+              child: InkWell(
                 onTap: () {
                   showCameraDialog(context);
                 },

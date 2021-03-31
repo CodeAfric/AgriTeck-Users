@@ -1,8 +1,50 @@
-import 'package:agriteck_user/disease-details/diseases_details_Screen.dart';
+import 'package:agriteck_user/disease-details/details_of_disease.dart';
+import 'package:agriteck_user/diseases/disease_detection_details.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:flutter/material.dart';
+import 'package:carousel_pro/carousel_pro.dart';
 
-class DiseaseDetails extends StatelessWidget {
+class CropDetailsScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      //resizeToAvoidBottomPadding: false,
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              ImageCarousel(),
+              CropDetails(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ImageCarousel extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Container(
+      height: size.height * 0.25,
+      child: Carousel(
+        boxFit: BoxFit.cover,
+        images: [
+          AssetImage('assets/diseases/disease1.jpg'),
+          AssetImage('assets/diseases/disease2.jpg'),
+          AssetImage('assets/diseases/disease3.jpg'),
+        ],
+        animationCurve: Curves.fastOutSlowIn,
+        animationDuration: Duration(milliseconds: 2000),
+      ),
+    );
+  }
+}
+
+class CropDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -27,11 +69,11 @@ class DiseaseDetails extends StatelessWidget {
             children: [
               Container(
                 child: Details(
-                  nameOfDisease: 'Curly Yellows',
+                  nameOfCrop: 'Curly Yellows',
                   plantTypes: 'Miaze, Banana, Barley, Bean, Bitter Gourd',
                   diseaseSymptoms:
                       'Curled and deformed leaves, Small Insects under leaves and shoots, Stunted growth',
-                  causesOfDisease:
+                  causesOfCrop:
                       'Aphids, these are soft bodied insects with long legs',
                   diseasePrevention:
                       'For example if one is coming out with a theory that '
@@ -56,21 +98,21 @@ class DiseaseDetails extends StatelessWidget {
 }
 
 class Details extends StatelessWidget {
-  final String nameOfDisease;
+  final String nameOfCrop;
   final String plantTypes;
   final String diseaseSymptoms;
   final String diseasePrevention;
   final String diseaseTreatment;
-  final String causesOfDisease;
+  final String causesOfCrop;
 
   Details(
       {Key key,
-      this.nameOfDisease,
+      this.nameOfCrop,
       this.plantTypes,
       this.diseaseSymptoms,
       this.diseasePrevention,
       this.diseaseTreatment,
-      this.causesOfDisease})
+      this.causesOfCrop})
       : super(key: key);
 
   TextStyle titleFontStyle = TextStyle(color: primaryDark, fontSize: 22);
@@ -91,11 +133,11 @@ class Details extends StatelessWidget {
                     vertical: 4,
                   ),
                   title: Text(
-                    'Name of Disease',
+                    'Name of Crop',
                     style: titleFontStyle,
                   ),
                   subtitle: Text(
-                    nameOfDisease,
+                    nameOfCrop,
                     style: textFontStyle,
                   ),
                 ),
@@ -105,12 +147,34 @@ class Details extends StatelessWidget {
                     vertical: 4,
                   ),
                   title: Text(
-                    'Affected Plants',
+                    'Species',
                     style: titleFontStyle,
                   ),
-                  subtitle: Text(
-                    plantTypes,
-                    style: textFontStyle,
+                  subtitle: Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.start,
+                    alignment: WrapAlignment.start,
+                    children: List.generate(
+                      5,
+                      (index) => Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            CircleAvatar(
+                              backgroundColor: Colors.grey,
+                              radius: 5,
+                            ),
+                            SizedBox(
+                              width: 4,
+                            ),
+                            Text(
+                              'Disease',
+                              style: textFontStyle,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 ListTile(
@@ -119,7 +183,7 @@ class Details extends StatelessWidget {
                     vertical: 4,
                   ),
                   title: Text(
-                    'Symptoms of Disease',
+                    'Prefere Soil',
                     style: titleFontStyle,
                   ),
                   subtitle: Text(
@@ -133,11 +197,11 @@ class Details extends StatelessWidget {
                     vertical: 4,
                   ),
                   title: Text(
-                    'Causes of Disease',
+                    'Description',
                     style: titleFontStyle,
                   ),
                   subtitle: Text(
-                    causesOfDisease,
+                    plantTypes,
                     style: textFontStyle,
                   ),
                 ),
@@ -147,12 +211,34 @@ class Details extends StatelessWidget {
                     vertical: 4,
                   ),
                   title: Text(
-                    'Disease Prevention',
+                    'Pets And Diseases',
                     style: titleFontStyle,
                   ),
-                  subtitle: Text(
-                    diseasePrevention,
-                    style: textFontStyle,
+                  subtitle: Wrap(
+                    crossAxisAlignment: WrapCrossAlignment.start,
+                    alignment: WrapAlignment.start,
+                    children: List.generate(
+                      5,
+                      (index) => Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            CircleAvatar(
+                              backgroundColor: Colors.grey,
+                              radius: 5,
+                            ),
+                            SizedBox(
+                              width: 4,
+                            ),
+                            Text(
+                              'Disease',
+                              style: textFontStyle,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 ListTile(
@@ -161,12 +247,41 @@ class Details extends StatelessWidget {
                     vertical: 4,
                   ),
                   title: Text(
-                    'Disease Treatment',
+                    'Tips',
                     style: titleFontStyle,
                   ),
-                  subtitle: Text(
-                    diseaseTreatment,
-                    style: textFontStyle,
+                  subtitle: Column(
+                    children: [
+                      ...List.generate(
+                        5,
+                        (index) => Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 5.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10.0),
+                                child: Icon(
+                                  Icons.fiber_manual_record,
+                                  size: 16,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 5.0,
+                              ),
+                              Expanded(
+                                child: Text(
+                                  diseaseSymptoms,
+                                  style: textFontStyle,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],

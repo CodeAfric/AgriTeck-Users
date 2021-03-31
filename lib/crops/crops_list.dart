@@ -1,4 +1,6 @@
 import 'package:agriteck_user/Toast/show_toast.dart';
+import 'package:agriteck_user/common-functions/helper-functions.dart';
+import 'package:agriteck_user/crops/crop-details.dart';
 import 'package:flutter/material.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -145,7 +147,7 @@ class CropItems extends StatelessWidget {
       elevation: 2.0,
       child: InkWell(
         onTap: () {
-          showToast(content: 'view crops in details');
+          sendToPage(context, CropDetailsScreen());
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
