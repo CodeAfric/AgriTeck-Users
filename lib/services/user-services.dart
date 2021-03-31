@@ -30,8 +30,14 @@ class UserServices {
 
   static Future<Map<String, dynamic>> querySingleUser(String userId) async {
     Map<String, dynamic> data;
-    FirebaseFirestore.instance.collection('Users').doc(userId).get().then((value){
-      data=value.data();
+    FirebaseFirestore firebaseFirestore= FirebaseFirestore.instance;
+    firebaseFirestore.collection("Users").get().then((querySnapshot) {
+      querySnapshot.docs.forEach((element) {
+        if(element.id==userId){
+          data=element.data();
+        }
+
+      });
     });
     return data;
   }

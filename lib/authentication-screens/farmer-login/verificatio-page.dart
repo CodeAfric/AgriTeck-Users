@@ -6,6 +6,7 @@ import 'package:agriteck_user/common-functions/helper-functions.dart';
 import 'package:agriteck_user/home/home-screen.dart';
 import 'package:agriteck_user/services/user-services.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -186,16 +187,29 @@ class _OTPScreenState extends State<OTPScreen> {
             if(value!=null){
               await showToast(context, fToast, Icons.check, primaryDark,
                   "Telephone number verified");
-              print('==============user=============${value.user.uid}');
-              await UserServices.querySingleUser(value.user.uid).then((value){
-                print('=========================================data===========$value');
+              bool userFound=false;
+              FirebaseFirestore firebaseFirestore= FirebaseFirestore.instance;
+              firebaseFirestore.collection("Users").get().then((querySnapshot) {
+                querySnapshot.docs.forEach((element) {
+                  if(element.id==value.user.uid){
+                    userFound=true;
+
+                  }
+
+                });
+                if(userFound){
+                 // await showSnackBar("Log in successful...", _scaffoldKey.currentState);
+                  sendToPage(context, HomePage(initPaage: BottomButtons.Home,));
+                }else{
+                  newUserDialog();
+                }
               });
+
 
               // if(data==null){
               //   newUserDialog();
               // }else{
-              //   await showSnackBar("Log in successful...", _scaffoldKey.currentState);
-              //   sendToPage(context, HomePage(initPaage: BottomButtons.Home,));
+              //
               // }
                 //sendToPage(context, UserForms(widget.phone));
             }
