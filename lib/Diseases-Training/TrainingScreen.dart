@@ -1,6 +1,13 @@
+import 'dart:io';
+import 'dart:async';
+import 'package:agriteck_user/Toast/show_toast.dart';
 import 'package:agriteck_user/common%20UI/open-camera.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
+import 'package:agriteck_user/common-functions/tflite.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+
+import 'package:agriteck_user/diseases/disease_detection_details.dart';
 
 class Training extends StatefulWidget {
   @override
@@ -8,6 +15,19 @@ class Training extends StatefulWidget {
 }
 
 class _TrainingState extends State<Training> {
+  List _output;
+  File image;
+  bool _loading;
+
+  @override
+  void initState() {
+    super.initState();
+
+    loadModel().then((val) {
+      print('object Model Loaded');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -77,7 +97,6 @@ class Buttonts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Container(
       height: 90,
       decoration: BoxDecoration(
@@ -115,10 +134,49 @@ class Buttonts extends StatelessWidget {
   }
 }
 
-class DiseaseCapture extends StatelessWidget {
+class DiseaseCapture extends StatefulWidget {
+  @override
+  _DiseaseCaptureState createState() => _DiseaseCaptureState();
+}
+
+class _DiseaseCaptureState extends State<DiseaseCapture> {
+  ImagePicker _picker = ImagePicker();
+  File cropImage;
+  var predictionOutCome;
+
+  Future getImage() async {
+    var imageFile = await _picker.getImage(source: ImageSource.gallery);
+    if (imageFile != null) {
+      //detect the crop disease
+      predictDesease(imageFile).then((predictions) async {
+        print(predictions);
+        //show the details of the crop
+        Navigator.of(context).pop();
+        await Navigator.push(context, MaterialPageRoute(builder: (context) {
+          return DiseaseDetection(
+            imagePath: File(imageFile.path),
+            predictions: predictions,
+          );
+        }));
+      });
+    } else {
+      showToast(content: 'No Image Selected');
+    }
+  }
+
+  // Future showCropDiseaseDetails() async {
+  //   await Navigator.push(context, MaterialPageRoute(builder: (context) {
+  //     return DiseaseDetectionDetails(
+  //       imagePath: cropImage,
+  //       predictions: predictionOutCome,
+  //     );
+  //   }));
+  // }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
     return Card(
       elevation: 10,
       child: Column(
@@ -146,7 +204,17 @@ class DiseaseCapture extends StatelessWidget {
                       child: OutlineButton(
                           borderSide: BorderSide(
                               color: primary.withOpacity(0.8), width: 2.0),
-                          onPressed: () {},
+                          onPressed: () async {
+                            print(
+                                '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+
+                            //get image from gallery
+                            getImage();
+
+                            //   print("IMAGE PATH: ${imageFile.path}");
+                            print(
+                                '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@');
+                          },
                           child: ListTile(
                             title: Icon(
                               Icons.camera_alt_outlined,
@@ -227,7 +295,7 @@ class DiseaseCapture extends StatelessWidget {
                 borderRadius: BorderRadius.circular(25),
                 color: primary,
               ),
-              child: GestureDetector(
+              child: InkWell(
                 onTap: () {
                   showCameraDialog(context);
                 },

@@ -1,9 +1,11 @@
 import 'dart:io';
-
+import 'package:agriteck_user/Toast/show_toast.dart';
+import 'package:agriteck_user/diseases/disease_detection_details.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:agriteck_user/common-functions/tflite.dart';
 
 ImagePicker _picker = ImagePicker();
 Future<File> showCameraDialog(BuildContext context) {
@@ -19,7 +21,7 @@ Future<File> showCameraDialog(BuildContext context) {
           content: SingleChildScrollView(
             child: ListBody(
               children: [
-                GestureDetector(
+                InkWell(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -39,10 +41,27 @@ Future<File> showCameraDialog(BuildContext context) {
                   onTap: () async {
                     imageFile =
                         await _picker.getImage(source: ImageSource.gallery);
+                    if (imageFile != null) {
+                      //detect the crop disease
+                      predictDesease(imageFile).then((predictions) async {
+                        print(predictions);
+                        //show the details of the crop
+                        Navigator.of(context).pop();
+                        await Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return DiseaseDetection(
+                            imagePath: File(imageFile.path),
+                            predictions: predictions,
+                          );
+                        }));
+                      });
+                    } else {
+                      showToast(content: 'No Image Selected');
+                    }
                   },
                 ),
                 // Padding(padding: const EdgeInsets.all(8)),
-                GestureDetector(
+                InkWell(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -60,12 +79,29 @@ Future<File> showCameraDialog(BuildContext context) {
                   onTap: () async {
                     imageFile =
                         await _picker.getImage(source: ImageSource.camera);
+                    if (imageFile != null) {
+                      //detect the crop disease
+                      predictDesease(imageFile).then((predictions) async {
+                        print(predictions);
+                        //show the details of the crop
+                        Navigator.of(context).pop();
+                        await Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return DiseaseDetection(
+                            imagePath: File(imageFile.path),
+                            predictions: predictions,
+                          );
+                        }));
+                      });
+                    } else {
+                      showToast(content: 'No Image Selected');
+                    }
                   },
                 ),
                 Divider(
                   color: primaryLight,
                 ),
-                GestureDetector(
+                InkWell(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -91,4 +127,13 @@ Future<File> showCameraDialog(BuildContext context) {
           ),
         );
       });
+}
+
+Future getImage({ImageSource source}) async {
+  var imageFile = await _picker.getImage(source: source);
+  if (imageFile != null) {
+    return imageFile;
+  } else {
+    showToast(content: 'No Image Selected');
+  }
 }
