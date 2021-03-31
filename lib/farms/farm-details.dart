@@ -15,38 +15,38 @@ class FarmDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        //resizeToAvoidBottomPadding: false,
-        backgroundColor: Colors.white,
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                ImageCarousel(),
-                FarmDetails(),
-              ],
-            ),
+      //resizeToAvoidBottomPadding: false,
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              ImageCarousel(),
+              FarmDetails(),
+            ],
           ),
         ),
-        floatingActionButton: FloatingButton(
-            label: 'Request Investment',
-            icon: Icons.person,
-            onPressHandler: () {
-              showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return CustomDialogBox(
-                title: 'Investment',
-                descriptions: 'Your request has been submitted.',
-                btn1Text: '',
-                btn2Text: 'okay',
-                img: 'assets/images/person.png',
-                btn1Press: () {
-                  Navigator.pop(context);
-                },
-               
-              );
-            }) ??
-        }));
+      ),
+      floatingActionButton: FloatingButton(
+          label: 'Request Investment',
+          icon: Icons.person,
+          onPressHandler: () {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return CustomDialogBox(
+                    title: 'Investment Request',
+                    descriptions: 'Your request has been submitted.',
+                    btn1Text: '',
+                    btn2Text: 'okay',
+                    img: 'assets/images/person.png',
+                    btn1Press: () {
+                      Navigator.pop(context);
+                    },
+                  );
+                });
+          }),
+    );
   }
 }
 
