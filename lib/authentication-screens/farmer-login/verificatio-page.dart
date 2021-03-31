@@ -193,9 +193,7 @@ class _OTPScreenState extends State<OTPScreen> {
                 querySnapshot.docs.forEach((element) {
                   if(element.id==value.user.uid){
                     userFound=true;
-
                   }
-
                 });
                 if(userFound){
                  // await showSnackBar("Log in successful...", _scaffoldKey.currentState);
@@ -205,13 +203,6 @@ class _OTPScreenState extends State<OTPScreen> {
                 }
               });
 
-
-              // if(data==null){
-              //   newUserDialog();
-              // }else{
-              //
-              // }
-                //sendToPage(context, UserForms(widget.phone));
             }
       });
 

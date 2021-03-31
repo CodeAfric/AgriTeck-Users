@@ -12,49 +12,53 @@ import 'package:flutter/material.dart';
    Widget build(BuildContext context) {
      return Container(
        color: Colors.white,
-       child: Column(
-         children: [
-           Container(
-             //color: primaryLight,
-             margin: EdgeInsets.all(8),
-             child: Row(
-               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-               crossAxisAlignment: CrossAxisAlignment.start,
-               children: [
-                 Expanded(
-                   flex: 1,
-                   child: Container(
-                     padding: EdgeInsets.only(left: 5),
-                       child: Buttonts(btnText: 'Pest and Diseases', btnIcon: 'assets/icons/pest.png' ,)),
-                 ),
-                 Expanded(
-                   flex: 1,
-                   child: Container(
+       width: MediaQuery.of(context).size.width,
+       height: MediaQuery.of(context).size.height,
+       child: SingleChildScrollView(
+         child: Column(
+           children: [
+             Container(
+               //color: primaryLight,
+               margin: EdgeInsets.all(8),
+               child: Row(
+                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                 crossAxisAlignment: CrossAxisAlignment.start,
+                 children: [
+                   Expanded(
+                     flex: 1,
+                     child: Container(
                        padding: EdgeInsets.only(left: 5),
-                       child: Buttonts(btnText: 'Weather Update', btnIcon: 'assets/icons/cloud.png' ,)),
-                 ),
-                 Expanded(
-                   flex: 1,
-                   child: Container(
-                       padding: EdgeInsets.only(left: 5),
-                       child: Buttonts(btnText: 'Good Farming Tips', btnIcon: 'assets/icons/tips.png' ,)),
-                 ),
-               ],
+                         child: Buttonts(btnText: 'Pest and Diseases', btnIcon: 'assets/icons/pest.png' ,)),
+                   ),
+                   Expanded(
+                     flex: 1,
+                     child: Container(
+                         padding: EdgeInsets.only(left: 5),
+                         child: Buttonts(btnText: 'Weather Update', btnIcon: 'assets/icons/cloud.png' ,)),
+                   ),
+                   Expanded(
+                     flex: 1,
+                     child: Container(
+                         padding: EdgeInsets.only(left: 5),
+                         child: Buttonts(btnText: 'Good Farming Tips', btnIcon: 'assets/icons/tips.png' ,)),
+                   ),
+                 ],
+               ),
              ),
-           ),
-           Container(
-             child: DiseaseCapture(),
-           ),
-           Container(
-             padding: EdgeInsets.only(top: 10),
-             child: Weather(
-               temperature: '23.2°',
-               location: 'Kumasi, Tanoso',
-               date: '27/04/2021',
-               weatherStatus: 'Partly cloudy throughout the day',
+             Container(
+               child: DiseaseCapture(),
              ),
-           )
-         ],
+             Container(
+               padding: EdgeInsets.only(top: 10),
+               child: Weather(
+                 temperature: '23.2°',
+                 location: 'Kumasi, Tanoso',
+                 date: '27/04/2021',
+                 weatherStatus: 'Partly cloudy throughout the day',
+               ),
+             )
+           ],
+         ),
        ),
      );
    }
