@@ -17,12 +17,14 @@ Future loadModel() async {
 
 Future predictDesease(var image) async {
   try {
+    print('-----------------------------------working from here');
+    print('-----------------------------------${image.path}e');
     // Start a timer for the process
     int startTime = new DateTime.now().millisecondsSinceEpoch;
     // Load the model
 
-    loadModel().then((val) {
-      print('object Model Loaded');
+   loadModel().then((val) {
+      print('======================================object Model Loaded');
     });
 
 // Run the Model on the image the is selested
@@ -42,9 +44,10 @@ Future predictDesease(var image) async {
     // Dispose the Tflite to free up resources
     Tflite.close();
 
-    // Return the prediction
+    // Return the predictionop
+    print('=================from first============\n${prediction}\n==============================');
     return prediction;
   } catch (e) {
-    return e;
+    print(e);
   }
 }

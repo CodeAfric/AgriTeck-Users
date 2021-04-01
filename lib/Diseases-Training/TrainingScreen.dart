@@ -78,12 +78,12 @@ class _TrainingState extends State<Training> {
           ),
           Container(
             padding: EdgeInsets.only(top: 10),
-            // child: Weather(
-            //   temperature: '23.2°',
-            //   location: 'Kumasi, Tanoso',
-            //   date: '27/04/2021',
-            //   weatherStatus: 'Partly cloudy throughout the day',
-            // ),
+            child: Weather(
+              temperature: '23.2°',
+              location: 'Kumasi, Tanoso',
+              date: '27/04/2021',
+              weatherStatus: 'Partly cloudy throughout the day',
+            ),
           )
         ],
       ),
@@ -315,95 +315,94 @@ class _DiseaseCaptureState extends State<DiseaseCapture> {
   }
 }
 
-// class Weather extends StatelessWidget {
-//   final String location;
-//   final String temperature;
-//   final String date;
-//   final String weatherStatus;
-//
-//   const Weather(
-//       {Key key, this.location, this.temperature, this.date, this.weatherStatus})
-//       : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     // TODO: implement build
-//     return Card(
-//       elevation: 10,
-//       child: Column(
-//         children: [
-//           Row(
-//             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//             children: [
-//               Expanded(
-//                 flex: 2,
-//                 child: Container(
-//                   padding: EdgeInsets.all(10),
-//                   child: Column(
-//                     mainAxisAlignment: MainAxisAlignment.start,
-//                     children: [
-//                       Container(
-//                         alignment: Alignment.centerLeft,
-//                         child: Text(
-//                           temperature,
-//                           style: TextStyle(
-//                               fontSize: 25,
-//                               color: Colors.black54,
-//                               fontWeight: FontWeight.w400),
-//                         ),
-//                       ),
-//                       Container(
-//                         alignment: Alignment.centerLeft,
-//                         child: Text(
-//                           location,
-//                           style: TextStyle(
-//                               fontSize: 16,
-//                               color: Colors.black45,
-//                               fontWeight: FontWeight.w400),
-//                         ),
-//                       ),
-//                       Container(
-//                         alignment: Alignment.centerLeft,
-//                         child: Text(
-//                           date,
-//                           style: TextStyle(
-//                               fontSize: 14,
-//                               color: Colors.black38,
-//                               fontWeight: FontWeight.w400),
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                 ),
-//               ),
-//               Expanded(
-//                 flex: 1,
-//                 child: Container(
-//                   height: 100,
-//                   width: 120,
-//                   padding: EdgeInsets.all(15),
-//                   child: Image.asset(
-//                     'assets/icons/weather.jpg',
-//                     fit: BoxFit.fill,
-//                   ),
-//                 ),
-//               )
-//             ],
-//           ),
-//           Divider(
-//             color: primaryLight,
-//           ),
-//           Container(
-//             alignment: Alignment.centerLeft,
-//             padding: EdgeInsets.all(10),
-//             child: Text(
-//               weatherStatus,
-//               style: TextStyle(fontSize: 16, color: Colors.black45),
-//             ),
-//           )
-//         ],
-//       ),
-//     );
-//   }
-// }
-//
+class Weather extends StatelessWidget {
+  final String location;
+  final String temperature;
+  final String date;
+  final String weatherStatus;
+
+  const Weather(
+      {Key key, this.location, this.temperature, this.date, this.weatherStatus})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Card(
+      elevation: 10,
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                flex: 2,
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          temperature,
+                          style: TextStyle(
+                              fontSize: 25,
+                              color: Colors.black54,
+                              fontWeight: FontWeight.w400),
+                        ),
+                      ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          location,
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.black45,
+                              fontWeight: FontWeight.w400),
+                        ),
+                      ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          date,
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black38,
+                              fontWeight: FontWeight.w400),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: Container(
+                  height: 100,
+                  width: 120,
+                  padding: EdgeInsets.all(15),
+                  child: Image.asset(
+                    'assets/icons/weather.jpg',
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              )
+            ],
+          ),
+          Divider(
+            color: primaryLight,
+          ),
+          Container(
+            alignment: Alignment.centerLeft,
+            padding: EdgeInsets.all(10),
+            child: Text(
+              weatherStatus,
+              style: TextStyle(fontSize: 16, color: Colors.black45),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}

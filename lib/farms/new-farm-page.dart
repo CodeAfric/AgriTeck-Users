@@ -335,7 +335,7 @@ class _NewFarmState extends State<NewFarm> {
               cropType: cropType,
               description: description,
             );
-            await UserServices.saveFarm(user.uid+formatter.format(DateTime.now()), farms);
+            await UserServices.saveFarm(user.uid+DateTime.now().toIso8601String(), farms);
             isLoading = false;
             await showToast(
                 context, fToast, Icons.check, primaryDark,"Farm data Saved successfully");

@@ -44,7 +44,8 @@ Future<File> showCameraDialog(BuildContext context) {
                     if (imageFile != null) {
                       //detect the crop disease
                       predictDesease(imageFile).then((predictions) async {
-                        print(predictions);
+                        print('===========$predictions');
+                        //print(predictions);
                         //show the details of the crop
                         Navigator.of(context).pop();
                         await Navigator.push(context,

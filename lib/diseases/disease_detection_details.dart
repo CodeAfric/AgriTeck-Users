@@ -70,7 +70,6 @@ class DiseaseDetectionDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
     return Container(
       height: size.height - 100,
       color: Colors.white,
@@ -177,24 +176,4 @@ class DiseaseDetectionDetails extends StatelessWidget {
   }
 }
 
-// class ImageCarousel extends StatelessWidget {
-//   final String imagePath;
-//   ImageCarousel({this.imagePath});
-//   @override
-//   Widget build(BuildContext context) {
-//     Size size = MediaQuery.of(context).size;
-//     return Container(
-//       height: size.height * 0.30,
-//       child: Carousel(
-//         boxFit: BoxFit.cover,
-//         images: [
-//           AssetImage(imagePath),
-//           AssetImage(imagePath),
-//           AssetImage(imagePath),
-//         ],
-//         animationCurve: Curves.fastOutSlowIn,
-//         animationDuration: Duration(milliseconds: 2000),
-//       ),
-//     );
-//   }
-// }
+
