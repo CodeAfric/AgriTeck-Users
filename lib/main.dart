@@ -27,9 +27,7 @@ class MyApp extends StatelessWidget {
           ? HomePage(
               initPaage: BottomButtons.Home,
             )
-          : HomePage(
-              initPaage: BottomButtons.Home,
-            ),
+          : WelcomeScreen()
     );
   }
 }
