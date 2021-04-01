@@ -1,11 +1,8 @@
-import 'package:agriteck_user/products/product-details.dart';
 import 'package:agriteck_user/products/product-details-screen.dart';
 import 'package:flutter/material.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 
-
 class ProductList extends StatelessWidget {
-  @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Expanded(

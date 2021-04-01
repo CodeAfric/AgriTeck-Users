@@ -6,7 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'authentication-screens/welcome-screen.dart';
 
-void main()async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
@@ -23,8 +23,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'AgriTek',
       theme: ThemeData(),
-      home:FirebaseAuth.instance.currentUser!=null?HomePage(initPaage: BottomButtons.Home,): WelcomeScreen(
-      ),
+      home: FirebaseAuth.instance.currentUser != null
+          ? HomePage(
+              initPaage: BottomButtons.Home,
+            )
+          : WelcomeScreen()
     );
   }
 }

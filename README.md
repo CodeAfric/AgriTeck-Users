@@ -1,5 +1,8 @@
 # agriteck_user
 
+1. This application is a flutter app runing on firebase.
+2. User have to add firebase to the project.
+3. Add firebase SSH1 fingerprint or SSH525 to the firebase project.
 A new Flutter application.
 
 ## Getting Started
