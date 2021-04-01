@@ -2,7 +2,7 @@ import 'package:agriteck_user/products/product-details.dart';
 import 'package:agriteck_user/products/product-details-screen.dart';
 import 'package:flutter/material.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
-import 'file:///C:/Users/emman/StudioProjects/AgriTeck-Users/lib/common%20UI/filter_buttons.dart';
+
 
 class ProductList extends StatelessWidget {
   @override
