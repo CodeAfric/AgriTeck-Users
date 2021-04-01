@@ -119,3 +119,39 @@ class GetComent {
     return comentData;
   }
 }
+
+class Investors {
+  String InvestorName, InvestorId, Investorphone, InvestorLocation, InvestorImage, InvestorEmail;
+  List InvestorInterest;
+
+  Investors(
+      {this.InvestorName,
+        this.InvestorId,
+        this.Investorphone,
+        this.InvestorLocation,
+        this.InvestorImage,
+        this.InvestorEmail,
+        this.InvestorInterest});
+
+  Map<String, dynamic> toMap() {
+    var map = Map<String, dynamic>();
+    map['Benson Gyimah'] = InvestorName;
+    map['IN12142'] = InvestorId;
+    map['+233244954758'] = Investorphone;
+    map['Takoradi Nsoem'] = InvestorLocation;
+    map['assets/diseases/farmer1.jpg'] = InvestorImage;
+    map['hshdgh@gmail.com'] = InvestorEmail;
+    map['Cereals'] = InvestorInterest;
+    return map;
+  }
+
+  Investors.fromMapObject(Map<String, dynamic> map) {
+    this.InvestorName = map['Benson Gyimah'];
+    this.InvestorId = map['IN12142'];
+    this.Investorphone = map['233244954758'];
+    this.InvestorLocation = map['Takoradi Nsoem'];
+    this.InvestorImage = map['assets/diseases/farmer1.jpg'];
+    this.InvestorInterest = map['cereal'];
+    this.InvestorEmail = map['hshdgh@gmail.com'];
+  }
+}
