@@ -212,7 +212,7 @@ class _UserFormsState extends State<UserForms> {
                                   SizedBox(height: 20.0),
                                   CustomDropDown(
                                     value: _specialized,
-                                    hint: 'Select category',
+                                    hint: 'Select Speciality',
                                     itemsList: speciality,
                                     onChanged: (value) {
                                       setState(() {
@@ -418,7 +418,6 @@ class _UserFormsState extends State<UserForms> {
 
   Widget getDateOfBirth() {
     return Container(
-      //margin: EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
           color: Colors.white,
@@ -558,7 +557,6 @@ class _UserFormsState extends State<UserForms> {
         await showSnackBar(
             "Please select you Date of Birth", _scaffoldKey.currentState);
       } else {
-        // print('working from here---------------------------------------');
         _formKey.currentState.save();
         try {
           _age = getYears(_dateTime);
@@ -585,7 +583,6 @@ class _UserFormsState extends State<UserForms> {
             isLoading = false;
             await showToast(
                 context, fToast, Icons.check, primaryDark, "User data Saved");
-
             sendToPage(
                 context,
                 HomePage(
