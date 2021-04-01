@@ -26,35 +26,6 @@ class _FarmScreenState extends State<FarmScreen> {
               farmLocation: 'Kwadaso Municipal',
             );
           }),
-      // child: ListView(
-      //   scrollDirection: Axis.vertical,
-      //   children: [
-      //     Container(
-      //       padding: EdgeInsets.only(bottom: 10),
-      //       child: ListItems(
-      //         farmImage: 'assets/diseases/farm1.jpeg',
-      //         farmName: "Attah Boakye's farm",
-      //         farmLocation: 'Kwadaso Municipal',
-      //       ),
-      //     ),
-      //     Container(
-      //       padding: EdgeInsets.only(bottom: 10),
-      //       child: ListItems(
-      //         farmImage: 'assets/diseases/farm2.jpg',
-      //         farmName: "Attah Boakye's farm",
-      //         farmLocation: 'Kwadaso Municipal',
-      //       ),
-      //     ),
-      //     Container(
-      //       padding: EdgeInsets.only(bottom: 10),
-      //       child: ListItems(
-      //         farmImage: 'assets/diseases/farm1.jpeg',
-      //         farmName: "Attah Boakye's farm",
-      //         farmLocation: 'Kwadaso Municipal',
-      //       ),
-      //     ),
-      //   ],
-      // ),
     );
   }
 }
@@ -138,90 +109,6 @@ class ListItems extends StatelessWidget {
         ),
       ),
     );
-    // return Container(
-    //   child: Container(
-    //     height: 100,
-    //     width: double.infinity,
-    //     decoration: BoxDecoration(
-    //         borderRadius: BorderRadius.circular(10.0),
-    //         color: Colors.white,
-    //         boxShadow: [
-    //           BoxShadow(
-    //               color: primaryLight.withOpacity(0.5),
-    //               offset: Offset(0.0, 4.0),
-    //               blurRadius: 10.0)
-    //         ]),
-    //     child: Row(
-    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //       children: [
-    //         Expanded(
-    //           flex: 2,
-    //           child: Container(
-    //             height: 100,
-    //             width: 110,
-    //             margin: EdgeInsets.all(5),
-    //             decoration: BoxDecoration(
-    //               borderRadius: BorderRadius.circular(10),
-    //               image: DecorationImage(
-    //                 image: AssetImage(
-    //                   farmImage,
-    //                 ),
-    //                 fit: BoxFit.cover,
-    //               ),
-    //             ),
-    //           ),
-    //         ),
-    //         Expanded(
-    //           flex: 3,
-    //           child: Container(
-    //               padding: EdgeInsets.only(top: 20),
-    //               child: Column(
-    //                 crossAxisAlignment: CrossAxisAlignment.start,
-    //                 children: [
-    //                   Text(
-    //                     farmName,
-    //                     style: TextStyle(
-    //                         fontSize: 16,
-    //                         color: primaryDark,
-    //                         fontWeight: FontWeight.w400),
-    //                   ),
-    //                   SizedBox(
-    //                     height: 5,
-    //                   ),
-    //                   Text(
-    //                     farmLocation,
-    //                     style: TextStyle(
-    //                         fontSize: 14,
-    //                         color: primaryDark,
-    //                         fontWeight: FontWeight.w400),
-    //                   ),
-    //                 ],
-    //               )),
-    //         ),
-    //         Expanded(
-    //           flex: 1,
-    //           child: Center(
-    //             child: Container(
-    //               padding: EdgeInsets.only(left: 5),
-    //               alignment: Alignment.centerLeft,
-    //               height: 40,
-    //               width: 50,
-    //               decoration: BoxDecoration(
-    //                   borderRadius: BorderRadius.only(
-    //                       bottomLeft: Radius.circular(10.0),
-    //                       topLeft: Radius.circular(10.0)),
-    //                   color: primaryDark),
-    //               child: Text(
-    //                 'Details',
-    //                 style: TextStyle(
-    //                     fontSize: 12, color: Colors.white, letterSpacing: .1),
-    //               ),
-    //             ),
-    //           ),
-    //         )
-    //       ],
-    //     ),
-    //   ),
-    // );
+
   }
 }

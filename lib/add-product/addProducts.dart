@@ -18,8 +18,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import '../../constant.dart';
-import '../welcome-screen.dart';
 
 class UserForms extends StatefulWidget {
   final String phoneNumber;
@@ -70,12 +68,7 @@ class _UserFormsState extends State<UserForms> {
                   Navigator.pop(context);
                 },
                 btn2Press: () async {
-                  await FirebaseAuth.instance.signOut();
-                  return Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                          builder: (BuildContext context) => WelcomeScreen()),
-                      (route) => false);
+
                 },
               );
             }) ??
@@ -212,8 +205,7 @@ class _UserFormsState extends State<UserForms> {
                                   SizedBox(height: 20.0),
                                   CustomDropDown(
                                     value: _specialized,
-                                    hint: 'Select Speciality',
-                                    itemsList: speciality,
+                                    hint: 'Select category',
                                     onChanged: (value) {
                                       setState(() {
                                         _specialized = value;
@@ -418,6 +410,7 @@ class _UserFormsState extends State<UserForms> {
 
   Widget getDateOfBirth() {
     return Container(
+      //margin: EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
           color: Colors.white,
@@ -557,6 +550,7 @@ class _UserFormsState extends State<UserForms> {
         await showSnackBar(
             "Please select you Date of Birth", _scaffoldKey.currentState);
       } else {
+        // print('working from here---------------------------------------');
         _formKey.currentState.save();
         try {
           _age = getYears(_dateTime);
@@ -583,6 +577,7 @@ class _UserFormsState extends State<UserForms> {
             isLoading = false;
             await showToast(
                 context, fToast, Icons.check, primaryDark, "User data Saved");
+
             sendToPage(
                 context,
                 HomePage(

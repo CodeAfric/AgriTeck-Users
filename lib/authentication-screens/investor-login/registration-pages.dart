@@ -21,16 +21,16 @@ import 'package:intl/intl.dart';
 import '../../constant.dart';
 import '../welcome-screen.dart';
 
-class UserForms extends StatefulWidget {
+class InvestorForms extends StatefulWidget {
   final String phoneNumber;
 
-  UserForms(this.phoneNumber);
+  InvestorForms(this.phoneNumber);
 
   @override
-  _UserFormsState createState() => _UserFormsState();
+  _InvestorForms createState() => _InvestorForms();
 }
 
-class _UserFormsState extends State<UserForms> {
+class _InvestorForms extends State<InvestorForms> {
   String _name, _location, _nationalId, _gender;
   int _numFarms;
   double _farmSize;
@@ -212,7 +212,7 @@ class _UserFormsState extends State<UserForms> {
                                   SizedBox(height: 20.0),
                                   CustomDropDown(
                                     value: _specialized,
-                                    hint: 'Select Speciality',
+                                    hint: 'Select category',
                                     itemsList: speciality,
                                     onChanged: (value) {
                                       setState(() {
@@ -418,6 +418,7 @@ class _UserFormsState extends State<UserForms> {
 
   Widget getDateOfBirth() {
     return Container(
+      //margin: EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
           color: Colors.white,
@@ -557,6 +558,7 @@ class _UserFormsState extends State<UserForms> {
         await showSnackBar(
             "Please select you Date of Birth", _scaffoldKey.currentState);
       } else {
+        // print('working from here---------------------------------------');
         _formKey.currentState.save();
         try {
           _age = getYears(_dateTime);
@@ -583,6 +585,7 @@ class _UserFormsState extends State<UserForms> {
             isLoading = false;
             await showToast(
                 context, fToast, Icons.check, primaryDark, "User data Saved");
+
             sendToPage(
                 context,
                 HomePage(

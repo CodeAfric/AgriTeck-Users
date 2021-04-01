@@ -41,7 +41,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           setState(() async {
             isLoading = false;
             await showSnackBar('OTP sent to Phone', _scaffoldKey.currentState);
-            sendToPage(context, OTPScreen(verificationID, phoneNumber));
+            //sendToPage(context, OTPScreen(verificationID, phoneNumber));
           });
         },
         timeout: Duration(seconds: 120));

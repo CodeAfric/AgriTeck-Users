@@ -4,7 +4,6 @@ import 'package:agriteck_user/common%20UI/dailog-box.dart';
 import 'package:agriteck_user/common%20UI/shape-painter.dart';
 import 'package:agriteck_user/common-functions/helper-functions.dart';
 import 'package:agriteck_user/home/home-screen.dart';
-import 'package:agriteck_user/services/sharedPrefs.dart';
 import 'package:agriteck_user/services/user-services.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,31 +11,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pinput/pin_put/pin_put.dart';
-
-class Dialogs {
-  static Future<void> showLoadingDialog(
-      BuildContext context, GlobalKey key) async {
-    return showDialog<void>(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return new WillPopScope(
-              onWillPop: () async => false,
-              child: SimpleDialog(
-                  key: key,
-                  backgroundColor: Colors.black54,
-                  children: <Widget>[
-                    Center(
-                      child: Column(children: [
-                        CircularProgressIndicator(),
-                        SizedBox(height: 10,),
-                        Text("Please Wait....",style: TextStyle(color: Colors.blueAccent),)
-                      ]),
-                    )
-                  ]));
-        });
-  }
-}
 
 class OTPScreen extends StatefulWidget {
   String verificationID,phone;
@@ -48,9 +22,8 @@ class OTPScreen extends StatefulWidget {
 }
 
 class _OTPScreenState extends State<OTPScreen> {
-  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  bool isLoading=false;
+
   final TextEditingController _pinPutController = TextEditingController();
   final FocusNode _pinPutFocusNode = FocusNode();
   BoxDecoration get _pinPutDecoration {
@@ -207,9 +180,7 @@ class _OTPScreenState extends State<OTPScreen> {
   }
 
   verifyOTP(String pin) async {
-    Dialogs.showLoadingDialog(context, _keyLoader);//invoking login
     try {
-     // Dialogs.showLoadingDialog(context, _keyLoader);//invoking login
       await FirebaseAuth.instance
           .signInWithCredential(PhoneAuthProvider.credential(
           verificationId:widget.verificationID, smsCode: pin)).then((value)async{
@@ -218,17 +189,14 @@ class _OTPScreenState extends State<OTPScreen> {
                   "Telephone number verified");
               bool userFound=false;
               FirebaseFirestore firebaseFirestore= FirebaseFirestore.instance;
-              firebaseFirestore.collection("Users").get().then((querySnapshot)async {
+              firebaseFirestore.collection("Users").get().then((querySnapshot) {
                 querySnapshot.docs.forEach((element) {
                   if(element.id==value.user.uid){
                     userFound=true;
                   }
                 });
                 if(userFound){
-                  await SharedPrefs.setUserID(value.user.uid);
-                  await SharedPrefs.setUserName(value.user.displayName);
-                  await SharedPrefs.setUserPhone(value.user.phoneNumber);
-                  await showSnackBar("Log in successful...", _scaffoldKey.currentState);
+                 // await showSnackBar("Log in successful...", _scaffoldKey.currentState);
                   sendToPage(context, HomePage(initPaage: BottomButtons.Home,));
                 }else{
                   newUserDialog();
@@ -244,7 +212,6 @@ class _OTPScreenState extends State<OTPScreen> {
     } catch (e) {
       await showSnackBar(e.toString(), _scaffoldKey.currentState);
     }
-    Navigator.of(_keyLoader.currentContext,rootNavigator: true).pop();//clo
 
   }
 
