@@ -1,11 +1,6 @@
-import 'package:agriteck_user/products/product-details.dart';
 import 'package:agriteck_user/products/product-details-screen.dart';
 import 'package:flutter/material.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
-<<<<<<< HEAD
-=======
-
->>>>>>> 00dab3eecd262392338807215af865867b5972e3
 
 class ProductList extends StatelessWidget {
   Widget build(BuildContext context) {
