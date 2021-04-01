@@ -5,6 +5,8 @@
 3. Add firebase SSH1 fingerprint or SSH525 to the firebase project.
 A new Flutter application.
 
+##Download the test-dataet from the project to test the disease detection model
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
