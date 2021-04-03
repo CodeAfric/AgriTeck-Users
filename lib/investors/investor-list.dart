@@ -1,4 +1,5 @@
 import 'package:agriteck_user/common-functions/helper-functions.dart';
+import 'package:agriteck_user/investors/Details_of_Investor.dart';
 import 'package:agriteck_user/investors/investor-details-screen.dart';
 import 'package:flutter/material.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
@@ -45,7 +46,7 @@ class InvestorList extends StatelessWidget {
                       ),
                     ),
                     onTap: () {
-                      sendToPage(context, InvestorDetailsScreen());
+                      sendToPage(context, InvestorDetails());
                     },
                   );
                 },

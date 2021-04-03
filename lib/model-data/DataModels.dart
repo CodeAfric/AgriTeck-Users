@@ -121,37 +121,68 @@ class GetComent {
 }
 
 class Investors {
-  String InvestorName, InvestorId, Investorphone, InvestorLocation, InvestorImage, InvestorEmail;
-  List InvestorInterest;
+  String investorName, investorId, investorphone, investorLocation, investorImage, investorEmail;
+  List investorInterest;
 
   Investors(
-      {this.InvestorName,
-        this.InvestorId,
-        this.Investorphone,
-        this.InvestorLocation,
-        this.InvestorImage,
-        this.InvestorEmail,
-        this.InvestorInterest});
+      {this.investorName,
+        this.investorId,
+        this.investorphone,
+        this.investorLocation,
+        this.investorImage,
+        this.investorEmail,
+        this.investorInterest});
+}
 
-  Map<String, dynamic> toMap() {
-    var map = Map<String, dynamic>();
-    map['Benson Gyimah'] = InvestorName;
-    map['IN12142'] = InvestorId;
-    map['+233244954758'] = Investorphone;
-    map['Takoradi Nsoem'] = InvestorLocation;
-    map['assets/diseases/farmer1.jpg'] = InvestorImage;
-    map['hshdgh@gmail.com'] = InvestorEmail;
-    map['Cereals'] = InvestorInterest;
-    return map;
+class Investor_Data{
+  List<Investors> investor_details(){
+    List<Investors> investor=[
+      Investors(
+        investorName: 'Kofi Nunana',
+        investorId: 'IN0001',
+        investorEmail: 'kofinunana@gmail.com',
+        investorphone: '0250250225',
+        investorInterest: ['cereals', 'vegetables', 'cash crops'],
+        investorLocation: 'Kpando',
+        investorImage: 'assets/images/investor.png',
+      )
+    ];
+    return investor;
   }
+}
 
-  Investors.fromMapObject(Map<String, dynamic> map) {
-    this.InvestorName = map['Benson Gyimah'];
-    this.InvestorId = map['IN12142'];
-    this.Investorphone = map['233244954758'];
-    this.InvestorLocation = map['Takoradi Nsoem'];
-    this.InvestorImage = map['assets/diseases/farmer1.jpg'];
-    this.InvestorInterest = map['cereal'];
-    this.InvestorEmail = map['hshdgh@gmail.com'];
+class Farmers {
+  String farmerName, farmerAge,farmerContact,farmerLocation,number_of_Plots,farmSize, farmerImage,
+  farmerId;
+  List speciality;
+
+  Farmers(
+      {this.farmerName,
+        this.farmerAge,
+        this.farmerContact,
+        this.farmerLocation,
+        this.farmSize,
+        this.number_of_Plots,
+        this.speciality,
+        this.farmerImage,
+      this.farmerId});
+}
+// ignore: camel_case_types
+class Farmers_data{
+  List<Farmers> farmers_details(){
+    List<Farmers> farmers=[
+      Farmers(
+        farmerAge: '46',
+        farmerContact: '+233249381499',
+        farmerImage: 'assets/diseases/farmer2.jpg',
+        farmerLocation: 'Peki Tsame',
+        farmerName: 'Kwesi Awua Dompre',
+        farmSize: '15 hectors',
+        number_of_Plots: '3',
+        farmerId: 'FM0006',
+        speciality: ['maize', 'casava', 'yam'],
+      )
+    ];
+    return farmers;
   }
 }

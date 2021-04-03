@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'AgriTek',
       theme: ThemeData(),
-      home:Home(),
+      home:MainPage(),
       // FirebaseAuth.instance.currentUser != null
       //     ? MainPage(
       //         initPaage: BottomButtons.Home,

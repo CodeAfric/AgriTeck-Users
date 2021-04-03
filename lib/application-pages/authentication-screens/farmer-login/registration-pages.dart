@@ -6,7 +6,6 @@ import 'package:agriteck_user/commonly-used-widget/radio-buttons.dart';
 import 'package:agriteck_user/commonly-used-widget/round_button.dart';
 import 'package:agriteck_user/commonly-used-widget/shape-painter.dart';
 import 'package:agriteck_user/commonly-used-widget/textField.dart';
-import 'file:///C:/Users/emman/StudioProjects/AgriTeck-Users/lib/main-page.dart';
 import 'package:agriteck_user/pojo-classes/farmers-data.dart';
 import 'package:agriteck_user/services/user-services.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
@@ -17,6 +16,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import '../../../constant.dart';
+import '../../../main-page.dart';
 import '../welcome-screen.dart';
 
 class FarmerRegistrationForm extends StatefulWidget {

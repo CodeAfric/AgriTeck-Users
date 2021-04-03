@@ -4,7 +4,6 @@ import 'package:agriteck_user/commonly-used-widget/clickable-text.dart';
 import 'package:agriteck_user/commonly-used-widget/dailog-box.dart';
 import 'package:agriteck_user/commonly-used-widget/please-wait-dailog.dart';
 import 'package:agriteck_user/commonly-used-widget/shape-painter.dart';
-import 'file:///C:/Users/emman/StudioProjects/AgriTeck-Users/lib/main-page.dart';
 import 'package:agriteck_user/services/sharedPrefs.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -12,6 +11,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pinput/pin_put/pin_put.dart';
+import '../../main-page.dart';
 import 'farmer-login/registration-pages.dart';
 
 

@@ -3,7 +3,6 @@ import 'package:agriteck_user/common-functions/helper-functions.dart';
 import 'package:agriteck_user/commonly-used-widget/round_button.dart';
 import 'package:agriteck_user/commonly-used-widget/shape-painter.dart';
 import 'package:agriteck_user/commonly-used-widget/textField.dart';
-import 'file:///C:/Users/emman/StudioProjects/AgriTeck-Users/lib/main-page.dart';
 import 'package:agriteck_user/pojo-classes/farms.dart';
 import 'package:agriteck_user/services/sharedPrefs.dart';
 import 'package:agriteck_user/services/user-services.dart';
@@ -13,6 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+
+import '../main-page.dart';
 
 
 class NewFarm extends StatefulWidget {

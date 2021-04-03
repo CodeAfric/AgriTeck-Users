@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'dart:async';
+import 'package:agriteck_user/common-functions/helper-functions.dart';
 import 'package:agriteck_user/commonly-used-widget/open-camera.dart';
+import 'package:agriteck_user/farmers/farmers-list.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:agriteck_user/common-functions/tflite.dart';
 import 'package:flutter/material.dart';
@@ -59,12 +61,17 @@ class _TrainingState extends State<Training> {
                 ),
                 Expanded(
                   flex: 1,
-                  child: Container(
-                      padding: EdgeInsets.only(left: 5),
-                      child: Buttonts(
-                        btnText: 'Good Farming Tips',
-                        btnIcon: 'assets/icons/tips.png',
-                      )),
+                  child: InkWell(
+                    onTap: (){
+                      sendToPage(context, FarmersList());
+                    },
+                    child: Container(
+                        padding: EdgeInsets.only(left: 5),
+                        child: Buttonts(
+                          btnText: 'Good Farming Tips',
+                          btnIcon: 'assets/icons/tips.png',
+                        )),
+                  ),
                 ),
               ],
             ),
