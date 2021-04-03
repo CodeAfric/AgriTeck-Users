@@ -37,15 +37,14 @@ class _BottomIconsState extends State<BottomIcons> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
                 ),
-                padding:
-                    EdgeInsets.only(left: 2, right: 2, top: 3, bottom: 3),
+                padding: EdgeInsets.only(left: 2, right: 2, top: 3, bottom: 1),
                 child: Column(
                   children: <Widget>[
                     Image.asset(
                       widget.icons,
                       color: widget.activeIconColor,
-                      width: 30,
-                      height: 30,
+                      width: 25,
+                      height: 25,
                     ),
                     SizedBox(
                       height: 3,
@@ -55,7 +54,7 @@ class _BottomIconsState extends State<BottomIcons> {
                       style: TextStyle(
                           color: widget.textColor,
                           fontWeight: FontWeight.bold,
-                          fontSize: 18),
+                          fontSize: 16),
                     ),
                   ],
                 ),
@@ -65,14 +64,14 @@ class _BottomIconsState extends State<BottomIcons> {
             borderRadius: BorderRadius.circular(30),
           ),
           padding:
-          EdgeInsets.only(left: 2, right: 2, top: 3, bottom: 3),
+          EdgeInsets.only(left: 2, right: 2, top: 3, bottom: 1),
           child: Column(
             children: <Widget>[
               Image.asset(
                 widget.icons,
                 color: widget.iconColor,
-                width: 25,
-                height: 25,
+                width: 20,
+                height: 20,
               ),
               SizedBox(
                 height: 3,
@@ -82,7 +81,7 @@ class _BottomIconsState extends State<BottomIcons> {
                 style: TextStyle(
                     color: Colors.black26,
                     fontWeight: FontWeight.bold,
-                    fontSize: 15),
+                    fontSize: 14),
               ),
             ],
           ),

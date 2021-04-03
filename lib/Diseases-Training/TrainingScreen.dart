@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:async';
-import 'package:agriteck_user/Toast/show_toast.dart';
-import 'package:agriteck_user/common%20UI/open-camera.dart';
+import 'package:agriteck_user/commonly-used-widget/open-camera.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:agriteck_user/common-functions/tflite.dart';
 import 'package:flutter/material.dart';
@@ -15,14 +14,11 @@ class Training extends StatefulWidget {
 }
 
 class _TrainingState extends State<Training> {
-  List _output;
   File image;
-  bool _loading;
 
   @override
   void initState() {
     super.initState();
-
     loadModel().then((val) {
       print('object Model Loaded');
     });
@@ -162,7 +158,7 @@ class _DiseaseCaptureState extends State<DiseaseCapture> {
         }));
       });
     } else {
-      showToast(content: 'No Image Selected');
+      // showToast();
     }
   }
 

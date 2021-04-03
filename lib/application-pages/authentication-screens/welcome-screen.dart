@@ -1,11 +1,11 @@
-import 'package:agriteck_user/common%20UI/round_button.dart';
-import 'package:agriteck_user/common%20UI/shape-painter.dart';
-import 'package:agriteck_user/common%20UI/textField.dart';
 import 'package:agriteck_user/common-functions/helper-functions.dart';
+import 'package:agriteck_user/commonly-used-widget/round_button.dart';
+import 'package:agriteck_user/commonly-used-widget/shape-painter.dart';
+import 'package:agriteck_user/commonly-used-widget/textField.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'farmer-login/verificatio-page.dart';
+import 'verificatio-page.dart';
 
 class WelcomeScreen extends StatefulWidget {
   @override
@@ -59,7 +59,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             height: _height,
             width: _width,
             child: CustomPaint(
-              painter: ShapePainter(),
+              painter: ShapePainter(),//background image-like design
             ),
           ),
           Container(
@@ -170,11 +170,13 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   }
 
   _verify() async {
+    //we first check if the forms is correctly filed per the validation given to the textIput
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       if (mounted) {
         setState(() {
-          _sendCodeToPhone(phoneNumber);
+          _sendCodeToPhone(phoneNumber);//when all validation is done,
+          //we move to the function to send the 
         });
       }
     }

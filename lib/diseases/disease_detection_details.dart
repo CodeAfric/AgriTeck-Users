@@ -1,8 +1,8 @@
 import 'dart:io';
-import 'package:agriteck_user/common%20UI/floating-menu.dart';
+import 'package:agriteck_user/commonly-used-widget/floating-menu.dart';
 import 'package:agriteck_user/community/commuinity-page.dart';
 import 'package:agriteck_user/community/post-details.dart';
-import 'package:agriteck_user/diseases/diseases-screen.dart';
+import 'package:agriteck_user/diseases/diseases-page.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:flutter/material.dart';
 

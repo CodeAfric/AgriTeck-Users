@@ -1,15 +1,15 @@
 import 'dart:io';
-import 'package:agriteck_user/common%20UI/round_button.dart';
-import 'package:agriteck_user/common%20UI/shape-painter.dart';
 import 'package:agriteck_user/common-functions/helper-functions.dart';
-import 'package:agriteck_user/home/home-screen.dart';
+import 'package:agriteck_user/commonly-used-widget/round_button.dart';
+import 'package:agriteck_user/commonly-used-widget/shape-painter.dart';
+import 'package:agriteck_user/commonly-used-widget/textField.dart';
+import 'file:///C:/Users/emman/StudioProjects/AgriTeck-Users/lib/main-page.dart';
 import 'package:agriteck_user/pojo-classes/farms.dart';
 import 'package:agriteck_user/services/sharedPrefs.dart';
 import 'package:agriteck_user/services/user-services.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:agriteck_user/common UI/textField.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -341,7 +341,7 @@ class _NewFarmState extends State<NewFarm> {
                 context, fToast, Icons.check, primaryDark,"Farm data Saved successfully");
             sendToPage(
                 context,
-                HomePage(
+                MainPage(
                   initPaage: BottomButtons.Farms,
                 ));
           }

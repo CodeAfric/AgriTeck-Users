@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:agriteck_user/Toast/show_toast.dart';
 import 'package:agriteck_user/diseases/disease_detection_details.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:flutter/material.dart';
@@ -57,7 +56,7 @@ Future<File> showCameraDialog(BuildContext context) {
                         }));
                       });
                     } else {
-                      showToast(content: 'No Image Selected');
+                      // showToast(content: 'No Image Selected');
                     }
                   },
                 ),
@@ -95,7 +94,7 @@ Future<File> showCameraDialog(BuildContext context) {
                         }));
                       });
                     } else {
-                      showToast(content: 'No Image Selected');
+                      // showToast(content: 'No Image Selected');
                     }
                   },
                 ),
@@ -135,6 +134,6 @@ Future getImage({ImageSource source}) async {
   if (imageFile != null) {
     return imageFile;
   } else {
-    showToast(content: 'No Image Selected');
+    //showToast(content: 'No Image Selected');
   }
 }

@@ -1,6 +1,5 @@
-import 'package:agriteck_user/common%20UI/dailog-box.dart';
-import 'package:agriteck_user/common%20UI/floating-buttton.dart';
-import 'package:agriteck_user/common-functions/helper-functions.dart';
+import 'package:agriteck_user/commonly-used-widget/dailog-box.dart';
+import 'package:agriteck_user/commonly-used-widget/floating-buttton.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';

@@ -1,42 +1,20 @@
-import 'package:agriteck_user/authentication-screens/farmer-login/registration-pages.dart';
-import 'package:agriteck_user/common%20UI/clickable-text.dart';
-import 'package:agriteck_user/common%20UI/dailog-box.dart';
-import 'package:agriteck_user/common%20UI/shape-painter.dart';
+import 'package:agriteck_user/application-pages/authentication-screens/welcome-screen.dart';
 import 'package:agriteck_user/common-functions/helper-functions.dart';
-import 'package:agriteck_user/home/home-screen.dart';
+import 'package:agriteck_user/commonly-used-widget/clickable-text.dart';
+import 'package:agriteck_user/commonly-used-widget/dailog-box.dart';
+import 'package:agriteck_user/commonly-used-widget/please-wait-dailog.dart';
+import 'package:agriteck_user/commonly-used-widget/shape-painter.dart';
+import 'file:///C:/Users/emman/StudioProjects/AgriTeck-Users/lib/main-page.dart';
 import 'package:agriteck_user/services/sharedPrefs.dart';
-import 'package:agriteck_user/services/user-services.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pinput/pin_put/pin_put.dart';
+import 'farmer-login/registration-pages.dart';
 
-class Dialogs {
-  static Future<void> showLoadingDialog(
-      BuildContext context, GlobalKey key) async {
-    return showDialog<void>(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext context) {
-          return new WillPopScope(
-              onWillPop: () async => false,
-              child: SimpleDialog(
-                  key: key,
-                  backgroundColor: Colors.black54,
-                  children: <Widget>[
-                    Center(
-                      child: Column(children: [
-                        CircularProgressIndicator(),
-                        SizedBox(height: 10,),
-                        Text("Please Wait....",style: TextStyle(color: Colors.blueAccent),)
-                      ]),
-                    )
-                  ]));
-        });
-  }
-}
+
 
 class OTPScreen extends StatefulWidget {
   String verificationID,phone;
@@ -86,7 +64,7 @@ class _OTPScreenState extends State<OTPScreen> {
           height: _height,
           width: _width,
           child: CustomPaint(
-            painter: ShapePainter(),
+            painter: ShapePainter(),//image-like background
           ),
         ),
         Align(
@@ -167,16 +145,16 @@ class _OTPScreenState extends State<OTPScreen> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: <Widget>[
-                                  FlatButton(
+                                  TextButton(
                                     onPressed: () =>
                                         _pinPutFocusNode.requestFocus(),
                                     child: const Text('Focus'),
                                   ),
-                                  FlatButton(
+                                  TextButton(
                                     onPressed: () => _pinPutFocusNode.unfocus(),
                                     child: const Text('Unfocus'),
                                   ),
-                                  FlatButton(
+                                  TextButton(
                                     onPressed: () =>
                                         _pinPutController.text = '',
                                     child: const Text('Clear All'),
@@ -184,7 +162,7 @@ class _OTPScreenState extends State<OTPScreen> {
                                 ],
                               ),
                               SizedBox(height: 35.0),
-                              ClickableText(
+                              ClickableText(//this is a custom text widget with onPress feature
                                 text1: 'Did Not Get Code ?',
                                 text2: 'Resend',
                                 press: () {
@@ -206,31 +184,36 @@ class _OTPScreenState extends State<OTPScreen> {
     );
   }
 
+  //with this function, we verify the token sent to the user phone
   verifyOTP(String pin) async {
-    Dialogs.showLoadingDialog(context, _keyLoader);//invoking login
+    Dialogs.showLoadingDialog(context, _keyLoader);//invoking verification
     try {
      // Dialogs.showLoadingDialog(context, _keyLoader);//invoking login
       await FirebaseAuth.instance
           .signInWithCredential(PhoneAuthProvider.credential(
           verificationId:widget.verificationID, smsCode: pin)).then((value)async{
-            if(value!=null){
+            if(value!=null){//After the telephone number verified successfully
+              //we chack if the user is a new farmer or an old farmer
               await showToast(context, fToast, Icons.check, primaryDark,
                   "Telephone number verified");
               bool userFound=false;
               FirebaseFirestore firebaseFirestore= FirebaseFirestore.instance;
+              //here we loop through all the users in our system to check if the just verified number exist
               firebaseFirestore.collection("Users").get().then((querySnapshot)async {
+
                 querySnapshot.docs.forEach((element) {
                   if(element.id==value.user.uid){
-                    userFound=true;
+                    userFound=true;//so if the user exist, we set the bool variable to true
                   }
                 });
-                if(userFound){
+                if(userFound){//so if the user found is true
                   await SharedPrefs.setUserID(value.user.uid);
                   await SharedPrefs.setUserName(value.user.displayName);
                   await SharedPrefs.setUserPhone(value.user.phoneNumber);
                   await showSnackBar("Log in successful...", _scaffoldKey.currentState);
-                  sendToPage(context, HomePage(initPaage: BottomButtons.Home,));
+                  sendToPage(context, MainPage(initPaage: BottomButtons.Home,));
                 }else{
+                  //id the user do not exist, the we send the user to the registration page to fill the forms
                   newUserDialog();
                 }
               });
@@ -247,7 +230,7 @@ class _OTPScreenState extends State<OTPScreen> {
     Navigator.of(_keyLoader.currentContext,rootNavigator: true).pop();//clo
 
   }
-
+//here we first show a dialog to the user, making him/her aware the number used is not registered
   newUserDialog() async {
     return showDialog(
         context: context,
@@ -258,13 +241,16 @@ class _OTPScreenState extends State<OTPScreen> {
             btn1Text: 'Cancel',
             btn2Text: 'Register',
             img: 'assets/images/confirm.png',
-            btn1Press: () {
+            btn1Press: ()async {
+              //if the user cancel and refuse to fill the form, we sign the user out and go back to the welcome page
+              await FirebaseAuth.instance.signOut();//sign user out
+              sendToPage(context, WelcomeScreen());//send to welcome page
               Navigator.pop(context);
             },
             btn2Press: () async {
-             // await FirebaseAuth.instance.signOut();
              setState(() {
-               sendToPage(context,UserForms(widget.phone));
+               //if the user accepts, then we send the user to the registration form
+               sendToPage(context,FarmerRegistrationForm(widget.phone));
              });
             },
           );

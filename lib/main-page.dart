@@ -1,40 +1,53 @@
-import 'package:agriteck_user/common%20UI/dailog-box.dart';
 import 'package:agriteck_user/common-functions/helper-functions.dart';
+import 'package:agriteck_user/commonly-used-widget/bottom-icons.dart';
+import 'package:agriteck_user/commonly-used-widget/dailog-box.dart';
+import 'package:agriteck_user/commonly-used-widget/floating-buttton.dart';
+import 'package:agriteck_user/commonly-used-widget/floating-menu.dart';
 import 'package:agriteck_user/community/commuinity-page.dart';
 import 'package:agriteck_user/crops/crops_screen.dart';
 import 'package:agriteck_user/farms/farm_list.dart';
-import 'package:agriteck_user/common%20UI/bottom-icons.dart';
-import 'package:agriteck_user/common%20UI/floating-buttton.dart';
-import 'package:agriteck_user/common%20UI/floating-menu.dart';
 import 'package:agriteck_user/farms/new-farm-page.dart';
 import 'package:agriteck_user/investors/investor.dart';
 import 'package:agriteck_user/products/products.dart';
+import 'package:agriteck_user/services/sharedPrefs.dart';
 import 'package:agriteck_user/vendors/vendor.dart';
+import 'package:async_loader/async_loader.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:agriteck_user/Diseases-Training/TrainingScreen.dart';
 import 'package:flutter/services.dart';
 
+import 'commonly-used-widget/custom-appbar-with-clipper.dart';
 
 enum BottomButtons { Crops, Farms, Home, Vendors, Market, Investors, Community }
 
-class HomePage extends StatefulWidget {
+class MainPage extends StatefulWidget {
   final BottomButtons initPaage;
-  HomePage({Key key, this.initPaage}) : super(key: key);
+  MainPage({Key key, this.initPaage}) : super(key: key);
   @override
-  _HomePageState createState() => _HomePageState();
+  _MainPageState createState() => _MainPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _MainPageState extends State<MainPage> {
   BottomButtons selectedPage;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-
+  final GlobalKey<AsyncLoaderState> _asyncLoaderState =
+      new GlobalKey<AsyncLoaderState>();
   @override
   void initState() {
     selectedPage = widget.initPaage;
     super.initState();
   }
 
+  String userName, userPhone, userImage;
+  getUserInfo() async {
+    userName = await SharedPrefs.getUsername();
+    userPhone = await SharedPrefs.getUserPhone();
+    userImage = await SharedPrefs.getUserPhoto();
+  }
+
+  //here we check which page we are, then we display the the corresponding title
   Widget setAppBar(selectedPage) {
     return selectedPage != BottomButtons.Home
         ? AppBar(
@@ -54,15 +67,6 @@ class _HomePageState extends State<HomePage> {
                   fontWeight: FontWeight.bold,
                   fontSize: 26),
             ),
-            actions: [
-              IconButton(
-                  icon: Icon(
-                    Icons.more_vert,
-                    size: 35,
-                    color: primaryDark,
-                  ),
-                  onPressed: () {})
-            ],
           )
         : AppBar(
             backgroundColor: Colors.white,
@@ -70,6 +74,8 @@ class _HomePageState extends State<HomePage> {
           );
   }
 
+//===============================================================================
+// here we check which page we are , then we show the user the corressponding floating action buton
   Widget setFloatBott(selectedPage) {
     return selectedPage == BottomButtons.Farms
         ? FloatingMenu(
@@ -131,36 +137,117 @@ class _HomePageState extends State<HomePage> {
                 : null;
   }
 
-
+//================================================================================
+  //here we prompt the user when he/she tries to press back on the main page
+  //when the user tries to quit the application by pressing back
   Future<bool> _onBackPressed() async {
     return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return CustomDialogBox(
-            title: 'Quit !',
-            descriptions: 'Are you Sure you want to quit this application ?',
-            btn1Text: 'No',
-            btn2Text: 'Yes',
-            img: 'assets/images/warning.png',
-            btn1Press: () {
-              Navigator.pop(context);
-            },
-            btn2Press: () {
-              setState(() {
-                SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-              });
-            },
-          );
-        }) ??
+            context: context,
+            builder: (BuildContext context) {
+              return CustomDialogBox(
+                title: 'Quit !',
+                descriptions:
+                    'Are you Sure you want to quit this application ?',
+                btn1Text: 'No',
+                btn2Text: 'Yes',
+                img: 'assets/images/warning.png',
+                btn1Press: () {
+                  Navigator.pop(context);
+                },
+                btn2Press: () {
+                  setState(() {
+                    SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+                  });
+                },
+              );
+            }) ??
         false;
   }
+//======================================================================
   @override
   Widget build(BuildContext context) {
+    var _asyncLoader = new AsyncLoader(
+      key: _asyncLoaderState,
+      initState: () async => await getUserInfo(),
+      renderLoad: () => Center(child: new CircularProgressIndicator()),
+      renderError: ([error]) =>
+          new Text('Sorry, there was an error loading your Information'),
+      renderSuccess: ({data}) => ClipPath(
+        clipper: CustomDrawerrCliper(),
+        child: Container(
+          height: 200,
+
+          child: Padding(
+            padding: const EdgeInsets.only(top: 0),
+            child: UserAccountsDrawerHeader(
+              decoration:BoxDecoration(
+                  gradient: LinearGradient(
+                      colors: [primaryDark, primary, primaryLight],
+                      begin: Alignment.bottomRight,
+                      end: Alignment.topLeft,
+                      tileMode: TileMode.clamp)) ,
+                accountName: Text(userName!=null?userName:"UserName",style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),),
+                accountEmail: Padding(
+                  padding: const EdgeInsets.only(bottom: 25),
+                  child: Text(userPhone!=null?userPhone:"Telephone"),
+                ),
+              currentAccountPicture: CircleAvatar(radius: 100,backgroundColor: Colors.white,
+                backgroundImage:userImage!=null?NetworkImage(userImage):AssetImage('assets/images/person.png'),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
     return WillPopScope(
       onWillPop: _onBackPressed,
       child: Scaffold(
         key: _scaffoldKey,
-        appBar: setAppBar(selectedPage),
+        drawer: Drawer(
+          child: Container(
+            color: Colors.white,
+            child: ListView(
+              physics: NeverScrollableScrollPhysics(),
+              children: [_asyncLoader],
+            ),
+          ),
+        ),
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(100),
+          child: AppBar(
+            elevation: 0,
+            centerTitle: true,
+            backgroundColor: Colors.transparent,
+            title: Text(
+              selectedPage == BottomButtons.Market
+                  ? 'Market'
+                  : selectedPage == BottomButtons.Farms
+                      ? 'Farms'
+                      : selectedPage == BottomButtons.Crops
+                          ? 'Crops'
+                          : selectedPage == BottomButtons.Community
+                              ? 'Community'
+                              : selectedPage == BottomButtons.Home
+                                  ? 'Home'
+                                  : '',
+              style: TextStyle(
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
+                  fontSize: 22),
+            ),
+            flexibleSpace: ClipPath(
+              clipper: CustomAppBarCliper(),
+              child: Container(
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        colors: [primaryDark, primary, primaryLight],
+                        begin: Alignment.bottomRight,
+                        end: Alignment.topLeft,
+                        tileMode: TileMode.clamp)),
+              ),
+            ),
+          ),
+        ),
         floatingActionButton: setFloatBott(selectedPage),
         body: Container(
           decoration: BoxDecoration(
@@ -258,7 +345,8 @@ class _HomePageState extends State<HomePage> {
               BottomIcons(
                 iconColor: primaryDark,
                 text: 'Market',
-                bottomIcons: selectedPage == BottomButtons.Market ? true : false,
+                bottomIcons:
+                    selectedPage == BottomButtons.Market ? true : false,
                 icons: 'assets/icons/market.png',
                 textColor: Colors.white,
                 onPressed: () {

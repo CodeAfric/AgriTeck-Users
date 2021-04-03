@@ -1,36 +1,34 @@
 import 'dart:io';
-
-import 'package:agriteck_user/common%20UI/custom-drop-down.dart';
-import 'package:agriteck_user/common%20UI/dailog-box.dart';
-import 'package:agriteck_user/common%20UI/radio-buttons.dart';
-import 'package:agriteck_user/common%20UI/round_button.dart';
-import 'package:agriteck_user/common%20UI/shape-painter.dart';
 import 'package:agriteck_user/common-functions/helper-functions.dart';
-import 'package:agriteck_user/home/home-screen.dart';
+import 'package:agriteck_user/commonly-used-widget/custom-drop-down.dart';
+import 'package:agriteck_user/commonly-used-widget/dailog-box.dart';
+import 'package:agriteck_user/commonly-used-widget/radio-buttons.dart';
+import 'package:agriteck_user/commonly-used-widget/round_button.dart';
+import 'package:agriteck_user/commonly-used-widget/shape-painter.dart';
+import 'package:agriteck_user/commonly-used-widget/textField.dart';
+import 'file:///C:/Users/emman/StudioProjects/AgriTeck-Users/lib/main-page.dart';
 import 'package:agriteck_user/pojo-classes/farmers-data.dart';
 import 'package:agriteck_user/services/user-services.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:agriteck_user/common UI/textField.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import '../../constant.dart';
+import '../../../constant.dart';
 import '../welcome-screen.dart';
 
-class InvestorForms extends StatefulWidget {
+class FarmerRegistrationForm extends StatefulWidget {
   final String phoneNumber;
 
-  InvestorForms(this.phoneNumber);
+  FarmerRegistrationForm(this.phoneNumber);
 
   @override
-  _InvestorForms createState() => _InvestorForms();
+  _FarmerRegistrationFormState createState() => _FarmerRegistrationFormState();
 }
 
-class _InvestorForms extends State<InvestorForms> {
+class _FarmerRegistrationFormState extends State<FarmerRegistrationForm> {
   String _name, _location, _nationalId, _gender;
   int _numFarms;
   double _farmSize;
@@ -55,7 +53,7 @@ class _InvestorForms extends State<InvestorForms> {
     fToast = FToast();
     fToast.init(context);
   }
-
+//when a user attempt going back this dialog is shown to warn the user
   Future<bool> _onBackPressed() async {
     return showDialog(
             context: context,
@@ -81,7 +79,7 @@ class _InvestorForms extends State<InvestorForms> {
             }) ??
         false;
   }
-
+//=============================================================================
   @override
   Widget build(BuildContext context) {
     double _width = MediaQuery.of(context).size.width;
@@ -111,7 +109,7 @@ class _InvestorForms extends State<InvestorForms> {
             height: _height,
             width: _width,
             child: CustomPaint(
-              painter: ShapePainter(),
+              painter: ShapePainter(),//this is the Image-like design on the backgroun
             ),
           ),
           Align(
@@ -212,7 +210,7 @@ class _InvestorForms extends State<InvestorForms> {
                                   SizedBox(height: 20.0),
                                   CustomDropDown(
                                     value: _specialized,
-                                    hint: 'Select category',
+                                    hint: 'Select Speciality',
                                     itemsList: speciality,
                                     onChanged: (value) {
                                       setState(() {
@@ -418,7 +416,6 @@ class _InvestorForms extends State<InvestorForms> {
 
   Widget getDateOfBirth() {
     return Container(
-      //margin: EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
           color: Colors.white,
@@ -558,7 +555,6 @@ class _InvestorForms extends State<InvestorForms> {
         await showSnackBar(
             "Please select you Date of Birth", _scaffoldKey.currentState);
       } else {
-        // print('working from here---------------------------------------');
         _formKey.currentState.save();
         try {
           _age = getYears(_dateTime);
@@ -585,10 +581,9 @@ class _InvestorForms extends State<InvestorForms> {
             isLoading = false;
             await showToast(
                 context, fToast, Icons.check, primaryDark, "User data Saved");
-
             sendToPage(
                 context,
-                HomePage(
+                MainPage(
                   initPaage: BottomButtons.Home,
                 ));
           }
