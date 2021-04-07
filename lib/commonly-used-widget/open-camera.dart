@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:agriteck_user/diseases/disease_detection_details.dart';
+import 'package:agriteck_user/diseases-page/disease-detection-details.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';

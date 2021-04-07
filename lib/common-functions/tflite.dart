@@ -17,24 +17,24 @@ Future loadModel() async {
 
 Future predictDesease(var image) async {
   try {
-    print('-----------------------------------working from here');
-    print('-----------------------------------${image.path}e');
     // Start a timer for the process
     int startTime = new DateTime.now().millisecondsSinceEpoch;
     // Load the model
 
-   loadModel().then((val) {
-      print('======================================object Model Loaded');
-    });
+    var objectType = await detectImage(image).then((value) => null);
 
-// Run the Model on the image the is selested
-// Return a List of Predictions a map datatype
+    print(objectType);
+
+    await loadModel().then((value) => null);
+
+    // Run the Model on the image the is selested
+    // Return a List of Predictions a map datatype
     var prediction = await Tflite.runModelOnImage(
       path: image.path,
-      numResults: 1,
-      threshold: 0.05,
-      imageMean: 255.0,
-      imageStd: 255.0,
+      numResults: 5,
+      // threshold: 0.05,
+      imageMean: 224.0,
+      imageStd: 224.0,
     );
 
     // Record the end time for the process
@@ -45,7 +45,40 @@ Future predictDesease(var image) async {
     Tflite.close();
 
     // Return the predictionop
-    print('=================from first============\n${prediction}\n==============================');
+    print(
+        '=================from first============\n${prediction}\n==============================');
+    return prediction;
+  } catch (e) {
+    print(e);
+  }
+}
+
+Future detectImage(var image) async {
+  try {
+    String res = await Tflite.loadModel(
+        model: "assets/mobilenet_model/ssd_mobilenet_v1_1_metadata_1.tflite",
+        labels:
+            "assets/mobilenet_model/labels_mobilenet.txt" // defaults to false, set to true to use GPU delegate
+        );
+
+    var prediction;
+
+    if (res == 'success') {
+      prediction = await Tflite.detectObjectOnImage(
+        path: image.path,
+        // model: 'MobileNet',
+        // threshold: 0.05,
+        imageMean: 224.0,
+        imageStd: 224.0,
+      );
+    }
+
+    // Dispose the Tflite to free up resources
+    Tflite.close();
+
+    // Return the predictionop
+    print(
+        '=================from first============\n$prediction\n==============================');
     return prediction;
   } catch (e) {
     print(e);

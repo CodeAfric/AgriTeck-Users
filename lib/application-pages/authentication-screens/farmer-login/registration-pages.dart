@@ -6,7 +6,6 @@ import 'package:agriteck_user/commonly-used-widget/radio-buttons.dart';
 import 'package:agriteck_user/commonly-used-widget/round_button.dart';
 import 'package:agriteck_user/commonly-used-widget/shape-painter.dart';
 import 'package:agriteck_user/commonly-used-widget/textField.dart';
-import 'file:///C:/Users/emman/StudioProjects/AgriTeck-Users/lib/main-page.dart';
 import 'package:agriteck_user/pojo-classes/farmers-data.dart';
 import 'package:agriteck_user/services/user-services.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
@@ -17,6 +16,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import '../../../constant.dart';
+import '../../../main-page.dart';
 import '../welcome-screen.dart';
 
 class FarmerRegistrationForm extends StatefulWidget {
@@ -53,6 +53,7 @@ class _FarmerRegistrationFormState extends State<FarmerRegistrationForm> {
     fToast = FToast();
     fToast.init(context);
   }
+
 //when a user attempt going back this dialog is shown to warn the user
   Future<bool> _onBackPressed() async {
     return showDialog(
@@ -79,6 +80,7 @@ class _FarmerRegistrationFormState extends State<FarmerRegistrationForm> {
             }) ??
         false;
   }
+
 //=============================================================================
   @override
   Widget build(BuildContext context) {
@@ -109,7 +111,8 @@ class _FarmerRegistrationFormState extends State<FarmerRegistrationForm> {
             height: _height,
             width: _width,
             child: CustomPaint(
-              painter: ShapePainter(),//this is the Image-like design on the backgroun
+              painter:
+                  ShapePainter(), //this is the Image-like design on the backgroun
             ),
           ),
           Align(

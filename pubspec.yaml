@@ -52,6 +52,7 @@ flutter:
     - assets/icons/
     - assets/images/
     - assets/
+    - assets/mobilenet_model/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

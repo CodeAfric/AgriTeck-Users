@@ -5,16 +5,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class UserServices {
-  static Future<void> saveUserInfo(String id, Farmers farmers)async{
-    FirebaseFirestore.instance.collection('Users').doc(id).set(
-      farmers.toMap());
-
+  static Future<void> saveUserInfo(String id, Farmers farmers) async {
+    FirebaseFirestore.instance.collection('Users').doc(id).set(farmers.toMap());
   }
 
-  static Future<void> saveFarm(String id, Farms farms)async{
-    FirebaseFirestore.instance.collection("Farms").doc(id).set(
-        farms.toMap());
-
+  static Future<void> saveFarm(String id, Farms farms) async {
+    FirebaseFirestore.instance.collection("Farms").doc(id).set(farms.toMap());
   }
 
   static Future<DocumentSnapshot> getUser(String userID) {
@@ -40,10 +36,11 @@ class UserServices {
         .FirebaseStorage.instance
         .ref()
         .child('Images')
-        .child('Farms').child(userID)
+        .child('Farms')
+        .child(userID)
         .child(image.path);
     firebase_storage.TaskSnapshot storageTaskSnapshot =
-    await reference.putFile(image);
+        await reference.putFile(image);
     final String downloadUrl = await storageTaskSnapshot.ref.getDownloadURL();
 
     return downloadUrl;
@@ -51,13 +48,12 @@ class UserServices {
 
   static Future<Map<String, dynamic>> querySingleUser(String userId) async {
     Map<String, dynamic> data;
-    FirebaseFirestore firebaseFirestore= FirebaseFirestore.instance;
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     firebaseFirestore.collection("Users").get().then((querySnapshot) {
       querySnapshot.docs.forEach((element) {
-        if(element.id==userId){
-          data=element.data();
+        if (element.id == userId) {
+          data = element.data();
         }
-
       });
     });
     return data;

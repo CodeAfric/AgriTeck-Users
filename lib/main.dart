@@ -1,3 +1,4 @@
+import 'package:agriteck_user/home-page/home-page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -15,18 +16,19 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-   // FirebaseAuth.instance.signOut();
+    // FirebaseAuth.instance.signOut();
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'AgriTek',
       theme: ThemeData(),
-      home:Home(),
-      // FirebaseAuth.instance.currentUser != null
-      //     ? MainPage(
-      //         initPaage: BottomButtons.Home,
-      //       )
-      //     : WelcomeScreen()
+      home: FirebaseAuth.instance.currentUser != null
+          ? MainPage(
+              initPaage: BottomButtons.Home,
+            )
+          : MainPage(
+              initPaage: BottomButtons.Home,
+            ),
     );
   }
 }
