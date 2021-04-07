@@ -5,7 +5,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'application-pages/authentication-screens/welcome-screen.dart';
 import 'main-page.dart';
-import 'package:agriteck_user/home-page/home-page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +23,6 @@ class MyApp extends StatelessWidget {
     // FirebaseAuth.instance.signOut();
 
     return MaterialApp(
-<<<<<<< Updated upstream
       debugShowCheckedModeBanner: false,
       title: 'AgriTek',
       theme: ThemeData(),
@@ -32,24 +30,11 @@ class MyApp extends StatelessWidget {
           ? MainPage(
               initPaage: BottomButtons.Home,
             )
-          : MainPage(
+          :
+          // WelcomeScreen(),
+          MainPage(
               initPaage: BottomButtons.Home,
             ),
-      // home:
-      // FirebaseAuth.instance.currentUser != null
-      //     ? MainPage(
-      //         initPaage: BottomButtons.Home,
-      //       ) :WelcomeScreen()
     );
-=======
-        debugShowCheckedModeBanner: false,
-        title: 'AgriTek',
-        theme: ThemeData(),
-        home: FirebaseAuth.instance.currentUser != null
-            ? HomePage(
-                initPaage: BottomButtons.Home,
-              )
-            : HomePage());
->>>>>>> Stashed changes
   }
 }
