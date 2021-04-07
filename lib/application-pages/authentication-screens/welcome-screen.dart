@@ -147,7 +147,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                   width: 200,
                                   child: RoundedButton(
                                       isLoading: isLoading,
-                                      textColor: Colors.white,
                                       text: 'SUBMIT',
                                       color: primary,
                                       press: _verify)),

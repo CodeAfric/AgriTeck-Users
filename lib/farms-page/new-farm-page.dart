@@ -4,7 +4,7 @@ import 'package:agriteck_user/commonly-used-widget/round_button.dart';
 import 'package:agriteck_user/commonly-used-widget/shape-painter.dart';
 import 'package:agriteck_user/commonly-used-widget/textField.dart';
 import 'file:///C:/Users/emman/StudioProjects/AgriTeck-Users/lib/main-page.dart';
-import 'package:agriteck_user/pojo-classes/farms.dart';
+import 'package:agriteck_user/pojo-classes/farms-data.dart';
 import 'package:agriteck_user/services/sharedPrefs.dart';
 import 'package:agriteck_user/services/user-services.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
@@ -182,7 +182,6 @@ class _NewFarmState extends State<NewFarm> {
                                     width: 200,
                                     child: RoundedButton(
                                         isLoading: isLoading,
-                                        textColor: Colors.white,
                                         text: 'SAVE DATA',
                                         color: primary,
                                         press: isLoading ? null : saveData)),

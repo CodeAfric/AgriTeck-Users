@@ -271,7 +271,6 @@ class _FarmerRegistrationFormState extends State<FarmerRegistrationForm> {
                                       width: 200,
                                       child: RoundedButton(
                                           isLoading: isLoading,
-                                          textColor: Colors.white,
                                           text: 'SUBMIT',
                                           color: primary,
                                           press: isLoading ? null : saveData)),

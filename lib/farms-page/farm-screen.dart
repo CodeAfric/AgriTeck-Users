@@ -1,8 +1,10 @@
 import 'package:agriteck_user/common-functions/helper-functions.dart';
-import 'package:agriteck_user/farms/farm-details.dart';
+import 'package:agriteck_user/pojo-classes/farms-data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
+
+import 'farm-details.dart';
 
 class FarmScreen extends StatefulWidget {
   @override
@@ -30,11 +32,12 @@ class _FarmScreenState extends State<FarmScreen> {
 }
 
 class ListItems extends StatelessWidget {
+  final Farms farms;
   final String farmImage;
   final String farmName;
   final String farmLocation;
 
-  const ListItems({Key key, this.farmImage, this.farmName, this.farmLocation})
+  const ListItems({Key key,this.farms, this.farmImage, this.farmName, this.farmLocation})
       : super(key: key);
 
   @override

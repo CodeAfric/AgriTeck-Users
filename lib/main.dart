@@ -1,12 +1,18 @@
+
+import 'package:agriteck_user/services/sharedPrefs.dart';
+import 'package:agriteck_user/services/user-services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'application-pages/authentication-screens/welcome-screen.dart';
 import 'main-page.dart';
-import 'test pages/main.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final _position = await SharedPrefs.getPositionInfo();
+  if (_position == null) {
+    await preferCurrentLoc();
+  }
   await Firebase.initializeApp();
   runApp(MyApp());
 }
@@ -21,12 +27,12 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'AgriTek',
       theme: ThemeData(),
-      home:Home(),
-      // FirebaseAuth.instance.currentUser != null
-      //     ? MainPage(
-      //         initPaage: BottomButtons.Home,
-      //       )
-      //     : WelcomeScreen()
+      home:
+      FirebaseAuth.instance.currentUser != null
+          ? MainPage(
+              initPaage: BottomButtons.Home,
+            ) :WelcomeScreen()
     );
   }
+
 }
