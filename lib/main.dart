@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
     // FirebaseAuth.instance.signOut();
 
     return MaterialApp(
+<<<<<<< Updated upstream
       debugShowCheckedModeBanner: false,
       title: 'AgriTek',
       theme: ThemeData(),
@@ -40,5 +41,15 @@ class MyApp extends StatelessWidget {
       //         initPaage: BottomButtons.Home,
       //       ) :WelcomeScreen()
     );
+=======
+        debugShowCheckedModeBanner: false,
+        title: 'AgriTek',
+        theme: ThemeData(),
+        home: FirebaseAuth.instance.currentUser != null
+            ? HomePage(
+                initPaage: BottomButtons.Home,
+              )
+            : HomePage());
+>>>>>>> Stashed changes
   }
 }
