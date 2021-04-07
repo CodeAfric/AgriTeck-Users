@@ -177,7 +177,6 @@ class _NewFarmState extends State<NewFarm> {
                                     width: 200,
                                     child: RoundedButton(
                                         isLoading: isLoading,
-                                        textColor: Colors.white,
                                         text: 'SAVE DATA',
                                         color: primary,
                                         press: isLoading ? null : saveData)),

@@ -1,8 +1,12 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:agriteck_user/pojo-classes/farmers-data.dart';
-import 'package:agriteck_user/pojo-classes/farms.dart';
+import 'package:agriteck_user/pojo-classes/farms-data.dart';
+import 'package:agriteck_user/services/sharedPrefs.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 
 class UserServices {
   static Future<void> saveUserInfo(String id, Farmers farmers) async {
@@ -59,3 +63,84 @@ class UserServices {
     return data;
   }
 }
+
+//the logic that will work is when the app is first launched,
+//user will have the options to choose current location or another location
+//and that location will be saved
+
+//Next launch make sure that we get the position and the name before we get to the home screen
+//On the home screen, the name is shown on the app bar and when it is clicked it should go to the mapping page
+
+
+/// When the location services are not enabled or permissions
+/// are denied the `Future` will return an error.
+Future<Position> _determinePosition() async {
+  bool serviceEnabled;
+  LocationPermission permission;
+
+  // Test if location services are enabled.
+  serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  if (!serviceEnabled) {
+    // Location services are not enabled don't continue
+    // accessing the position and request users of the
+    // App to enable the location services.
+    return Future.error('Location services are disabled.');
+  }
+
+  permission = await Geolocator.checkPermission();
+  if (permission == LocationPermission.denied) {
+    permission = await Geolocator.requestPermission();
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
+    }
+
+    if (permission == LocationPermission.denied) {
+      // Permissions are denied, next time you could try
+      // requesting permissions again (this is also where
+      // Android's shouldShowRequestPermissionRationale
+      // returned true. According to Android guidelines
+      // your App should show an explanatory UI now.
+      return Future.error(
+          'Location permissions are denied');
+    }
+  }
+
+  // When we reach here, permissions are granted and we can
+  // continue accessing the position of the device.
+  return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+}
+
+//method that fires when the user prefers current location
+Future<bool> preferCurrentLoc() async {
+  try {
+      final _locaData = await _determinePosition();
+      print('____________________________________________________________');
+      print('$_locaData');
+      print('____________________________________________________________');
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+          _locaData.latitude,
+          _locaData.longitude
+      );
+      Placemark place = placemarks[0];
+      Map<String, dynamic> _userAddress = {
+        "location": {"lat":  _locaData.latitude, "long": _locaData.longitude},
+        "locationName": place.name,
+        "street":place.street,
+        "country":place.country,
+        "locality":place.locality,
+        "region":place.administrativeArea,
+        "countyCode":place.isoCountryCode
+      };
+      SharedPrefs.savePositionInfo(_userAddress);
+      print('==============================================================');
+      print('${place}');
+      print('==============================================================');
+      return true;
+  } catch (e) {
+    print('location error ' + e.toString());
+    return false;
+  }
+}
+

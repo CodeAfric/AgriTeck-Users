@@ -1,5 +1,6 @@
 import 'package:agriteck_user/common-functions/helper-functions.dart';
 import 'package:agriteck_user/commonly-used-widget/bottom-icons.dart';
+import 'package:agriteck_user/commonly-used-widget/custom_app_bar.dart';
 import 'package:agriteck_user/commonly-used-widget/dailog-box.dart';
 import 'package:agriteck_user/commonly-used-widget/floating-buttton.dart';
 import 'package:agriteck_user/commonly-used-widget/floating-menu.dart';
@@ -8,6 +9,7 @@ import 'package:agriteck_user/crops-page/crops-page.dart';
 import 'package:agriteck_user/farms-page/farm-page.dart';
 import 'package:agriteck_user/farms-page/new-farm-page.dart';
 import 'package:agriteck_user/investors/investor.dart';
+import 'package:agriteck_user/pojo-classes/tips-data.dart';
 import 'package:agriteck_user/products/products.dart';
 import 'package:agriteck_user/services/sharedPrefs.dart';
 import 'package:agriteck_user/vendors/vendor.dart';
@@ -17,8 +19,11 @@ import 'package:flutter/material.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:agriteck_user/Diseases-Training/TrainingScreen.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'commonly-used-widget/custom-appbar-with-clipper.dart';
+import 'farms-page/farm-screen.dart';
+import 'farms-page/new-farm-page.dart';
+import 'home-page/home-page.dart';
 
 enum BottomButtons { Crops, Farms, Home, Vendors, Market, Investors, Community }
 
@@ -47,32 +52,6 @@ class _MainPageState extends State<MainPage> {
     userImage = await SharedPrefs.getUserPhoto();
   }
 
-  //here we check which page we are, then we display the the corresponding title
-  Widget setAppBar(selectedPage) {
-    return selectedPage != BottomButtons.Home
-        ? AppBar(
-            backgroundColor: primaryLight.withOpacity(0.7),
-            title: Text(
-              selectedPage == BottomButtons.Market
-                  ? 'Market'
-                  : selectedPage == BottomButtons.Farms
-                      ? 'Farms'
-                      : selectedPage == BottomButtons.Crops
-                          ? 'Crops'
-                          : selectedPage == BottomButtons.Community
-                              ? 'Community'
-                              : '',
-              style: TextStyle(
-                  color: primaryDark,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 26),
-            ),
-          )
-        : AppBar(
-            backgroundColor: Colors.white,
-            elevation: 0,
-          );
-  }
 
 //===============================================================================
 // here we check which page we are , then we show the user the corressponding floating action buton
@@ -173,34 +152,24 @@ class _MainPageState extends State<MainPage> {
       renderLoad: () => Center(child: new CircularProgressIndicator()),
       renderError: ([error]) =>
           new Text('Sorry, there was an error loading your Information'),
-      renderSuccess: ({data}) => ClipPath(
-        clipper: CustomDrawerrCliper(),
-        child: Container(
-          height: 200,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 0),
-            child: UserAccountsDrawerHeader(
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      colors: [primaryDark, primary, primaryLight],
-                      begin: Alignment.bottomRight,
-                      end: Alignment.topLeft,
-                      tileMode: TileMode.clamp)),
-              accountName: Text(
-                userName != null ? userName : "UserName",
-                style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
-              ),
+      renderSuccess: ({data}) => Container(
+        height: 200,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 0),
+          child: UserAccountsDrawerHeader(
+            decoration:BoxDecoration(
+                gradient: LinearGradient(
+                    colors: [primaryDark, primary, primaryLight],
+                    begin: Alignment.bottomRight,
+                    end: Alignment.topLeft,
+                    tileMode: TileMode.clamp)) ,
+              accountName: Text(userName!=null?userName:"UserName",style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),),
               accountEmail: Padding(
                 padding: const EdgeInsets.only(bottom: 25),
-                child: Text(userPhone != null ? userPhone : "Telephone"),
+                child: Text(userPhone!=null?userPhone:"Telephone"),
               ),
-              currentAccountPicture: CircleAvatar(
-                radius: 100,
-                backgroundColor: Colors.white,
-                backgroundImage: userImage != null
-                    ? NetworkImage(userImage)
-                    : AssetImage('assets/images/person.png'),
-              ),
+            currentAccountPicture: CircleAvatar(radius: 100,backgroundColor: Colors.white,
+              backgroundImage:userImage!=null?NetworkImage(userImage):AssetImage('assets/images/person.png'),
             ),
           ),
         ),
@@ -219,77 +188,21 @@ class _MainPageState extends State<MainPage> {
             ),
           ),
         ),
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(100),
-          child: AppBar(
-            elevation: 0,
-            centerTitle: true,
-            backgroundColor: Colors.transparent,
-            title: Text(
-              selectedPage == BottomButtons.Market
-                  ? 'Market'
-                  : selectedPage == BottomButtons.Farms
-                      ? 'Farms'
-                      : selectedPage == BottomButtons.Crops
-                          ? 'Crops'
-                          : selectedPage == BottomButtons.Community
-                              ? 'Community'
-                              : selectedPage == BottomButtons.Home
-                                  ? 'Home'
-                                  : '',
-              style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  color: Colors.white,
-                  fontSize: 22),
-            ),
-            flexibleSpace: ClipPath(
-              clipper: CustomAppBarCliper(),
-              child: Container(
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        colors: [primaryDark, primary, primaryLight],
-                        begin: Alignment.bottomRight,
-                        end: Alignment.topLeft,
-                        tileMode: TileMode.clamp)),
-              ),
-            ),
-          ),
+        appBar: CustomAppBar(
+          leadingIcon: Icons.menu,
         ),
         floatingActionButton: setFloatBott(selectedPage),
-        body: Container(
-          decoration: BoxDecoration(
-            color: primaryLight.withOpacity(0.3),
-          ),
-          child: selectedPage == BottomButtons.Home
-              ? Training()
-              : selectedPage == BottomButtons.Community
-                  ? CommunityScreen()
-                  : selectedPage == BottomButtons.Crops
-                      ? CropsScreen()
-                      : selectedPage == BottomButtons.Farms
-                          ? FarmsScreen()
-                          : selectedPage == BottomButtons.Market
-                              ? ProductScreen()
-                              : Container(),
-        ),
-        bottomNavigationBar: Container(
-          height: 70,
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-            color: primaryLight.withOpacity(0.9),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 3,
-                blurRadius: 5,
-                offset: Offset(0, 0), // changes position of shadow
-              ),
-            ],
-          ),
-          padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        body: selectedPage == BottomButtons.Home
+            ? HomeScreen(tips: Tips.testTips()[0],)
+            : selectedPage == BottomButtons.Community
+                ? CommunityScreen()
+                : selectedPage == BottomButtons.Crops
+                    ? CropScreen()
+                    : selectedPage == BottomButtons.Farms
+                        ? FarmScreen()
+                        : selectedPage == BottomButtons.Market
+                            ? ProductScreen()
+                            : Container(),
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               BottomIcons(
@@ -301,7 +214,6 @@ class _MainPageState extends State<MainPage> {
                 onPressed: () {
                   setState(() {
                     selectedPage = BottomButtons.Home;
-                  });
                 },
                 activeColor: primary,
                 activeIconColor: Colors.white,

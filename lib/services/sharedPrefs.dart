@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefs{
@@ -54,6 +56,29 @@ class SharedPrefs{
   static Future<String> getUserPhoto() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return Future(() => prefs.getString('photoUrl'));
+  }
+
+
+  // save position info on storage
+  static Future<bool> savePositionInfo(Map<String, dynamic> position) async {
+    final _prefs = await SharedPreferences.getInstance();
+    return await _prefs.setString('position', json.encode(position));
+  }
+
+  // get position info on storage
+  static Future<Map<String, dynamic>> getPositionInfo() async {
+    final _prefs = await SharedPreferences.getInstance();
+    final _position = _prefs.getString('position');
+    try {
+      return json.decode(_position) as Map<String, dynamic>;
+    } catch (err) {
+      return null;
+    }
+  }
+
+  static Future<bool> deleteLocation() async {
+    final _prefs = await SharedPreferences.getInstance();
+    return await _prefs.remove('position');
   }
 
 
