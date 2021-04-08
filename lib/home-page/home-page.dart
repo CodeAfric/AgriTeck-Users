@@ -21,56 +21,59 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<AsyncLoaderState> _asyncLoaderState =
-  new GlobalKey<AsyncLoaderState>();
-  Map<String, dynamic> weatherJSON,waetherForFivedays;
+      new GlobalKey<AsyncLoaderState>();
+  Map<String, dynamic> weatherJSON, waetherForFivedays;
   String _currentDate;
   var _userLocation;
-  getWeatherUpdate()async{
-    WeatherServices weather = new WeatherServices("9be7d9f30e6275394f7aa27d8093dd5f");
+  getWeatherUpdate() async {
+    WeatherServices weather =
+        new WeatherServices("9be7d9f30e6275394f7aa27d8093dd5f");
     weatherJSON = await weather.getCurrentWeather();
-    waetherForFivedays= await weather.getFiveDayForecast();
-    _currentDate=weather.getDateTime();
-    _userLocation=await SharedPrefs.getPositionInfo();
-    print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-    List data=waetherForFivedays['list'];
+    waetherForFivedays = await weather.getFiveDayForecast();
+    _currentDate = weather.getDateTime();
+    _userLocation = await SharedPrefs.getPositionInfo();
+    print(
+        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+    List data = waetherForFivedays['list'];
     data.forEach((element) {
       print('$element');
-      print('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+      print(
+          '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
     });
-
-
-
   }
+
   @override
   void initState() {
-  // getWeatherUpdate();
+    // getWeatherUpdate();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
     return Container(
-      height: MediaQuery.of(context).size.height,
-      width: MediaQuery.of(context).size.width,
+      height: screenHeight,
+      width: screenWidth,
       child: CustomScrollView(
         physics: ClampingScrollPhysics(),
         slivers: <Widget>[
-          widget.tips!=null? _tipOfTheDay(screenHeight,widget.tips):SliverToBoxAdapter(),
-          _cureYouPlant(screenHeight),
+          widget.tips != null
+              ? _tipOfTheDay(screenHeight, widget.tips)
+              : SliverToBoxAdapter(),
+          _cureYouPlant(screenHeight, screenWidth),
           _weatherCard(screenHeight),
         ],
       ),
     );
   }
 
-  SliverToBoxAdapter _tipOfTheDay(double screenHeight,Tips tips) {
+  SliverToBoxAdapter _tipOfTheDay(double screenHeight, Tips tips) {
     return SliverToBoxAdapter(
       child: Container(
         padding: const EdgeInsets.all(20.0),
         decoration: BoxDecoration(
           color: primary,
-
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(40.0),
             bottomRight: Radius.circular(40.0),
@@ -81,7 +84,10 @@ class _HomeScreenState extends State<HomeScreen> {
           children: <Widget>[
             Row(
               children: <Widget>[
-                Icon(FontAwesomeIcons.lightbulb,color: Colors.yellow,),
+                Icon(
+                  FontAwesomeIcons.lightbulb,
+                  color: Colors.yellow,
+                ),
                 Text(
                   'Tip of the Day',
                   style: const TextStyle(
@@ -91,9 +97,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 Spacer(),
-                Icon(FontAwesomeIcons.calendarDay,size: 20,color: Colors.black45,),
-                Text(tips.tipDate,style: TextStyle(fontWeight: FontWeight.w600,fontSize: 16,color: Colors.black45),)
-
+                Icon(
+                  FontAwesomeIcons.calendarDay,
+                  size: 20,
+                  color: Colors.black45,
+                ),
+                Text(
+                  tips.tipDate,
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                      color: Colors.black45),
+                )
               ],
             ),
             SizedBox(height: screenHeight * 0.03),
@@ -154,83 +169,81 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  SliverToBoxAdapter _cureYouPlant(double screenHeight) {
-
+  SliverToBoxAdapter _cureYouPlant(double screenHeight, double screenWidth) {
     return SliverToBoxAdapter(
-      child: Container(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              'Cure Your Plant',
-              style: const TextStyle(
-                fontSize: 22.0,
-                fontWeight: FontWeight.w600,
-              ),
+        child: Container(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            'Cure Your Plant',
+            style: const TextStyle(
+              fontSize: 22.0,
+              fontWeight: FontWeight.w600,
             ),
-            const SizedBox(height: 20.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: procedure
-                  .map((e) => Column(
-                children: <Widget>[
-                  CircleAvatar(
-                    radius: 60,
-                    backgroundImage: AssetImage(
-                      e.keys.first,
-
-                    ),
-                  ),
-                  SizedBox(height: screenHeight * 0.015),
-                  Text(
-                    e.values.first,
-                    style: const TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w500,
-                    ),
-                    textAlign: TextAlign.center,
-                  )
-                ],
-              ))
-                  .toList(),
-            ),
-            SizedBox(height: 15,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                FlatButton.icon(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 10.0,
-                    horizontal: 60.0,
-                  ),
-                  onPressed: () {
-                    //ToDo here we open tips details dialog
-                  },
-                  color: primaryDark,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  icon: const Icon(
-                    FontAwesomeIcons.camera,
-                    color: Colors.white,
-                  ),
-                  label: Text(
-                    'Capture Plant',
-                    style: Styles.buttonTextStyle,
-                  ),
-                  textColor: Colors.white,
+          ),
+          const SizedBox(height: 20.0),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: procedure
+                .map((e) => Column(
+                      children: <Widget>[
+                        CircleAvatar(
+                          radius: screenWidth * 0.1,
+                          backgroundImage: AssetImage(
+                            e.keys.first,
+                          ),
+                        ),
+                        SizedBox(height: screenHeight * 0.015),
+                        Text(
+                          e.values.first,
+                          style: const TextStyle(
+                            fontSize: 16.0,
+                            fontWeight: FontWeight.w500,
+                          ),
+                          textAlign: TextAlign.center,
+                        )
+                      ],
+                    ))
+                .toList(),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              FlatButton.icon(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 10.0,
+                  horizontal: 60.0,
                 ),
-              ],
-            )
-          ],
-        ),
-      )
-    );
+                onPressed: () {
+                  //ToDo here we open tips details dialog
+                },
+                color: primaryDark,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+                icon: const Icon(
+                  FontAwesomeIcons.camera,
+                  color: Colors.white,
+                ),
+                label: Text(
+                  'Capture Plant',
+                  style: Styles.buttonTextStyle,
+                ),
+                textColor: Colors.white,
+              ),
+            ],
+          )
+        ],
+      ),
+    ));
   }
 
   SliverToBoxAdapter _weatherCard(double screenHeight) {
-
     var _asyncLoader = new AsyncLoader(
       key: _asyncLoaderState,
       initState: () async => await getWeatherUpdate(),
@@ -239,7 +252,7 @@ class _HomeScreenState extends State<HomeScreen> {
           height: 100,
           child: Center(child: new CircularProgressIndicator())),
       renderError: ([error]) =>
-      new Text('Sorry, there was an error loading Weather'),
+          new Text('Sorry, there was an error loading Weather'),
       renderSuccess: ({data}) => Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
@@ -254,53 +267,97 @@ class _HomeScreenState extends State<HomeScreen> {
               width: double.infinity,
               child: Column(
                 children: [
-                  SizedBox(height: 5,),
-                  Text('${weatherJSON['name']} - ${_userLocation['locationName']}',style: TextStyle(fontSize: 20,color: Colors.black45,fontWeight:FontWeight.bold),),
-                  SizedBox(height: 5,),
-                  Text(_currentDate,style: TextStyle(fontSize: 14,color: Colors.black45,fontWeight:FontWeight.w300),),
-                  SizedBox(height: 5,),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    '${weatherJSON['name']} - ${_userLocation['locationName']}',
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.black45,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    _currentDate,
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.black45,
+                        fontWeight: FontWeight.w300),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
                 ],
               )),
           Padding(
-            padding: const EdgeInsets.only(left:12.0,right: 12,top: 8,bottom: 15),
+            padding: const EdgeInsets.only(
+                left: 12.0, right: 12, top: 8, bottom: 15),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('${weatherJSON['weather'][0]['main']} - ${weatherJSON['weather'][0]['description']}',style: TextStyle(fontSize: 14,color: Colors.black45,fontWeight:FontWeight.bold),),
-                        SizedBox(height: 10,),
-                        RichText(
-                          text: TextSpan(children: [
-                            TextSpan(
-                                text: '${weatherJSON['main']['temp'].toStringAsFixed(1)}',
-                                style: TextStyle(fontSize: 55,color: Colors.black45,fontWeight:FontWeight.bold)),
-                            WidgetSpan(
-                              child: Transform.translate(
-                                offset: const Offset(2, -4),
-                                child: Text(
-                                  '°C',
-                                  //superscript is usually smaller in size
-                                  textScaleFactor: 0.7,
-                                  style: TextStyle(fontSize: 30,color: Colors.black45,fontWeight:FontWeight.bold)
-                                ),
-                              ),
-                            )
-                          ]),
-                        ),
-                      ],
-                    )),
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      '${weatherJSON['weather'][0]['main']} - ${weatherJSON['weather'][0]['description']}',
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.black45,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    RichText(
+                      text: TextSpan(children: [
+                        TextSpan(
+                            text:
+                                '${weatherJSON['main']['temp'].toStringAsFixed(1)}',
+                            style: TextStyle(
+                                fontSize: 55,
+                                color: Colors.black45,
+                                fontWeight: FontWeight.bold)),
+                        WidgetSpan(
+                          child: Transform.translate(
+                            offset: const Offset(2, -4),
+                            child: Text('°C',
+                                //superscript is usually smaller in size
+                                textScaleFactor: 0.7,
+                                style: TextStyle(
+                                    fontSize: 30,
+                                    color: Colors.black45,
+                                    fontWeight: FontWeight.bold)),
+                          ),
+                        )
+                      ]),
+                    ),
+                  ],
+                )),
                 Container(
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset("assets/images/weather.png",height: 100,width: 100,),
-                        SizedBox(height: 10,),
-                        Text('Wind: ${weatherJSON['wind']['speed'].toStringAsFixed(2)}m/s',style: TextStyle(fontSize: 17,color: Colors.black45,fontWeight:FontWeight.w500),)
-                      ],
-                    )),
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      "assets/images/weather.png",
+                      height: 100,
+                      width: 100,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      'Wind: ${weatherJSON['wind']['speed'].toStringAsFixed(2)}m/s',
+                      style: TextStyle(
+                          fontSize: 17,
+                          color: Colors.black45,
+                          fontWeight: FontWeight.w500),
+                    )
+                  ],
+                )),
               ],
             ),
           ),
@@ -309,15 +366,15 @@ class _HomeScreenState extends State<HomeScreen> {
     );
     return SliverToBoxAdapter(
       child: GestureDetector(
-        onTap: (){
+        onTap: () {
           sendToPage(context, WeatherDetails());
         },
         child: Card(
-          margin: EdgeInsets.symmetric(horizontal: 15,vertical: 10),
-          elevation: 5,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          child: _asyncLoader
-        ),
+            margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            elevation: 5,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            child: _asyncLoader),
       ),
     );
   }

@@ -3,7 +3,6 @@ import 'package:agriteck_user/common-functions/helper-functions.dart';
 import 'package:agriteck_user/commonly-used-widget/round_button.dart';
 import 'package:agriteck_user/commonly-used-widget/shape-painter.dart';
 import 'package:agriteck_user/commonly-used-widget/textField.dart';
-import 'file:///C:/Users/emman/StudioProjects/AgriTeck-Users/lib/main-page.dart';
 import 'package:agriteck_user/pojo-classes/farms-data.dart';
 import 'package:agriteck_user/services/sharedPrefs.dart';
 import 'package:agriteck_user/services/user-services.dart';
@@ -14,17 +13,17 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
+import '../main-page.dart';
 
 class NewFarm extends StatefulWidget {
-
   @override
   _NewFarmState createState() => _NewFarmState();
 }
 
 class _NewFarmState extends State<NewFarm> {
-  String farmId,description;
-  List<Map<String,dynamic>> farmState;
-  String  cropType;
+  String farmId, description;
+  List<Map<String, dynamic>> farmState;
+  String cropType;
   File image;
   double farmSize;
   String location;
@@ -110,7 +109,6 @@ class _NewFarmState extends State<NewFarm> {
                                     } else
                                       return null;
                                   },
-
                                   isPassword: false,
                                 ),
                                 SizedBox(
@@ -134,7 +132,6 @@ class _NewFarmState extends State<NewFarm> {
                                   },
                                   isPassword: false,
                                 ),
-
                                 SizedBox(
                                   height: 20,
                                 ),
@@ -155,7 +152,6 @@ class _NewFarmState extends State<NewFarm> {
                                   },
                                   isPassword: false,
                                 ),
-
                                 SizedBox(height: 20.0),
                                 InputTextField(
                                   withDecoration: true,
@@ -174,7 +170,6 @@ class _NewFarmState extends State<NewFarm> {
                                     } else
                                       return null;
                                   },
-
                                   isPassword: false,
                                 ),
                                 SizedBox(height: 30.0),
@@ -204,7 +199,6 @@ class _NewFarmState extends State<NewFarm> {
     );
   }
 
-
   Widget _imageChooser() {
     return Center(
       child: GestureDetector(
@@ -214,46 +208,45 @@ class _NewFarmState extends State<NewFarm> {
         child: Container(
           child: image != null
               ? ClipRRect(
-            borderRadius: BorderRadius.circular(5),
-            child: Image.file(
-              image,
-              width: MediaQuery.of(context).size.width,
-              height: 200,
-              fit: BoxFit.fill,
-            ),
-          )
-              : Container(
-            decoration: BoxDecoration(
-                color: Colors.white24,
-                borderRadius: BorderRadius.circular(50)),
-            width: MediaQuery.of(context).size.width,
-            height: 200,
-            child: Stack(children: <Widget>[
-              Align(
-                alignment: Alignment.center,
-                child: Icon(
-                  Icons.camera_alt,
-                  color: Colors.black38,
-                ),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 8.0, right: 8, bottom: 25),
-                  child: Text(
-                    'Take photo',
-                    style: TextStyle(color: primaryDark),
+                  borderRadius: BorderRadius.circular(5),
+                  child: Image.file(
+                    image,
+                    width: MediaQuery.of(context).size.width,
+                    height: 200,
+                    fit: BoxFit.fill,
                   ),
+                )
+              : Container(
+                  decoration: BoxDecoration(
+                      color: Colors.white24,
+                      borderRadius: BorderRadius.circular(50)),
+                  width: MediaQuery.of(context).size.width,
+                  height: 200,
+                  child: Stack(children: <Widget>[
+                    Align(
+                      alignment: Alignment.center,
+                      child: Icon(
+                        Icons.camera_alt,
+                        color: Colors.black38,
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 8.0, right: 8, bottom: 25),
+                        child: Text(
+                          'Take photo',
+                          style: TextStyle(color: primaryDark),
+                        ),
+                      ),
+                    )
+                  ]),
                 ),
-              )
-            ]),
-          ),
         ),
       ),
     );
   }
-
 
   getImageFromGallery() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
@@ -306,6 +299,7 @@ class _NewFarmState extends State<NewFarm> {
           );
         });
   }
+
   saveData() async {
     if (mounted) {
       setState(() {
@@ -313,50 +307,50 @@ class _NewFarmState extends State<NewFarm> {
       });
     }
     if (_formKey.currentState.validate()) {
-        _formKey.currentState.save();
-        try {
-         String userId=await SharedPrefs.getUserID();
+      _formKey.currentState.save();
+      try {
+        String userId = await SharedPrefs.getUserID();
         // String user=await SharedPrefs.getUserID();
-         var formatter = new DateFormat('MM/dd/yyyy');
-          User user = FirebaseAuth.instance.currentUser;
-          if (user != null) {
-            String photoUrl;
-            if (image != null) {
-              photoUrl = await UserServices.uploadFarmPic(image, user.uid);
-            }
-            Farms farms=new Farms(
-              farmSize: farmSize,
-              farmerId: userId,
-              farmId: userId+'-${formatter.format(DateTime.now())}',
-              farmState: [],
-              location: location,
-              images: photoUrl,
-              cropType: cropType,
-              description: description,
-            );
-            await UserServices.saveFarm(user.uid+DateTime.now().toIso8601String(), farms);
-            isLoading = false;
-            await showToast(
-                context, fToast, Icons.check, primaryDark,"Farm data Saved successfully");
-            sendToPage(
-                context,
-                MainPage(
-                  initPaage: BottomButtons.Farms,
-                ));
+        var formatter = new DateFormat('MM/dd/yyyy');
+        User user = FirebaseAuth.instance.currentUser;
+        if (user != null) {
+          String photoUrl;
+          if (image != null) {
+            photoUrl = await UserServices.uploadFarmPic(image, user.uid);
           }
-        } catch (error) {
-          setState(() {
-            isLoading = false;
-            print('[$error]');
-          });
+          Farms farms = new Farms(
+            farmSize: farmSize,
+            farmerId: userId,
+            farmId: userId + '-${formatter.format(DateTime.now())}',
+            farmState: [],
+            location: location,
+            images: photoUrl,
+            cropType: cropType,
+            description: description,
+          );
+          await UserServices.saveFarm(
+              user.uid + DateTime.now().toIso8601String(), farms);
+          isLoading = false;
+          await showToast(context, fToast, Icons.check, primaryDark,
+              "Farm data Saved successfully");
+          sendToPage(
+              context,
+              MainPage(
+                initPaage: BottomButtons.Farms,
+              ));
         }
-      }
-
-      if (mounted) {
+      } catch (error) {
         setState(() {
           isLoading = false;
+          print('[$error]');
         });
       }
     }
-  }
 
+    if (mounted) {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+}

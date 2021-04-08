@@ -6,7 +6,7 @@ import 'package:agriteck_user/common-functions/tflite.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-import 'package:agriteck_user/diseases/disease_detection_details.dart';
+import 'package:agriteck_user/diseases-page/disease-detection-details.dart';
 
 class Training extends StatefulWidget {
   @override
@@ -29,7 +29,7 @@ class _TrainingState extends State<Training> {
     return Container(
       color: Colors.white,
       height: MediaQuery.of(context).size.height,
-      width:  MediaQuery.of(context).size.width,
+      width: MediaQuery.of(context).size.width,
       child: Column(
         children: [
           Container(
@@ -146,7 +146,7 @@ class _DiseaseCaptureState extends State<DiseaseCapture> {
     var imageFile = await _picker.getImage(source: ImageSource.gallery);
     if (imageFile != null) {
       //detect the crop disease
-      predictDesease(imageFile).then((predictions) async {
+      await predictDesease(imageFile).then((predictions) async {
         print(predictions);
         //show the details of the crop
         Navigator.of(context).pop();
@@ -196,7 +196,6 @@ class _DiseaseCaptureState extends State<DiseaseCapture> {
                           onPressed: () async {
                             //get image from gallery
                             getImage();
-
                           },
                           child: ListTile(
                             title: Icon(

@@ -1,4 +1,3 @@
-
 import 'package:agriteck_user/services/sharedPrefs.dart';
 import 'package:agriteck_user/services/user-services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -21,18 +20,21 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-   // FirebaseAuth.instance.signOut();
+    // FirebaseAuth.instance.signOut();
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'AgriTek',
       theme: ThemeData(),
-      home:
-      FirebaseAuth.instance.currentUser != null
+      home: FirebaseAuth.instance.currentUser != null
           ? MainPage(
               initPaage: BottomButtons.Home,
-            ) :WelcomeScreen()
+            )
+          :
+          // WelcomeScreen(),
+          MainPage(
+              initPaage: BottomButtons.Home,
+            ),
     );
   }
-
 }

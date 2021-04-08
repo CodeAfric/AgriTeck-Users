@@ -1,8 +1,8 @@
 import 'package:agriteck_user/commonly-used-widget/dailog-box.dart';
 import 'package:agriteck_user/commonly-used-widget/floating-buttton.dart';
+import 'package:agriteck_user/commonly-used-widget/image-carousel.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:flutter/material.dart';
-import 'package:carousel_pro/carousel_pro.dart';
 
 class FarmDetailsScreen extends StatelessWidget {
   final String farmImage;
@@ -13,6 +13,7 @@ class FarmDetailsScreen extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       //resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
@@ -20,8 +21,44 @@ class FarmDetailsScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              ImageCarousel(),
-              FarmDetails(),
+              ImageCarousel([
+                'assets/diseases/disease1.jpg',
+                'assets/diseases/disease1.jpg',
+                'assets/diseases/disease1.jpg',
+              ]),
+              Container(
+                height: size.height * 0.70,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(15.0),
+                    topRight: Radius.circular(15.0),
+                  ),
+                ),
+                child: Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10.0),
+                          topRight: Radius.circular(10.0)),
+                      color: Colors.white,
+                    ),
+                    child: ListView(
+                      scrollDirection: Axis.vertical,
+                      children: [
+                        Container(
+                          child: FarmContent(
+                            farmId: 'F1001',
+                            location: 'Kwadaso Municipal',
+                            farmSymptoms: '0248569654',
+                            causesOfCrop:
+                                'Aphids, these are soft bodied insects with long legs',
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
@@ -49,86 +86,25 @@ class FarmDetailsScreen extends StatelessWidget {
   }
 }
 
-class ImageCarousel extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Container(
-      height: size.height * 0.25,
-      child: Carousel(
-        boxFit: BoxFit.cover,
-        images: [
-          AssetImage('assets/diseases/disease1.jpg'),
-          AssetImage('assets/diseases/disease2.jpg'),
-          AssetImage('assets/diseases/disease3.jpg'),
-        ],
-        animationCurve: Curves.fastOutSlowIn,
-        animationDuration: Duration(milliseconds: 2000),
-      ),
-    );
-  }
-}
-
-class FarmDetails extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Container(
-      height: size.height * 0.70,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(15.0),
-          topRight: Radius.circular(15.0),
-        ),
-      ),
-      child: Expanded(
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(10.0),
-                topRight: Radius.circular(10.0)),
-            color: Colors.white,
-          ),
-          child: ListView(
-            scrollDirection: Axis.vertical,
-            children: [
-              Container(
-                child: Details(
-                  farmId: 'F1001',
-                  location: 'Kwadaso Municipal',
-                  diseaseSymptoms: '0248569654',
-                  causesOfCrop:
-                      'Aphids, these are soft bodied insects with long legs',
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class Details extends StatelessWidget {
+class FarmContent extends StatelessWidget {
   final String farmId;
   final String location;
-  final String diseaseSymptoms;
-  final String diseasePrevention;
-  final String diseaseTreatment;
+  final String farmSymptoms;
+  final String farmPrevention;
+  final String farmTreatment;
   final String causesOfCrop;
-
-  Details(
+  final TextStyle titleFontStyle = TextStyle(color: primaryDark, fontSize: 22);
+  final TextStyle textFontStyle = TextStyle(fontSize: 16, height: 1.5);
+  FarmContent(
       {Key key,
       this.farmId,
       this.location,
-      this.diseaseSymptoms,
-      this.diseasePrevention,
-      this.diseaseTreatment,
+      this.farmSymptoms,
+      this.farmPrevention,
+      this.farmTreatment,
       this.causesOfCrop})
       : super(key: key);
 
-  TextStyle titleFontStyle = TextStyle(color: primaryDark, fontSize: 22);
-  TextStyle textFontStyle = TextStyle(fontSize: 16, height: 1.5);
   @override
   Widget build(BuildContext context) {
     return Container(
