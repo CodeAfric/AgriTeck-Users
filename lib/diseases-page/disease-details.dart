@@ -38,23 +38,20 @@ class DiseaseDetailsScreen extends StatelessWidget {
                 scrollDirection: Axis.vertical,
                 child: DiseaseContant(
                   nameOfDisease: this.diseaseName,
-                  plantTypes: 'Miaze, Banana, Barley, Bean, Bitter Gourd',
+                  plantTypes: 'Maize, Banana, Barley, Bean, Bitter Gourd',
                   diseaseSymptoms:
                       'Curled and deformed leaves, Small Insects under leaves and shoots, Stunted growth',
                   causesOfDisease:
                       'Aphids, these are soft bodied insects with long legs',
                   diseasePrevention:
-                      'For example if one is coming out with a theory that '
-                      'cannibals lives longer than normal human beings, the researcher will use '
-                      'qualitative research to seek peoples belief on cannibalism, '
-                      'analyze the data and formulate his theory. After that the researcher'
-                      ' can use the quantitative research to deduce from people’s beliefs and arguments, '
-                      'express their views, test and come out with figures to prove his theory that really people '
-                      'who practice cannibalism live much longer than people who do not practice it.',
+                      'Maintain a high number of different varieties of plants around the field,'
+                          'remove plant debries from previous cultures,'
+                          'Use reflective mulches to repel invading population okf aphids,'
+                          'check weeds in and around the field,'
+                          'if possible, use nets to protect the plant',
                   diseaseTreatment:
-                      'For example if one is coming out with a theory that cannibals lives longer than normal'
-                      ' human beings, the researcher will use qualitative research to seek '
-                      'peoples belief on cannibalism, analyze',
+                      'for the beginning, use insecticidal soap solution or solution based on plant oils,'
+                          'a spray of water on the affected plant can also remove them ',
                 ),
               ),
             ),
