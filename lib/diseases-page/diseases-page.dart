@@ -68,7 +68,7 @@ class _DiseasesScreenState extends State<DiseasesScreen> {
                         return InkWell(
                           child: Container(
                             child: DiseaseCard(
-                              diseaseImage: 'assets/plants/sick.png',
+                              diseaseImage: disease.images[0],
                               // diseasesList[index]['images'][0] != null
                               //     ? diseasesList[index]['images'][0]
                               //     : null,
