@@ -10,6 +10,7 @@ import 'package:agriteck_user/commonly-used-widget/shape-painter.dart';
 import 'package:agriteck_user/commonly-used-widget/textField.dart';
 import 'package:agriteck_user/model-data/DataModels.dart';
 import 'package:agriteck_user/pojo-classes/farmers-data.dart';
+import 'package:agriteck_user/pojo-classes/investors-data.dart';
 import 'package:agriteck_user/services/user-services.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -540,15 +541,24 @@ class _InvestorRegistrationFormState extends State<InvestorRegistrationForm> {
             if (_image != null) {
               photoUrl = await UserServices.uploadPic(_image, user.uid);
             }
-            Investors investors = new Investors(
-              InvestorId: _investorId,
-              InvestorName: _name,
-              Investorphone: _phoneNumber,
-              InvestorEmail: _email,
-              InvestorImage: photoUrl,
-              InvestorLocation: _location,
+            // Investors investors = new Investors(
+            //   InvestorId: _investorId,
+            //   InvestorName: _name,
+            //   Investorphone: _phoneNumber,
+            //   InvestorEmail: _email,
+            //   InvestorImage: photoUrl,
+            //   InvestorLocation: _location,
+            // );
+            InvestorsData investors = InvestorsData(
+              name: _name,
+              investorID: _investorId,
+              phone: _phoneNumber,
+              location: _location,
+              image: photoUrl,
+              email: _email,
             );
-            // await UserServices.saveUserInfo(user.uid, );
+
+            await UserServices.saveInvestorInfo(user.uid, investors);
             await FirebaseAuth.instance.currentUser
                 .updateProfile(displayName: _name, photoURL: photoUrl);
             isLoading = false;

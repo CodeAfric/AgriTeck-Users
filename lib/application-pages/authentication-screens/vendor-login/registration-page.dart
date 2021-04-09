@@ -11,6 +11,7 @@ import 'package:agriteck_user/commonly-used-widget/textField.dart';
 import 'package:agriteck_user/main-page.dart';
 import 'package:agriteck_user/model-data/DataModels.dart';
 import 'package:agriteck_user/pojo-classes/farmers-data.dart';
+import 'package:agriteck_user/pojo-classes/vendors-data.dart';
 import 'package:agriteck_user/services/user-services.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -538,20 +539,20 @@ class _VendorRegistrationForm extends State<VendorRegistrationForm> {
             if (_image != null) {
               photoUrl = await UserServices.uploadPic(_image, user.uid);
             }
-            Investors investors = new Investors(
-              InvestorId: _investorId,
-              InvestorName: _name,
-              Investorphone: _phoneNumber,
-              InvestorEmail: _email,
-              InvestorImage: photoUrl,
-              InvestorLocation: _location,
+            Vendors vendors = new Vendors(
+              vendorID: _investorId,
+              name: _name,
+              phone: _phoneNumber,
+              email: _email,
+              image: photoUrl,
+              location: _location,
             );
-            // await UserServices.saveUserInfo(user.uid, );
+            await UserServices.saveVendorInfo(user.uid, vendors);
             await FirebaseAuth.instance.currentUser
                 .updateProfile(displayName: _name, photoURL: photoUrl);
             isLoading = false;
-            await showToast(context, fToast, Icons.check, primaryDark,
-                "Investor data Saved");
+            await showToast(
+                context, fToast, Icons.check, primaryDark, "Vendor data Saved");
             sendToPage(
                 context,
                 MainPage(

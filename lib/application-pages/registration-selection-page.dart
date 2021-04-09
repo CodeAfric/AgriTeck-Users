@@ -1,3 +1,4 @@
+import 'package:agriteck_user/application-pages/authentication-screens/farmer-login/registration-pages.dart';
 import 'package:agriteck_user/application-pages/authentication-screens/investor-login/registration-page.dart';
 import 'package:agriteck_user/application-pages/authentication-screens/vendor-login/registration-page.dart';
 import 'package:agriteck_user/common-functions/helper-functions.dart';
@@ -81,11 +82,18 @@ class RegistrationSelectionPage extends StatelessWidget {
                         'Login As',
                         style: TextStyle(fontSize: 24.0, color: Colors.black54),
                       ),
+                      SizedBox(height: 30),
                       SizedBox(
                         width: 200,
                         // ignore: deprecated_member_use
                         child: RaisedButton(
-                          onPressed: () {},
+                          shape: RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(30.0),
+                          ),
+                          onPressed: () {
+                            sendToPage(context,
+                                FarmerRegistrationForm('+233550935558'));
+                          },
                           child: Text(
                             'Farmer',
                             style: TextStyle(color: Colors.white),
@@ -97,6 +105,9 @@ class RegistrationSelectionPage extends StatelessWidget {
                         width: 200,
                         // ignore: deprecated_member_use
                         child: RaisedButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(30.0),
+                          ),
                           onPressed: () {
                             sendToPage(context, VendorRegistrationForm());
                           },
@@ -111,6 +122,9 @@ class RegistrationSelectionPage extends StatelessWidget {
                         width: 200,
                         // ignore: deprecated_member_use
                         child: RaisedButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(30.0),
+                          ),
                           onPressed: () {
                             sendToPage(context, InvestorRegistrationForm());
                           },
