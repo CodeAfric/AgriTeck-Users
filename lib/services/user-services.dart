@@ -15,6 +15,10 @@ class UserServices {
     FirebaseFirestore.instance.collection('Users').doc(id).set(farmers.toMap());
   }
 
+  // static Future<void> saveUser(String id, dynamic data) async {
+  //   FirebaseFirestore.instance.collection('Users').doc(id).set(data.toMap());
+  // }
+
   static Future<void> saveInvestorInfo(
       String id, InvestorsData investors) async {
     FirebaseFirestore.instance

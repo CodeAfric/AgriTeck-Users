@@ -9,6 +9,7 @@ import 'package:agriteck_user/commonly-used-widget/textField.dart';
 import 'package:agriteck_user/pojo-classes/farmers-data.dart';
 import 'package:agriteck_user/services/user-services.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -142,6 +143,7 @@ class _FarmerRegistrationFormState extends State<FarmerRegistrationForm> {
                                     onSave: (value) {
                                       setState(() {
                                         _nationalId = value;
+                                        print('NationalID: $_nationalId');
                                       });
                                     },
                                     type: TextInputType.text,
@@ -166,6 +168,7 @@ class _FarmerRegistrationFormState extends State<FarmerRegistrationForm> {
                                     onSave: (value) {
                                       setState(() {
                                         _name = value;
+                                        print('Farmer Name: $_name');
                                       });
                                     },
                                     type: TextInputType.text,
@@ -294,6 +297,12 @@ class _FarmerRegistrationFormState extends State<FarmerRegistrationForm> {
           ),
         ]),
       ),
+    );
+  }
+
+  savemyData() async {
+    await FirebaseFirestore.instance.collection('users').doc('id1').set(
+      {'id': '123', 'name': 'Prince'},
     );
   }
 
@@ -562,6 +571,7 @@ class _FarmerRegistrationFormState extends State<FarmerRegistrationForm> {
           _age = getYears(_dateTime);
           User user = FirebaseAuth.instance.currentUser;
           if (user != null) {
+            print('Firebaser User ${user.uid}');
             String photoUrl;
             if (_image != null) {
               photoUrl = await UserServices.uploadPic(_image, user.uid);
@@ -578,8 +588,8 @@ class _FarmerRegistrationFormState extends State<FarmerRegistrationForm> {
                 telephone: widget.phoneNumber,
                 location: _location);
             await UserServices.saveUserInfo(user.uid, farmers);
-            await FirebaseAuth.instance.currentUser
-                .updateProfile(displayName: _name, photoURL: photoUrl);
+            // await FirebaseAuth.instance.currentUser
+            //     .updateProfile(displayName: _name, photoURL: photoUrl);
             isLoading = false;
             await showToast(
                 context, fToast, Icons.check, primaryDark, "User data Saved");

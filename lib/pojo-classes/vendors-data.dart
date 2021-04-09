@@ -1,5 +1,5 @@
 class Vendors {
-  String name, vendorID, phone, location, image, email;
+  String name, vendorID, phone, location, image, email, gender;
   List interest;
 
   Vendors(
@@ -9,6 +9,7 @@ class Vendors {
       this.location,
       this.image,
       this.email,
+      this.gender,
       this.interest});
 
   Map<String, dynamic> toMap() {
@@ -23,6 +24,7 @@ class Vendors {
     map['image'] = image;
     map['email'] = email;
     map['interest'] = interest;
+    map['gender'] = gender;
     return map;
   }
 
@@ -34,5 +36,6 @@ class Vendors {
     this.image = map['image'];
     this.email = map['email'];
     this.interest = map['interest'];
+    this.gender = map['gender'];
   }
 }
