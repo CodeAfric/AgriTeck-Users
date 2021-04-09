@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:io';
 import 'package:agriteck_user/pojo-classes/farmers-data.dart';
 import 'package:agriteck_user/pojo-classes/farms-data.dart';
+import 'package:agriteck_user/pojo-classes/investors-data.dart';
+import 'package:agriteck_user/pojo-classes/vendors-data.dart';
 import 'package:agriteck_user/services/sharedPrefs.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -11,6 +13,21 @@ import 'package:geolocator/geolocator.dart';
 class UserServices {
   static Future<void> saveUserInfo(String id, Farmers farmers) async {
     FirebaseFirestore.instance.collection('Users').doc(id).set(farmers.toMap());
+  }
+
+  static Future<void> saveInvestorInfo(
+      String id, InvestorsData investors) async {
+    FirebaseFirestore.instance
+        .collection('Investors')
+        .doc(id)
+        .set(investors.toMap());
+  }
+
+  static Future<void> saveVendorInfo(String id, Vendors vendors) async {
+    FirebaseFirestore.instance
+        .collection('Vendors')
+        .doc(id)
+        .set(vendors.toMap());
   }
 
   static Future<void> saveFarm(String id, Farms farms) async {
@@ -71,7 +88,6 @@ class UserServices {
 //Next launch make sure that we get the position and the name before we get to the home screen
 //On the home screen, the name is shown on the app bar and when it is clicked it should go to the mapping page
 
-
 /// When the location services are not enabled or permissions
 /// are denied the `Future` will return an error.
 Future<Position> _determinePosition() async {
@@ -102,45 +118,42 @@ Future<Position> _determinePosition() async {
       // Android's shouldShowRequestPermissionRationale
       // returned true. According to Android guidelines
       // your App should show an explanatory UI now.
-      return Future.error(
-          'Location permissions are denied');
+      return Future.error('Location permissions are denied');
     }
   }
 
   // When we reach here, permissions are granted and we can
   // continue accessing the position of the device.
-  return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best);
+  return await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.best);
 }
 
 //method that fires when the user prefers current location
 Future<bool> preferCurrentLoc() async {
   try {
-      final _locaData = await _determinePosition();
-      print('____________________________________________________________');
-      print('$_locaData');
-      print('____________________________________________________________');
-      List<Placemark> placemarks = await placemarkFromCoordinates(
-          _locaData.latitude,
-          _locaData.longitude
-      );
-      Placemark place = placemarks[0];
-      Map<String, dynamic> _userAddress = {
-        "location": {"lat":  _locaData.latitude, "long": _locaData.longitude},
-        "locationName": place.name,
-        "street":place.street,
-        "country":place.country,
-        "locality":place.locality,
-        "region":place.administrativeArea,
-        "countyCode":place.isoCountryCode
-      };
-      SharedPrefs.savePositionInfo(_userAddress);
-      print('==============================================================');
-      print('${place}');
-      print('==============================================================');
-      return true;
+    final _locaData = await _determinePosition();
+    print('____________________________________________________________');
+    print('$_locaData');
+    print('____________________________________________________________');
+    List<Placemark> placemarks =
+        await placemarkFromCoordinates(_locaData.latitude, _locaData.longitude);
+    Placemark place = placemarks[0];
+    Map<String, dynamic> _userAddress = {
+      "location": {"lat": _locaData.latitude, "long": _locaData.longitude},
+      "locationName": place.name,
+      "street": place.street,
+      "country": place.country,
+      "locality": place.locality,
+      "region": place.administrativeArea,
+      "countyCode": place.isoCountryCode
+    };
+    SharedPrefs.savePositionInfo(_userAddress);
+    print('==============================================================');
+    print('${place}');
+    print('==============================================================');
+    return true;
   } catch (e) {
     print('location error ' + e.toString());
     return false;
   }
 }
-
