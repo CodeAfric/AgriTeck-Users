@@ -1,16 +1,14 @@
 import 'package:agriteck_user/commonly-used-widget/image-carousel.dart';
+import 'package:agriteck_user/pojo-classes/diseases-data.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:flutter/material.dart';
 
 class DiseaseDetailsScreen extends StatelessWidget {
-  final String diseaseName;
-  final String diseaseId;
+  final Disease diseaseData;
+  // final String diseaseId;
 
   // todo: Get the details detal at the init state
-  DiseaseDetailsScreen({
-    this.diseaseName,
-    this.diseaseId,
-  });
+  DiseaseDetailsScreen({this.diseaseData});
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +19,7 @@ class DiseaseDetailsScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
+            // todo: image from network
             ImageCarousel([
               'assets/diseases/disease1.jpg',
               'assets/diseases/disease2.jpg',
@@ -37,21 +36,12 @@ class DiseaseDetailsScreen extends StatelessWidget {
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: DiseaseContant(
-                  nameOfDisease: this.diseaseName,
-                  plantTypes: 'Maize, Banana, Barley, Bean, Bitter Gourd',
-                  diseaseSymptoms:
-                      'Curled and deformed leaves, Small Insects under leaves and shoots, Stunted growth',
-                  causesOfDisease:
-                      'Aphids, these are soft bodied insects with long legs',
-                  diseasePrevention:
-                      'Maintain a high number of different varieties of plants around the field,'
-                          'remove plant debries from previous cultures,'
-                          'Use reflective mulches to repel invading population okf aphids,'
-                          'check weeds in and around the field,'
-                          'if possible, use nets to protect the plant',
-                  diseaseTreatment:
-                      'for the beginning, use insecticidal soap solution or solution based on plant oils,'
-                          'a spray of water on the affected plant can also remove them ',
+                  nameOfDisease: diseaseData.name,
+                  plantTypes: diseaseData.affectedPlants.join(', '),
+                  diseaseSymptoms: diseaseData.signs,
+                  causesOfDisease: diseaseData.causes,
+                  diseasePrevention: diseaseData.preventiveM,
+                  diseaseTreatment: diseaseData.treatment,
                 ),
               ),
             ),
@@ -65,10 +55,10 @@ class DiseaseDetailsScreen extends StatelessWidget {
 class DiseaseContant extends StatelessWidget {
   final String nameOfDisease;
   final String plantTypes;
-  final String diseaseSymptoms;
-  final String diseasePrevention;
-  final String diseaseTreatment;
-  final String causesOfDisease;
+  final List diseaseSymptoms;
+  final List diseasePrevention;
+  final List diseaseTreatment;
+  final List causesOfDisease;
   final TextStyle titleFontStyle = TextStyle(color: primaryDark, fontSize: 22);
   final TextStyle textFontStyle = TextStyle(fontSize: 16, height: 1.5);
 
@@ -127,9 +117,26 @@ class DiseaseContant extends StatelessWidget {
                 'Symptoms of Disease',
                 style: titleFontStyle,
               ),
-              subtitle: Text(
-                diseaseSymptoms,
-                style: textFontStyle,
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: List.generate(
+                  diseaseSymptoms.length,
+                  (index) => Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 3,
+                        backgroundColor: Colors.grey,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        diseaseSymptoms[index],
+                        style: textFontStyle,
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
             ListTile(
@@ -141,9 +148,26 @@ class DiseaseContant extends StatelessWidget {
                 'Causes of Disease',
                 style: titleFontStyle,
               ),
-              subtitle: Text(
-                causesOfDisease,
-                style: textFontStyle,
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: List.generate(
+                  causesOfDisease.length,
+                  (index) => Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 3,
+                        backgroundColor: Colors.grey,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        causesOfDisease[index],
+                        style: textFontStyle,
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
             ListTile(
@@ -155,9 +179,26 @@ class DiseaseContant extends StatelessWidget {
                 'Disease Prevention',
                 style: titleFontStyle,
               ),
-              subtitle: Text(
-                diseasePrevention,
-                style: textFontStyle,
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: List.generate(
+                  causesOfDisease.length,
+                  (index) => Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 3,
+                        backgroundColor: Colors.grey,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        causesOfDisease[index],
+                        style: textFontStyle,
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
             ListTile(
@@ -169,9 +210,26 @@ class DiseaseContant extends StatelessWidget {
                 'Disease Treatment',
                 style: titleFontStyle,
               ),
-              subtitle: Text(
-                diseaseTreatment,
-                style: textFontStyle,
+              subtitle: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: List.generate(
+                  diseaseTreatment.length,
+                  (index) => Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 3,
+                        backgroundColor: Colors.grey,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        diseaseTreatment[index],
+                        style: textFontStyle,
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
           ],

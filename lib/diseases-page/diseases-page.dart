@@ -1,10 +1,37 @@
 import 'package:agriteck_user/common-functions/helper-functions.dart';
 import 'package:agriteck_user/diseases-page/disease-card.dart';
+import 'package:agriteck_user/pojo-classes/diseases-data.dart';
+import 'package:agriteck_user/services/database-services.dart';
 import 'package:agriteck_user/diseases-page/disease-details.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:flutter/material.dart';
 
-class DiseasesScreen extends StatelessWidget {
+class DiseasesScreen extends StatefulWidget {
+  @override
+  _DiseasesScreenState createState() => _DiseasesScreenState();
+}
+
+class _DiseasesScreenState extends State<DiseasesScreen> {
+  List diseasesList = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    DatabaseServices.getDataFromDatabase('Diseases').then((snapshot) {
+      setState(() {
+        diseasesList = snapshot.docs.toList();
+      });
+    });
+
+    ///whatever you want to run on page build
+  }
+
+  //  async DatabaseServices.readDiseases().then((){
+
+  //  });
+  // print(data);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,21 +60,29 @@ class DiseasesScreen extends StatelessWidget {
                     ),
                     child: ListView.builder(
                       padding: EdgeInsets.only(bottom: 80.0),
-                      itemCount: 10,
+                      itemCount: diseasesList.length,
                       itemBuilder: (context, index) {
+                        var disease = Disease.fromMapObject(
+                          diseasesList[index].data(),
+                        );
                         return InkWell(
                           child: Container(
                             child: DiseaseCard(
-                              diseaseImage: 'assets/diseases/disease1.jpg',
-                              diseaseName: 'Curly flew Shoot',
-                              plantType: 'general grass',
+                              diseaseImage: 'assets/plants/sick.png',
+                              // diseasesList[index]['images'][0] != null
+                              //     ? diseasesList[index]['images'][0]
+                              //     : null,
+                              diseaseName: disease.name,
+                              affectedPlants: disease.affectedPlants.join(', '),
                             ),
                           ),
                           onTap: () {
                             sendToPage(
                               context,
                               DiseaseDetailsScreen(
-                                diseaseName: 'Curly flew Shoot',
+                                diseaseData: Disease.fromMapObject(
+                                  diseasesList[index].data(),
+                                ),
                               ),
                             );
                           },

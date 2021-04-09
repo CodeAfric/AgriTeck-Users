@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 class DiseaseCard extends StatelessWidget {
   final String diseaseImage;
   final String diseaseName;
-  final String plantType;
+  final String affectedPlants;
 
   const DiseaseCard(
-      {Key key, this.diseaseImage, this.diseaseName, this.plantType})
+      {Key key, this.diseaseImage, this.diseaseName, this.affectedPlants})
       : super(key: key);
 
   @override
@@ -31,7 +31,7 @@ class DiseaseCard extends StatelessWidget {
                     child: Image.asset(
                       diseaseImage,
                       fit: BoxFit.cover,
-                      height: 90,
+                      height: 70,
                       width: 100,
                     ),
                   ),
@@ -50,7 +50,7 @@ class DiseaseCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        padding: EdgeInsets.only(top: 10),
+                        padding: EdgeInsets.only(top: 5),
                         alignment: Alignment.centerLeft,
                         child: Text(
                           diseaseName,
@@ -63,10 +63,10 @@ class DiseaseCard extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.only(top: 10),
+                        padding: EdgeInsets.only(top: 2),
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          plantType,
+                          affectedPlants.toString(),
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             fontSize: 16,
