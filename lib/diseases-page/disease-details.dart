@@ -20,11 +20,7 @@ class DiseaseDetailsScreen extends StatelessWidget {
         child: Column(
           children: [
             // todo: image from network
-            ImageCarousel([
-              'assets/diseases/disease1.jpg',
-              'assets/diseases/disease2.jpg',
-              'assets/diseases/disease3.jpg',
-            ]),
+            ImageCarousel([...diseaseData.images]),
             Container(
               height: size.height * 0.70,
               decoration: BoxDecoration(

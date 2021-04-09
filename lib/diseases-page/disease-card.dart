@@ -1,4 +1,5 @@
 import 'package:agriteck_user/styles/app-colors.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class DiseaseCard extends StatelessWidget {
@@ -28,8 +29,8 @@ class DiseaseCard extends StatelessWidget {
                   padding: EdgeInsets.all(3.0),
                   child: ClipRRect(
                     borderRadius: BorderRadius.all(Radius.circular(3)),
-                    child: Image.asset(
-                      diseaseImage,
+                    child: CachedNetworkImage(
+                      imageUrl: diseaseImage,
                       fit: BoxFit.cover,
                       height: 70,
                       width: 100,
