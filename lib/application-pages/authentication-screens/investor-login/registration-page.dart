@@ -539,12 +539,12 @@ class _InvestorRegistrationFormState extends State<InvestorRegistrationForm> {
   }
 
   saveData() async {
-    if (mounted) {
-      setState(() {
-        isLoading = true;
-      });
-    }
     if (_formKey.currentState.validate()) {
+      if (mounted) {
+        setState(() {
+          isLoading = true;
+        });
+      }
       _formKey.currentState.save();
       try {
         User user = FirebaseAuth.instance.currentUser;
@@ -561,7 +561,7 @@ class _InvestorRegistrationFormState extends State<InvestorRegistrationForm> {
             image: photoUrl,
             email: _email,
           );
-          await UserServices.saveInvestorInfo(user.uid, investors);
+          await UserServices.saveUserInfo('Investors', user.uid, investors);
           await FirebaseAuth.instance.currentUser
               .updateProfile(displayName: _name, photoURL: photoUrl);
           isLoading = false;

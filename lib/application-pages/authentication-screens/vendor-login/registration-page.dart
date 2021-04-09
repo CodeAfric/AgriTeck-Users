@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:agriteck_user/application-pages/authentication-screens/welcome-screen.dart';
 import 'package:agriteck_user/common-functions/helper-functions.dart';
 import 'package:agriteck_user/commonly-used-widget/custom-drop-down.dart';
@@ -30,11 +29,11 @@ class VendorRegistrationForm extends StatefulWidget {
 class _VendorRegistrationForm extends State<VendorRegistrationForm> {
   String _name,
       _location,
-      _investorId,
+      _vendorId,
       _gender,
       _phoneNumber,
       _email,
-      _investorInterest;
+      _vendorInterest;
   DateTime backButtonPressTime;
   File _image;
   final picker = ImagePicker();
@@ -142,7 +141,7 @@ class _VendorRegistrationForm extends State<VendorRegistrationForm> {
                                     withDecoration: true,
                                     onSave: (value) {
                                       setState(() {
-                                        _investorId = value;
+                                        _vendorId = value;
                                       });
                                     },
                                     type: TextInputType.text,
@@ -183,9 +182,9 @@ class _VendorRegistrationForm extends State<VendorRegistrationForm> {
                                     ),
                                     isPassword: false,
                                   ),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
+                                  SizedBox(height: 20.0),
+                                  getGender(),
+                                  SizedBox(height: 20.0),
                                   InputTextField(
                                     withDecoration: true,
                                     onSave: (value) {
@@ -233,12 +232,12 @@ class _VendorRegistrationForm extends State<VendorRegistrationForm> {
                                   ),
                                   SizedBox(height: 20.0),
                                   CustomDropDown(
-                                    value: _investorInterest,
+                                    value: _vendorInterest,
                                     hint: 'Select interest',
                                     itemsList: investorInterest,
                                     onChanged: (value) {
                                       setState(() {
-                                        _investorInterest = value;
+                                        _vendorInterest = value;
                                       });
                                     },
                                   ),
@@ -518,21 +517,17 @@ class _VendorRegistrationForm extends State<VendorRegistrationForm> {
   }
 
   saveData() async {
-    if (mounted) {
-      setState(() {
-        isLoading = true;
-      });
-    }
     if (_formKey.currentState.validate()) {
+      if (mounted) {
+        setState(() {
+          isLoading = true;
+        });
+      }
       if (_gender.isEmpty) {
         await showSnackBar("Please choose gender", _scaffoldKey.currentState);
-      } else if (_dateTime == null) {
-        await showSnackBar(
-            "Please select you Date of Birth", _scaffoldKey.currentState);
       } else {
         _formKey.currentState.save();
         try {
-          // _age = getYears(_dateTime);
           User user = FirebaseAuth.instance.currentUser;
           if (user != null) {
             String photoUrl;
@@ -540,14 +535,15 @@ class _VendorRegistrationForm extends State<VendorRegistrationForm> {
               photoUrl = await UserServices.uploadPic(_image, user.uid);
             }
             Vendors vendors = new Vendors(
-              vendorID: _investorId,
+              vendorID: _vendorId,
               name: _name,
+              gender: _gender,
               phone: _phoneNumber,
               email: _email,
               image: photoUrl,
               location: _location,
             );
-            await UserServices.saveVendorInfo(user.uid, vendors);
+            await UserServices.saveUserInfo('Vendors', user.uid, vendors);
             await FirebaseAuth.instance.currentUser
                 .updateProfile(displayName: _name, photoURL: photoUrl);
             isLoading = false;

@@ -83,58 +83,22 @@ class RegistrationSelectionPage extends StatelessWidget {
                         style: TextStyle(fontSize: 24.0, color: Colors.black54),
                       ),
                       SizedBox(height: 30),
-                      SizedBox(
-                        width: 200,
-                        // ignore: deprecated_member_use
-                        child: RaisedButton(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(30.0),
-                          ),
+                      _raisedButton(
                           onPressed: () {
                             sendToPage(context,
                                 FarmerRegistrationForm('+233550935558'));
                           },
-                          child: Text(
-                            'Farmer',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          color: primary,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 200,
-                        // ignore: deprecated_member_use
-                        child: RaisedButton(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(30.0),
-                          ),
+                          text: 'Farmer'),
+                      _raisedButton(
                           onPressed: () {
                             sendToPage(context, VendorRegistrationForm());
                           },
-                          child: Text(
-                            'Vendor',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          color: primary,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 200,
-                        // ignore: deprecated_member_use
-                        child: RaisedButton(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(30.0),
-                          ),
+                          text: 'Vendor'),
+                      _raisedButton(
                           onPressed: () {
                             sendToPage(context, InvestorRegistrationForm());
                           },
-                          child: Text(
-                            'Investor',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          color: primary,
-                        ),
-                      ),
+                          text: 'Investor'),
                     ],
                   ),
                 ),
@@ -142,6 +106,25 @@ class RegistrationSelectionPage extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _raisedButton({Function onPressed, String text}) {
+    // ignore: deprecated_member_use
+    return SizedBox(
+      width: 200,
+      // ignore: deprecated_member_use
+      child: RaisedButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: new BorderRadius.circular(20.0),
+        ),
+        onPressed: onPressed,
+        child: Text(
+          text,
+          style: TextStyle(color: Colors.white),
+        ),
+        color: primary,
       ),
     );
   }

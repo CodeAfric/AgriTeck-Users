@@ -33,10 +33,10 @@ class MyApp extends StatelessWidget {
       title: 'AgriTek',
       theme: ThemeData(),
       home: FirebaseAuth.instance.currentUser != null
-          // ? RegistrationSelectionPage()
-          // : RegistrationSelectionPage(),
-          ? DiseasesScreen()
-          : DiseasesScreen(),
+          ? RegistrationSelectionPage()
+          : RegistrationSelectionPage(),
+      // ? DiseasesScreen()
+      // : DiseasesScreen(),
       // MainPage(
       //     initPaage: BottomButtons.Home,
       //   )

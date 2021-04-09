@@ -554,12 +554,13 @@ class _FarmerRegistrationFormState extends State<FarmerRegistrationForm> {
   }
 
   saveData() async {
-    if (mounted) {
+   
+    if (_formKey.currentState.validate()) {
+       if (mounted) {
       setState(() {
         isLoading = true;
       });
     }
-    if (_formKey.currentState.validate()) {
       if (_gender.isEmpty) {
         await showSnackBar("Please choose gender", _scaffoldKey.currentState);
       } else if (_dateTime == null) {
@@ -587,9 +588,9 @@ class _FarmerRegistrationFormState extends State<FarmerRegistrationForm> {
                 img: photoUrl,
                 telephone: widget.phoneNumber,
                 location: _location);
-            await UserServices.saveUserInfo(user.uid, farmers);
-            // await FirebaseAuth.instance.currentUser
-            //     .updateProfile(displayName: _name, photoURL: photoUrl);
+            await UserServices.saveUserInfo('Farmers', user.uid, farmers);
+            await FirebaseAuth.instance.currentUser
+                .updateProfile(displayName: _name, photoURL: photoUrl);
             isLoading = false;
             await showToast(
                 context, fToast, Icons.check, primaryDark, "User data Saved");

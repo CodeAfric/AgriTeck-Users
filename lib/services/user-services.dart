@@ -11,28 +11,32 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 
 class UserServices {
-  static Future<void> saveUserInfo(String id, Farmers farmers) async {
-    FirebaseFirestore.instance.collection('Users').doc(id).set(farmers.toMap());
+  static Future<void> saveUserInfo(
+      String collectionName, String id, dynamic data) async {
+    FirebaseFirestore.instance
+        .collection(collectionName)
+        .doc(id)
+        .set(data.toMap());
   }
 
   // static Future<void> saveUser(String id, dynamic data) async {
   //   FirebaseFirestore.instance.collection('Users').doc(id).set(data.toMap());
   // }
 
-  static Future<void> saveInvestorInfo(
-      String id, InvestorsData investors) async {
-    FirebaseFirestore.instance
-        .collection('Investors')
-        .doc(id)
-        .set(investors.toMap());
-  }
+  // static Future<void> saveInvestorInfo(
+  //     String id, InvestorsData investors) async {
+  //   FirebaseFirestore.instance
+  //       .collection('Investors')
+  //       .doc(id)
+  //       .set(investors.toMap());
+  // }
 
-  static Future<void> saveVendorInfo(String id, Vendors vendors) async {
-    FirebaseFirestore.instance
-        .collection('Vendors')
-        .doc(id)
-        .set(vendors.toMap());
-  }
+  // static Future<void> saveVendorInfo(String id, Vendors vendors) async {
+  //   FirebaseFirestore.instance
+  //       .collection('Vendors')
+  //       .doc(id)
+  //       .set(vendors.toMap());
+  // }
 
   static Future<void> saveFarm(String id, Farms farms) async {
     FirebaseFirestore.instance.collection("Farms").doc(id).set(farms.toMap());
