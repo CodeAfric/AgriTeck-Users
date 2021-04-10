@@ -24,6 +24,9 @@ import '../../../constant.dart';
 import '../../../main-page.dart';
 
 class InvestorRegistrationForm extends StatefulWidget {
+  final String phoneNumber;
+
+  InvestorRegistrationForm(this.phoneNumber);
   @override
   _InvestorRegistrationFormState createState() =>
       _InvestorRegistrationFormState();

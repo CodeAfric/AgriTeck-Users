@@ -100,7 +100,7 @@ class RegistrationSelectionPage extends StatelessWidget {
                         onPressed: () async {
                           var check = await SharedPrefs.setUserType('Vendors');
                           print('>>>>> $check');
-                          sendToPage(context, VendorRegistrationForm());
+                          sendToPage(context, WelcomeScreen());
                         },
                         text: 'Vendor',
                         width: _width * 0.8,
@@ -110,7 +110,7 @@ class RegistrationSelectionPage extends StatelessWidget {
                           var check =
                               await SharedPrefs.setUserType('Investors');
                           print('>>>> $check');
-                          sendToPage(context, InvestorRegistrationForm());
+                          sendToPage(context, WelcomeScreen());
                         },
                         text: 'Investor',
                         width: _width * 0.8,

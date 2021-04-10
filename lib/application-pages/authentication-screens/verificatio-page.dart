@@ -1,3 +1,5 @@
+import 'package:agriteck_user/application-pages/authentication-screens/investor-login/registration-page.dart';
+import 'package:agriteck_user/application-pages/authentication-screens/vendor-login/registration-page.dart';
 import 'package:agriteck_user/application-pages/authentication-screens/welcome-screen.dart';
 import 'package:agriteck_user/application-pages/registration-selection-page.dart';
 import 'package:agriteck_user/common-functions/helper-functions.dart';
@@ -206,21 +208,22 @@ class _OTPScreenState extends State<OTPScreen> {
 
           firebaseFirestore
               .collection("$userType")
+              .doc(value.user.uid)
               .get()
               .then((querySnapshot) async {
-            // var query = querySnapshot.data();
-            // print("QUERIED DATA: $query");
-            // if (query.isEmpty) {
-            //   userFound = false;
-            // } else {
-            //   userFound = true;
-            // }
-            querySnapshot.docs.forEach((element) {
-              if (element.id == value.user.uid) {
-                userFound =
-                    true; //so if the user exist, we set the bool variable to true
-              }
-            });
+            var query = querySnapshot.data();
+            print("QUERIED DATA: $query");
+            if (query == null) {
+              userFound = false;
+            } else {
+              userFound = true;
+            }
+            // querySnapshot.docs.forEach((element) {
+            //   if (element.id == value.user.uid) {
+            //     userFound =
+            //         true; //so if the user exist, we set the bool variable to true
+            //   }
+            // });
             if (userFound) {
               //so if the user found is true
               await SharedPrefs.setUserID(value.user.uid);
@@ -268,10 +271,19 @@ class _OTPScreenState extends State<OTPScreen> {
                   Navigator.pop(context);
                 },
                 btn2Press: () async {
+                  var userType = await SharedPrefs.getUserType();
                   setState(() {
+                    if (userType == 'Farmers') {
+                      sendToPage(context, FarmerRegistrationForm(widget.phone));
+                    } else if (userType == 'Vendors') {
+                      sendToPage(context, VendorRegistrationForm(widget.phone));
+                    } else {
+                      sendToPage(
+                          context, InvestorRegistrationForm(widget.phone));
+                    }
                     //if the user accepts, then we send the user to the registration form
-                    sendToPage(context,
-                        RegistrationSelectionPage(phoneNum: widget.phone));
+                    // sendToPage(context,
+                    //     RegistrationSelectionPage(phoneNum: widget.phone));
                   });
                 },
               );

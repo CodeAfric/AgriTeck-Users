@@ -22,6 +22,9 @@ import 'package:intl/intl.dart';
 import '../../../constant.dart';
 
 class VendorRegistrationForm extends StatefulWidget {
+  final String phoneNumber;
+
+  VendorRegistrationForm(this.phoneNumber);
   @override
   _VendorRegistrationForm createState() => _VendorRegistrationForm();
 }
