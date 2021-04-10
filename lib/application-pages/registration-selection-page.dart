@@ -8,6 +8,8 @@ import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:flutter/material.dart';
 
 class RegistrationSelectionPage extends StatelessWidget {
+  final String phoneNum;
+  RegistrationSelectionPage({this.phoneNum});
   @override
   Widget build(BuildContext context) {
     double _width = MediaQuery.of(context).size.width;
@@ -79,26 +81,32 @@ class RegistrationSelectionPage extends StatelessWidget {
                         height: 30,
                       ),
                       Text(
-                        'Login As',
+                        'Register As',
                         style: TextStyle(fontSize: 24.0, color: Colors.black54),
                       ),
                       SizedBox(height: 30),
                       _raisedButton(
-                          onPressed: () {
-                            sendToPage(context,
-                                FarmerRegistrationForm('+233550935558'));
-                          },
-                          text: 'Farmer'),
+                        onPressed: () {
+                          sendToPage(
+                              context, FarmerRegistrationForm('+233550935558'));
+                        },
+                        text: 'Farmer',
+                        width: _width * 0.8,
+                      ),
                       _raisedButton(
-                          onPressed: () {
-                            sendToPage(context, VendorRegistrationForm());
-                          },
-                          text: 'Vendor'),
+                        onPressed: () {
+                          sendToPage(context, VendorRegistrationForm());
+                        },
+                        text: 'Vendor',
+                        width: _width * 0.8,
+                      ),
                       _raisedButton(
-                          onPressed: () {
-                            sendToPage(context, InvestorRegistrationForm());
-                          },
-                          text: 'Investor'),
+                        onPressed: () {
+                          sendToPage(context, InvestorRegistrationForm());
+                        },
+                        text: 'Investor',
+                        width: _width * 0.8,
+                      ),
                     ],
                   ),
                 ),
@@ -110,10 +118,10 @@ class RegistrationSelectionPage extends StatelessWidget {
     );
   }
 
-  Widget _raisedButton({Function onPressed, String text}) {
+  Widget _raisedButton({Function onPressed, String text, double width}) {
     // ignore: deprecated_member_use
-    return SizedBox(
-      width: 200,
+    return Container(
+      width: width,
       // ignore: deprecated_member_use
       child: RaisedButton(
         shape: RoundedRectangleBorder(
@@ -122,7 +130,7 @@ class RegistrationSelectionPage extends StatelessWidget {
         onPressed: onPressed,
         child: Text(
           text,
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: Colors.white, fontSize: 18),
         ),
         color: primary,
       ),
