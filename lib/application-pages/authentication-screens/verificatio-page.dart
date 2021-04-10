@@ -1,4 +1,5 @@
 import 'package:agriteck_user/application-pages/authentication-screens/welcome-screen.dart';
+import 'package:agriteck_user/application-pages/registration-selection-page.dart';
 import 'package:agriteck_user/common-functions/helper-functions.dart';
 import 'package:agriteck_user/commonly-used-widget/clickable-text.dart';
 import 'package:agriteck_user/commonly-used-widget/dailog-box.dart';
@@ -266,7 +267,8 @@ class _OTPScreenState extends State<OTPScreen> {
                 btn2Press: () async {
                   setState(() {
                     //if the user accepts, then we send the user to the registration form
-                    sendToPage(context, FarmerRegistrationForm(widget.phone));
+                    sendToPage(context,
+                        RegistrationSelectionPage(phoneNum: widget.phone));
                   });
                 },
               );
