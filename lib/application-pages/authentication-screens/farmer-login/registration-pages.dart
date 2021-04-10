@@ -18,7 +18,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import '../../../constant.dart';
 import '../../../main-page.dart';
-import '../welcome-screen.dart';
+import '../phone_verification.dart';
 
 class FarmerRegistrationForm extends StatefulWidget {
   final String phoneNumber;
@@ -74,7 +74,8 @@ class _FarmerRegistrationFormState extends State<FarmerRegistrationForm> {
                   return Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
-                          builder: (BuildContext context) => WelcomeScreen()),
+                          builder: (BuildContext context) =>
+                              PhoneVerification()),
                       (route) => false);
                 },
               );

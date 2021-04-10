@@ -1,7 +1,7 @@
 import 'package:agriteck_user/application-pages/authentication-screens/investor-login/registration-page.dart';
 import 'package:agriteck_user/application-pages/authentication-screens/vendor-login/registration-page.dart';
-import 'package:agriteck_user/application-pages/authentication-screens/welcome-screen.dart';
-import 'package:agriteck_user/application-pages/registration-selection-page.dart';
+import 'package:agriteck_user/application-pages/authentication-screens/phone_verification.dart';
+import 'package:agriteck_user/application-pages/welcome_page.dart';
 import 'package:agriteck_user/common-functions/helper-functions.dart';
 import 'package:agriteck_user/commonly-used-widget/clickable-text.dart';
 import 'package:agriteck_user/commonly-used-widget/dailog-box.dart';
@@ -218,12 +218,6 @@ class _OTPScreenState extends State<OTPScreen> {
             } else {
               userFound = true;
             }
-            // querySnapshot.docs.forEach((element) {
-            //   if (element.id == value.user.uid) {
-            //     userFound =
-            //         true; //so if the user exist, we set the bool variable to true
-            //   }
-            // });
             if (userFound) {
               //so if the user found is true
               await SharedPrefs.setUserID(value.user.uid);

@@ -1,3 +1,4 @@
+import 'package:agriteck_user/application-pages/welcome_page.dart';
 import 'package:agriteck_user/common-functions/helper-functions.dart';
 import 'package:agriteck_user/commonly-used-widget/bottom-icons.dart';
 import 'package:agriteck_user/commonly-used-widget/custom_app_bar.dart';
@@ -13,12 +14,12 @@ import 'package:agriteck_user/products/products.dart';
 import 'package:agriteck_user/services/sharedPrefs.dart';
 import 'package:agriteck_user/vendors/vendor.dart';
 import 'package:async_loader/async_loader.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:flutter/services.dart';
 import 'farms-page/farm-screen.dart';
 import 'farms-page/new-farm-page.dart';
-
 
 enum BottomButtons { Crops, Farms, Home, Vendors, Market, Investors, Community }
 
@@ -31,18 +32,22 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   BottomButtons selectedPage;
+  String userName, userPhone, userImage, userType;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<AsyncLoaderState> _asyncLoaderState =
       new GlobalKey<AsyncLoaderState>();
 
-
   @override
   void initState() {
     selectedPage = widget.initPage;
+    getUserType();
     super.initState();
   }
 
-  String userName, userPhone, userImage;
+  getUserType() async {
+    userType = await SharedPrefs.getUserType();
+  }
+
   getUserInfo() async {
     userName = await SharedPrefs.getUsername();
     userPhone = await SharedPrefs.getUserPhone();
@@ -140,8 +145,6 @@ class _MainPageState extends State<MainPage> {
   }
 //======================================================================
 
-
-
   @override
   Widget build(BuildContext context) {
     var _asyncLoader = new AsyncLoader(
@@ -189,17 +192,80 @@ class _MainPageState extends State<MainPage> {
             color: Colors.white,
             child: ListView(
               physics: NeverScrollableScrollPhysics(),
-              children: [_asyncLoader],
+              children: [
+                _asyncLoader,
+                ListTile(
+                  leading: Icon(Icons.arrow_forward),
+                  trailing: Icon(Icons.arrow_forward),
+                  title: Text(
+                    'Crops',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  onTap: () {
+                    // Update the state of the app.
+                    // ...
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.arrow_forward),
+                  trailing: Icon(Icons.arrow_forward),
+                  title: Text(
+                    'Crops',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  onTap: () {
+                    // Update the state of the app.
+                    // ...
+                  },
+                ),
+                Divider(),
+                ListTile(
+                  leading: Icon(Icons.arrow_forward),
+                  title: Text(
+                    'Profile',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  onTap: () {
+                    // Update the state of the app.
+                    // ...
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.arrow_forward),
+                  title: Text(
+                    'Sign Out',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  onTap: () {
+                    // Update the state of the app.
+                    FirebaseAuth.instance.signOut();
+                    Navigator.pop(context);
+                    sendToPage(context, WelcomeScreen());
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.arrow_forward),
+                  title: Text(
+                    'Exit',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  onTap: () {
+                    // Update the state of the app.
+                    // ...
+                    // Then close the drawer
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
             ),
           ),
         ),
         appBar: CustomAppBar(
           leadingIcon: Icons.menu,
-          onIconPress: (){
+          onIconPress: () {
             setState(() {
               _scaffoldKey.currentState.openDrawer();
             });
-
           },
         ),
         floatingActionButton: setFloatBott(selectedPage),
@@ -225,55 +291,61 @@ class _MainPageState extends State<MainPage> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              BottomIcons(
-                iconColor: Colors.grey,
-                text: 'Home',
-                bottomIcons: selectedPage == BottomButtons.Home ? true : false,
-                icons: 'assets/icons/home.png',
-                textColor: primary,
-                onPressed: () {
-                  setState(() {
-                    selectedPage = BottomButtons.Home;
-                  });
-                },
-                activeColor: primary,
-                activeIconColor: primary,
-              ),
-              BottomIcons(
-                iconColor: Colors.grey,
-                text: 'Crops',
-                bottomIcons: selectedPage == BottomButtons.Crops ? true : false,
-                icons: 'assets/icons/cultivate.png',
-                textColor: primary,
-                onPressed: () {
-                  setState(() {
-                    selectedPage = BottomButtons.Crops;
-                  });
-                },
-                activeColor: primary,
-                activeIconColor: primary,
-              ),
-              BottomIcons(
-                iconColor: Colors.grey,
-                text: 'Farms',
-                bottomIcons: selectedPage == BottomButtons.Farms ? true : false,
-                icons: 'assets/icons/farm.png',
-                textColor:primary,
-                onPressed: () {
-                  setState(() {
-                    selectedPage = BottomButtons.Farms;
-                  });
-                },
-                activeColor: primary,
-                activeIconColor: primary,
-              ),
+              if (userType == 'Farmers')
+                BottomIcons(
+                  iconColor: Colors.grey,
+                  text: 'Home',
+                  bottomIcons:
+                      selectedPage == BottomButtons.Home ? true : false,
+                  icons: 'assets/icons/home.png',
+                  textColor: primary,
+                  onPressed: () {
+                    setState(() {
+                      selectedPage = BottomButtons.Home;
+                    });
+                  },
+                  activeColor: primary,
+                  activeIconColor: primary,
+                ),
+              if (userType == 'Farmers')
+                BottomIcons(
+                  iconColor: Colors.grey,
+                  text: 'Crops',
+                  bottomIcons:
+                      selectedPage == BottomButtons.Crops ? true : false,
+                  icons: 'assets/icons/cultivate.png',
+                  textColor: primary,
+                  onPressed: () {
+                    setState(() {
+                      selectedPage = BottomButtons.Crops;
+                    });
+                  },
+                  activeColor: primary,
+                  activeIconColor: primary,
+                ),
+              if (userType == 'Farmers' || userType == 'Investors')
+                BottomIcons(
+                  iconColor: Colors.grey,
+                  text: 'Farms',
+                  bottomIcons:
+                      selectedPage == BottomButtons.Farms ? true : false,
+                  icons: 'assets/icons/farm.png',
+                  textColor: primary,
+                  onPressed: () {
+                    setState(() {
+                      selectedPage = BottomButtons.Farms;
+                    });
+                  },
+                  activeColor: primary,
+                  activeIconColor: primary,
+                ),
               BottomIcons(
                 iconColor: Colors.grey,
                 text: 'Community',
                 bottomIcons:
                     selectedPage == BottomButtons.Community ? true : false,
                 icons: 'assets/icons/community.png',
-                textColor:primary,
+                textColor: primary,
                 onPressed: () {
                   setState(() {
                     selectedPage = BottomButtons.Community;
@@ -288,7 +360,7 @@ class _MainPageState extends State<MainPage> {
                 bottomIcons:
                     selectedPage == BottomButtons.Market ? true : false,
                 icons: 'assets/icons/market.png',
-                textColor:primary,
+                textColor: primary,
                 onPressed: () {
                   setState(() {
                     selectedPage = BottomButtons.Market;

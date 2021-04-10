@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:agriteck_user/application-pages/authentication-screens/welcome-screen.dart';
+import 'package:agriteck_user/application-pages/authentication-screens/phone_verification.dart';
 import 'package:agriteck_user/common-functions/helper-functions.dart';
 import 'package:agriteck_user/commonly-used-widget/custom-drop-down.dart';
 import 'package:agriteck_user/commonly-used-widget/dailog-box.dart';
@@ -74,7 +74,8 @@ class _InvestorRegistrationFormState extends State<InvestorRegistrationForm> {
                   return Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
-                          builder: (BuildContext context) => WelcomeScreen()),
+                          builder: (BuildContext context) =>
+                              PhoneVerification()),
                       (route) => false);
                 },
               );
@@ -573,7 +574,7 @@ class _InvestorRegistrationFormState extends State<InvestorRegistrationForm> {
           sendToPage(
               context,
               MainPage(
-                initPaage: BottomButtons.Home,
+                initPage: BottomButtons.Home,
               ));
         }
       } catch (error) {
