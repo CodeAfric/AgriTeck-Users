@@ -15,4 +15,37 @@ class DatabaseServices {
     CollectionReference reference = db.collection(collection);
     return reference.get();
   }
+
+  static Future<QuerySnapshot> querySingleUserById(
+      String userId, String collection) async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    return firebaseFirestore
+        .collection(collection)
+        .where('id', isEqualTo: 'userId')
+        .get();
+  }
+
+  static Future<QuerySnapshot> querySingleFromDatabaseByField(
+      String collection, String fieldName, dynamic value) async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    return firebaseFirestore
+        .collection(collection)
+        .where(fieldName, isGreaterThanOrEqualTo: value)
+        .get();
+  }
+
+  static Future<String> uploadFarmPic(
+      File image, String userID, String path) async {
+    firebase_storage.Reference reference = firebase_storage
+        .FirebaseStorage.instance
+        .ref()
+        .child(path)
+        .child(userID)
+        .child(image.path);
+    firebase_storage.TaskSnapshot storageTaskSnapshot =
+        await reference.putFile(image);
+    final String downloadUrl = await storageTaskSnapshot.ref.getDownloadURL();
+
+    return downloadUrl;
+  }
 }

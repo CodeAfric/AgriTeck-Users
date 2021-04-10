@@ -15,9 +15,9 @@ class Vendors {
   Map<String, dynamic> toMap() {
     var map = Map<String, dynamic>();
     if (vendorID != null) {
-      map['investorID'] = vendorID;
+      map['venderID'] = vendorID;
     }
-    map['investorID'] = vendorID;
+    map['venderID'] = vendorID;
     map['name'] = name;
     map['phone'] = phone;
     map['location'] = location;

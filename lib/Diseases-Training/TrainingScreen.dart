@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'dart:async';
-import 'package:agriteck_user/commonly-used-widget/open-camera.dart';
+import 'package:agriteck_user/commonly-used-widget/detect-disease.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:agriteck_user/common-functions/tflite.dart';
 import 'package:flutter/material.dart';
@@ -279,7 +279,7 @@ class _DiseaseCaptureState extends State<DiseaseCapture> {
               ),
               child: InkWell(
                 onTap: () {
-                  showCameraDialog(context);
+                  detectDisease(context);
                 },
                 child: Center(
                   child: Row(

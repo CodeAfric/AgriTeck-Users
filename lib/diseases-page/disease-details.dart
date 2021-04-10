@@ -178,7 +178,7 @@ class DiseaseContant extends StatelessWidget {
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: List.generate(
-                  causesOfDisease.length,
+                  diseasePrevention.length,
                   (index) => Row(
                     children: [
                       CircleAvatar(
@@ -189,7 +189,7 @@ class DiseaseContant extends StatelessWidget {
                         width: 5,
                       ),
                       Text(
-                        causesOfDisease[index],
+                        diseasePrevention[index],
                         style: textFontStyle,
                       ),
                     ],

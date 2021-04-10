@@ -7,7 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:agriteck_user/common-functions/tflite.dart';
 
 ImagePicker _picker = ImagePicker();
-Future<File> showCameraDialog(BuildContext context) {
+Future<File> detectDisease(BuildContext context) {
   PickedFile imageFile;
   return showDialog(
       context: context,

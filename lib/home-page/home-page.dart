@@ -1,4 +1,5 @@
 import 'package:agriteck_user/common-functions/helper-functions.dart';
+import 'package:agriteck_user/commonly-used-widget/detect-disease.dart';
 import 'package:agriteck_user/commonly-used-widget/round_button.dart';
 import 'package:agriteck_user/home-page/weather-details.dart';
 import 'package:agriteck_user/pojo-classes/tips-data.dart';
@@ -220,7 +221,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   horizontal: 60.0,
                 ),
                 onPressed: () {
-                  //ToDo here we open tips details dialog
+                  detectDisease(context);
                 },
                 color: primaryDark,
                 shape: RoundedRectangleBorder(

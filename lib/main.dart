@@ -29,18 +29,21 @@ class MyApp extends StatelessWidget {
     // print(data);
 
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'AgriTek',
-      theme: ThemeData(),
-      home: FirebaseAuth.instance.currentUser != null
-          ? RegistrationSelectionPage()
-          : RegistrationSelectionPage(),
-      // ? DiseasesScreen()
-      // : DiseasesScreen(),
-      // MainPage(
-      //     initPaage: BottomButtons.Home,
-      //   )
-      // DiseasesScreen(),
-    );
+        debugShowCheckedModeBanner: false,
+        title: 'AgriTek',
+        theme: ThemeData(),
+        home: FirebaseAuth.instance.currentUser != null
+            // ? WelcomeScreen()
+            // : WelcomeScreen(),
+            // ? DiseasesScreen()
+            // : DiseasesScreen(),
+            ? MainPage(
+                initPaage: BottomButtons.Home,
+              )
+            : MainPage(
+                initPaage: BottomButtons.Home,
+              )
+        // DiseasesScreen(),
+        );
   }
 }
