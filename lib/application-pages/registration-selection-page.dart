@@ -4,6 +4,7 @@ import 'package:agriteck_user/application-pages/authentication-screens/vendor-lo
 import 'package:agriteck_user/common-functions/helper-functions.dart';
 import 'package:agriteck_user/commonly-used-widget/round_button.dart';
 import 'package:agriteck_user/commonly-used-widget/shape-painter.dart';
+import 'package:agriteck_user/services/sharedPrefs.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:flutter/material.dart';
 
@@ -84,18 +85,21 @@ class RegistrationSelectionPage extends StatelessWidget {
                       ),
                       SizedBox(height: 30),
                       _raisedButton(
-                          onPressed: () {
+                          onPressed: () async {
+                            await SharedPrefs.setUserType('Farmers');
                             sendToPage(context,
                                 FarmerRegistrationForm('+233550935558'));
                           },
                           text: 'Farmer'),
                       _raisedButton(
-                          onPressed: () {
+                          onPressed: () async {
+                            await SharedPrefs.setUserType('Vendors');
                             sendToPage(context, VendorRegistrationForm());
                           },
                           text: 'Vendor'),
                       _raisedButton(
-                          onPressed: () {
+                          onPressed: () async {
+                            await SharedPrefs.setUserType('Investors');
                             sendToPage(context, InvestorRegistrationForm());
                           },
                           text: 'Investor'),

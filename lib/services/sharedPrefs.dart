@@ -1,9 +1,18 @@
-
 import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SharedPrefs{
+class SharedPrefs {
+  static Future<bool> setUserType(String userType) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.setString('userType', userType);
+  }
+
+  static Future<String> getUserType() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return Future(() => prefs.getString('userType'));
+  }
+
   static Future<bool> setUserID(String id) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.setString('userId', id);
@@ -38,16 +47,17 @@ class SharedPrefs{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return Future(() => prefs.getString('userName'));
   }
+
   static Future<bool> removeUsername() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.remove('userName');
   }
 
-
   static Future<bool> setUserPhoto(String url) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.setString('photoUrl', url);
   }
+
   static Future<bool> removeUserPhoto() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.remove('photoUrl');
@@ -57,7 +67,6 @@ class SharedPrefs{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return Future(() => prefs.getString('photoUrl'));
   }
-
 
   // save position info on storage
   static Future<bool> savePositionInfo(Map<String, dynamic> position) async {
@@ -80,6 +89,4 @@ class SharedPrefs{
     final _prefs = await SharedPreferences.getInstance();
     return await _prefs.remove('position');
   }
-
-
 }

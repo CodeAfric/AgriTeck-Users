@@ -201,21 +201,28 @@ class _OTPScreenState extends State<OTPScreen> {
           bool userFound = false;
           FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
           //here we loop through all the users in our system to check if the just verified number exist
+          var userType = await SharedPrefs.getUserType();
+
           firebaseFirestore
-              .collection("Users")
+              .collection("$userType")
+              .doc(value.user.uid)
               .get()
               .then((querySnapshot) async {
-            querySnapshot.docs.forEach((element) {
-              if (element.id == value.user.uid) {
-                userFound =
-                    true; //so if the user exist, we set the bool variable to true
-              }
-            });
+            var query = querySnapshot.data();
+            print("QUERIED DATA: $query");
+            // if (query.containsKey(''))
+            // querySnapshot.docs.forEach((element) {
+            //   if (element.id == value.user.uid) {
+            //     userFound =
+            //         true; //so if the user exist, we set the bool variable to true
+            //   }
+            // });
             if (userFound) {
               //so if the user found is true
               await SharedPrefs.setUserID(value.user.uid);
               await SharedPrefs.setUserName(value.user.displayName);
               await SharedPrefs.setUserPhone(value.user.phoneNumber);
+
               await showSnackBar(
                   "Log in successful...", _scaffoldKey.currentState);
               sendToPage(
