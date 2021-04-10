@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(),
       home: FirebaseAuth.instance.currentUser != null
           ? MainPage(
+<<<<<<< Updated upstream
               initPage: BottomButtons.Home,
             )
           :
@@ -35,6 +36,20 @@ class MyApp extends StatelessWidget {
           MainPage(
               initPage: BottomButtons.Home,
             ),
+=======
+              initPaage: BottomButtons.Home,
+            )
+          : RegistrationSelectionPage(),
+      // ? DiseasesScreen()
+      // : DiseasesScreen(),
+      // ? MainPage(
+      //     initPaage: BottomButtons.Home,
+      //   )
+      // : MainPage(
+      //     initPaage: BottomButtons.Home,
+      //   )
+      // DiseasesScreen(),
+>>>>>>> Stashed changes
     );
   }
 }
