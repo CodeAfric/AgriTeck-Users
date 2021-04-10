@@ -1,6 +1,7 @@
 import 'package:agriteck_user/application-pages/authentication-screens/farmer-login/registration-pages.dart';
 import 'package:agriteck_user/application-pages/authentication-screens/investor-login/registration-page.dart';
 import 'package:agriteck_user/application-pages/authentication-screens/vendor-login/registration-page.dart';
+import 'package:agriteck_user/application-pages/authentication-screens/welcome-screen.dart';
 import 'package:agriteck_user/common-functions/helper-functions.dart';
 import 'package:agriteck_user/commonly-used-widget/round_button.dart';
 import 'package:agriteck_user/commonly-used-widget/shape-painter.dart';
@@ -88,16 +89,17 @@ class RegistrationSelectionPage extends StatelessWidget {
                       SizedBox(height: 30),
                       _raisedButton(
                         onPressed: () async {
-                          await SharedPrefs.setUserType('Farmers');
-                          sendToPage(
-                              context, FarmerRegistrationForm('+233550935558'));
+                          var p = await SharedPrefs.setUserType('Farmers');
+                          print('>>> $p');
+                          sendToPage(context, WelcomeScreen());
                         },
                         text: 'Farmer',
                         width: _width * 0.8,
                       ),
                       _raisedButton(
                         onPressed: () async {
-                          await SharedPrefs.setUserType('Vendors');
+                          var check = await SharedPrefs.setUserType('Vendors');
+                          print('>>>>> $check');
                           sendToPage(context, VendorRegistrationForm());
                         },
                         text: 'Vendor',
@@ -105,7 +107,9 @@ class RegistrationSelectionPage extends StatelessWidget {
                       ),
                       _raisedButton(
                         onPressed: () async {
-                          await SharedPrefs.setUserType('Investors');
+                          var check =
+                              await SharedPrefs.setUserType('Investors');
+                          print('>>>> $check');
                           sendToPage(context, InvestorRegistrationForm());
                         },
                         text: 'Investor',

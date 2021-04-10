@@ -206,20 +206,21 @@ class _OTPScreenState extends State<OTPScreen> {
 
           firebaseFirestore
               .collection("$userType")
-              .doc(value.user.uid)
               .get()
               .then((querySnapshot) async {
-            var query = querySnapshot.data();
-            print("QUERIED DATA: $query");
-            if (query.isNotEmpty) {
-              userFound = true;
-            }
-            // querySnapshot.docs.forEach((element) {
-            //   if (element.id == value.user.uid) {
-            //     userFound =
-            //         true; //so if the user exist, we set the bool variable to true
-            //   }
-            // });
+            // var query = querySnapshot.data();
+            // print("QUERIED DATA: $query");
+            // if (query.isEmpty) {
+            //   userFound = false;
+            // } else {
+            //   userFound = true;
+            // }
+            querySnapshot.docs.forEach((element) {
+              if (element.id == value.user.uid) {
+                userFound =
+                    true; //so if the user exist, we set the bool variable to true
+              }
+            });
             if (userFound) {
               //so if the user found is true
               await SharedPrefs.setUserID(value.user.uid);

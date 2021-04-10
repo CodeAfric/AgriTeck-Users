@@ -40,6 +40,7 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     selectedPage = widget.initPaage;
+    getUserType();
     super.initState();
   }
 
@@ -48,6 +49,13 @@ class _MainPageState extends State<MainPage> {
     userName = await SharedPrefs.getUsername();
     userPhone = await SharedPrefs.getUserPhone();
     userImage = await SharedPrefs.getUserPhoto();
+  }
+
+  String userType;
+  getUserType() async {
+    userType = await SharedPrefs.getUserType();
+    print('>><<<');
+    print(userType);
   }
 
 //===============================================================================
