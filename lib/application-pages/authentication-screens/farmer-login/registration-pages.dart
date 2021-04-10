@@ -554,13 +554,12 @@ class _FarmerRegistrationFormState extends State<FarmerRegistrationForm> {
   }
 
   saveData() async {
-   
     if (_formKey.currentState.validate()) {
-       if (mounted) {
-      setState(() {
-        isLoading = true;
-      });
-    }
+      if (mounted) {
+        setState(() {
+          isLoading = true;
+        });
+      }
       if (_gender.isEmpty) {
         await showSnackBar("Please choose gender", _scaffoldKey.currentState);
       } else if (_dateTime == null) {

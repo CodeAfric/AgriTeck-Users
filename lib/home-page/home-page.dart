@@ -46,13 +46,20 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     // getWeatherUpdate();
+
     super.initState();
+  }
+
+  sssss() async {
+    var x = await SharedPrefs.getUserType();
+    return x;
   }
 
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
+    sssss();
     return Container(
       height: screenHeight,
       width: screenWidth,

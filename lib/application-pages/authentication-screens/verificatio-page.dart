@@ -211,7 +211,9 @@ class _OTPScreenState extends State<OTPScreen> {
               .then((querySnapshot) async {
             var query = querySnapshot.data();
             print("QUERIED DATA: $query");
-            // if (query.containsKey(''))
+            if (query.isNotEmpty) {
+              userFound = true;
+            }
             // querySnapshot.docs.forEach((element) {
             //   if (element.id == value.user.uid) {
             //     userFound =
