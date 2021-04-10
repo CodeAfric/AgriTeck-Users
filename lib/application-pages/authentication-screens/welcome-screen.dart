@@ -59,7 +59,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             height: _height,
             width: _width,
             child: CustomPaint(
-              painter: ShapePainter(),//background image-like design
+              painter: ShapePainter(), //background image-like design
             ),
           ),
           Container(
@@ -78,8 +78,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           style: Theme.of(context).textTheme.display3,
                           children: [
                             TextSpan(
-                              text: "Agri",
-                            ),
+                                text: "Agri",
+                                style: TextStyle(color: primaryLight)),
                             TextSpan(
                               text: "Teck",
                               style: TextStyle(fontWeight: FontWeight.bold),
@@ -115,9 +115,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                           ],
                         ),
                       ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Text(
+                        'Login',
+                        style: TextStyle(fontSize: 24.0, color: Colors.black54),
+                      ),
                       Form(
                         key: _formKey,
                         child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 10.0),
                           child: Column(
                             children: [
                               SizedBox(height: 20.0),
@@ -144,12 +152,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                               ),
                               SizedBox(height: 35.0),
                               SizedBox(
-                                  width: 200,
-                                  child: RoundedButton(
-                                      isLoading: isLoading,
-                                      text: 'SUBMIT',
-                                      color: primary,
-                                      press: _verify)),
+                                width: 200,
+                                child: RoundedButton(
+                                  isLoading: isLoading,
+                                  text: 'SUBMIT',
+                                  color: primary,
+                                  press: _verify,
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -174,11 +184,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
       _formKey.currentState.save();
       if (mounted) {
         setState(() {
-          _sendCodeToPhone(phoneNumber);//when all validation is done,
-          //we move to the function to send the 
+          _sendCodeToPhone(phoneNumber); //when all validation is done,
+          //we move to the function to send the
         });
       }
     }
   }
-
 }

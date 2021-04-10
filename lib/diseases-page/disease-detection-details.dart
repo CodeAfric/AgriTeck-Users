@@ -1,7 +1,11 @@
 import 'dart:io';
+import 'package:agriteck_user/common-functions/helper-functions.dart';
 import 'package:agriteck_user/commonly-used-widget/floating-menu.dart';
 import 'package:agriteck_user/community-page/commuinity-page.dart';
+import 'package:agriteck_user/diseases-page/disease-details.dart';
 import 'package:agriteck_user/diseases-page/diseases-page.dart';
+import 'package:agriteck_user/pojo-classes/diseases-data.dart';
+import 'package:agriteck_user/services/database-services.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:flutter/material.dart';
 
@@ -126,7 +130,31 @@ class DiseaseDetectionDetails extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    print('object');
+                    var diseases;
+                    var diseaseName = predictions[0]['label']
+                        .toString()
+                        .replaceAll(new RegExp(r'_'), ' ')
+                        .replaceAll(new RegExp(r' '), ' ')
+                        .replaceAll(new RegExp(r'  '), ' ')
+                        .replaceAll(new RegExp(r'   '), ' ');
+                    print(diseaseName);
+                    DatabaseServices.querySingleFromDatabaseByField(
+                      'Diseases',
+                      'name',
+                      diseaseName,
+                    ).then((snapshot) {
+                      if (snapshot.size > 0) {
+                        sendToPage(
+                          context,
+                          DiseaseDetailsScreen(
+                            diseaseData: Disease.fromMapObject(
+                                snapshot.docs.toList()[0].data()),
+                          ),
+                        );
+                      } else {
+                        print('Ask Community');
+                      }
+                    });
                   },
                   child: Container(
                     alignment: Alignment.centerRight,

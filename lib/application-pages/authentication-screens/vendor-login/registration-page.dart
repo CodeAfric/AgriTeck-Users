@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:agriteck_user/application-pages/authentication-screens/welcome-screen.dart';
 import 'package:agriteck_user/common-functions/helper-functions.dart';
 import 'package:agriteck_user/commonly-used-widget/custom-drop-down.dart';
 import 'package:agriteck_user/commonly-used-widget/dailog-box.dart';
@@ -6,10 +7,12 @@ import 'package:agriteck_user/commonly-used-widget/radio-buttons.dart';
 import 'package:agriteck_user/commonly-used-widget/round_button.dart';
 import 'package:agriteck_user/commonly-used-widget/shape-painter.dart';
 import 'package:agriteck_user/commonly-used-widget/textField.dart';
+import 'package:agriteck_user/main-page.dart';
+import 'package:agriteck_user/model-data/DataModels.dart';
 import 'package:agriteck_user/pojo-classes/farmers-data.dart';
+import 'package:agriteck_user/pojo-classes/vendors-data.dart';
 import 'package:agriteck_user/services/user-services.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -17,24 +20,23 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import '../../../constant.dart';
-import '../../../main-page.dart';
-import '../welcome-screen.dart';
 
-class FarmerRegistrationForm extends StatefulWidget {
+class VendorRegistrationForm extends StatefulWidget {
   final String phoneNumber;
 
-  FarmerRegistrationForm(this.phoneNumber);
-
+  VendorRegistrationForm(this.phoneNumber);
   @override
-  _FarmerRegistrationFormState createState() => _FarmerRegistrationFormState();
+  _VendorRegistrationForm createState() => _VendorRegistrationForm();
 }
 
-class _FarmerRegistrationFormState extends State<FarmerRegistrationForm> {
-  String _name, _location, _nationalId, _gender;
-  int _numFarms;
-  double _farmSize;
-  int _age;
-  String _specialized;
+class _VendorRegistrationForm extends State<VendorRegistrationForm> {
+  String _name,
+      _location,
+      _vendorId,
+      _gender,
+      _phoneNumber,
+      _email,
+      _vendorInterest;
   DateTime backButtonPressTime;
   File _image;
   final picker = ImagePicker();
@@ -142,12 +144,11 @@ class _FarmerRegistrationFormState extends State<FarmerRegistrationForm> {
                                     withDecoration: true,
                                     onSave: (value) {
                                       setState(() {
-                                        _nationalId = value;
-                                        print('NationalID: $_nationalId');
+                                        _vendorId = value;
                                       });
                                     },
                                     type: TextInputType.text,
-                                    label: 'National ID',
+                                    label: 'Vendor ID',
                                     validation: (value) {
                                       if (value.isEmpty) {
                                         return 'Please Enter a valid ID Number';
@@ -168,7 +169,6 @@ class _FarmerRegistrationFormState extends State<FarmerRegistrationForm> {
                                     onSave: (value) {
                                       setState(() {
                                         _name = value;
-                                        print('Farmer Name: $_name');
                                       });
                                     },
                                     type: TextInputType.text,
@@ -185,13 +185,33 @@ class _FarmerRegistrationFormState extends State<FarmerRegistrationForm> {
                                     ),
                                     isPassword: false,
                                   ),
+                                  SizedBox(height: 20.0),
+                                  getGender(),
+                                  SizedBox(height: 20.0),
+                                  InputTextField(
+                                    withDecoration: true,
+                                    onSave: (value) {
+                                      setState(() {
+                                        _email = value;
+                                      });
+                                    },
+                                    type: TextInputType.text,
+                                    label: 'Email',
+                                    validation: (value) {
+                                      if (value.isEmpty) {
+                                        return 'Please Enter your Email';
+                                      } else
+                                        return null;
+                                    },
+                                    prefixIcon: Icon(
+                                      Icons.email,
+                                      color: primary,
+                                    ),
+                                    isPassword: false,
+                                  ),
                                   SizedBox(
                                     height: 20,
                                   ),
-                                  getGender(),
-                                  SizedBox(height: 20.0),
-                                  getDateOfBirth(),
-                                  SizedBox(height: 20.0),
                                   InputTextField(
                                     withDecoration: true,
                                     onSave: (value) {
@@ -200,7 +220,7 @@ class _FarmerRegistrationFormState extends State<FarmerRegistrationForm> {
                                       });
                                     },
                                     type: TextInputType.text,
-                                    label: 'Where do you stay ?',
+                                    label: 'location',
                                     validation: (value) {
                                       if (value.isEmpty) {
                                         return 'Please Enter your location';
@@ -215,64 +235,16 @@ class _FarmerRegistrationFormState extends State<FarmerRegistrationForm> {
                                   ),
                                   SizedBox(height: 20.0),
                                   CustomDropDown(
-                                    value: _specialized,
-                                    hint: 'Select Speciality',
-                                    itemsList: speciality,
+                                    value: _vendorInterest,
+                                    hint: 'Select interest',
+                                    itemsList: investorInterest,
                                     onChanged: (value) {
                                       setState(() {
-                                        _specialized = value;
+                                        _vendorInterest = value;
                                       });
                                     },
                                   ),
                                   SizedBox(height: 20.0),
-                                  InputTextField(
-                                    withDecoration: true,
-                                    onSave: (value) {
-                                      setState(() {
-                                        try {
-                                          _numFarms = int.parse(value);
-                                        } catch (e) {}
-                                      });
-                                    },
-                                    type: TextInputType.number,
-                                    label: 'Total Number of Farms',
-                                    validation: (value) {
-                                      if (value.isEmpty) {
-                                        return 'Please Enter your Number of Plot you have';
-                                      } else
-                                        return null;
-                                    },
-                                    prefixIcon: Icon(
-                                      Icons.format_list_numbered,
-                                      color: primary,
-                                    ),
-                                    isPassword: false,
-                                  ),
-                                  SizedBox(height: 20.0),
-                                  InputTextField(
-                                    withDecoration: true,
-                                    onSave: (value) {
-                                      setState(() {
-                                        try {
-                                          _farmSize = double.parse(value);
-                                        } catch (e) {}
-                                      });
-                                    },
-                                    type: TextInputType.text,
-                                    label: 'Total Farm Size (Ha)',
-                                    validation: (value) {
-                                      if (value.isEmpty) {
-                                        return 'Please Enter your Total farm Size';
-                                      } else
-                                        return null;
-                                    },
-                                    prefixIcon: Icon(
-                                      Icons.photo_size_select_small,
-                                      color: primary,
-                                    ),
-                                    isPassword: false,
-                                  ),
-                                  SizedBox(height: 35.0),
                                   SizedBox(
                                       width: 200,
                                       child: RoundedButton(
@@ -297,12 +269,6 @@ class _FarmerRegistrationFormState extends State<FarmerRegistrationForm> {
           ),
         ]),
       ),
-    );
-  }
-
-  savemyData() async {
-    await FirebaseFirestore.instance.collection('users').doc('id1').set(
-      {'id': '123', 'name': 'Prince'},
     );
   }
 
@@ -562,41 +528,34 @@ class _FarmerRegistrationFormState extends State<FarmerRegistrationForm> {
       }
       if (_gender.isEmpty) {
         await showSnackBar("Please choose gender", _scaffoldKey.currentState);
-      } else if (_dateTime == null) {
-        await showSnackBar(
-            "Please select you Date of Birth", _scaffoldKey.currentState);
       } else {
         _formKey.currentState.save();
         try {
-          _age = getYears(_dateTime);
           User user = FirebaseAuth.instance.currentUser;
           if (user != null) {
-            print('Firebaser User ${user.uid}');
             String photoUrl;
             if (_image != null) {
               photoUrl = await UserServices.uploadPic(_image, user.uid);
             }
-            Farmers farmers = new Farmers(
-                farmerId: _nationalId,
-                farmSize: _farmSize,
-                numFarms: _numFarms,
-                name: _name,
-                specialized: _specialized,
-                gender: _gender,
-                age: _age,
-                img: photoUrl,
-                telephone: widget.phoneNumber,
-                location: _location);
-            await UserServices.saveUserInfo('Farmers', user.uid, farmers);
+            Vendors vendors = new Vendors(
+              vendorID: _vendorId,
+              name: _name,
+              gender: _gender,
+              phone: _phoneNumber,
+              email: _email,
+              image: photoUrl,
+              location: _location,
+            );
+            await UserServices.saveUserInfo('Vendors', user.uid, vendors);
             await FirebaseAuth.instance.currentUser
                 .updateProfile(displayName: _name, photoURL: photoUrl);
             isLoading = false;
             await showToast(
-                context, fToast, Icons.check, primaryDark, "User data Saved");
+                context, fToast, Icons.check, primaryDark, "Vendor data Saved");
             sendToPage(
                 context,
                 MainPage(
-                  initPage: BottomButtons.Home,
+                  initPaage: BottomButtons.Home,
                 ));
           }
         } catch (error) {

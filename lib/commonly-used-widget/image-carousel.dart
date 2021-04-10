@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_pro/carousel_pro.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,7 @@ class ImageCarousel extends StatelessWidget {
       child: Carousel(
         boxFit: BoxFit.cover,
         images: [
-          ...this.imagePaths.map((path) => AssetImage(path)),
+          ...this.imagePaths.map((path) => NetworkImage(path)),
         ],
         animationCurve: Curves.fastOutSlowIn,
         animationDuration: Duration(milliseconds: 2000),
