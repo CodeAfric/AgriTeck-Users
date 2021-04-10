@@ -336,7 +336,7 @@ class _NewFarmState extends State<NewFarm> {
           sendToPage(
               context,
               MainPage(
-                initPaage: BottomButtons.Farms,
+                initPage: BottomButtons.Farms,
               ));
         }
       } catch (error) {

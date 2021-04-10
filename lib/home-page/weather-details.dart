@@ -1,9 +1,11 @@
 import 'package:agriteck_user/commonly-used-widget/custom_app_bar.dart';
-import 'package:agriteck_user/commonly-used-widget/dailog-box.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class WeatherDetails extends StatefulWidget {
+  final List data;
+
+  const WeatherDetails({Key key, this.data}) : super(key: key);
+
   @override
   _WeatherDetailsState createState() => _WeatherDetailsState();
 }
@@ -14,10 +16,11 @@ class _WeatherDetailsState extends State<WeatherDetails>  with SingleTickerProvi
     showModalBottomSheet(
         context: context,
         builder: (context) {
+          var _height=MediaQuery.of(context).size.height;
           return Container(
             color: Color(0xFF737373),
             child: Container(
-              height: 180,
+              height: _height*.6,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(10),

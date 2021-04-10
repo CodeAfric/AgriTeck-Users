@@ -28,12 +28,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(),
       home: FirebaseAuth.instance.currentUser != null
           ? MainPage(
-              initPaage: BottomButtons.Home,
+              initPage: BottomButtons.Home,
             )
           :
           // WelcomeScreen(),
           MainPage(
-              initPaage: BottomButtons.Home,
+              initPage: BottomButtons.Home,
             ),
     );
   }

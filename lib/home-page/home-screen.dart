@@ -1,5 +1,4 @@
 import 'package:agriteck_user/common-functions/helper-functions.dart';
-import 'package:agriteck_user/commonly-used-widget/round_button.dart';
 import 'package:agriteck_user/home-page/weather-details.dart';
 import 'package:agriteck_user/pojo-classes/tips-data.dart';
 import 'package:agriteck_user/services/sharedPrefs.dart';
@@ -19,12 +18,14 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
+
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<AsyncLoaderState> _asyncLoaderState =
       new GlobalKey<AsyncLoaderState>();
   Map<String, dynamic> weatherJSON, waetherForFivedays;
   String _currentDate;
   var _userLocation;
+    List weatherData;
   getWeatherUpdate() async {
     WeatherServices weather =
         new WeatherServices("9be7d9f30e6275394f7aa27d8093dd5f");
@@ -34,12 +35,13 @@ class _HomeScreenState extends State<HomeScreen> {
     _userLocation = await SharedPrefs.getPositionInfo();
     print(
         '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-    List data = waetherForFivedays['list'];
-    data.forEach((element) {
-      print('$element');
-      print(
-          '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-    });
+    weatherData= waetherForFivedays['list'];
+    print('$weatherJSON');
+    // weatherData.forEach((element) {
+    //   print('$element');
+    //   print(
+    //       '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+    // });
   }
 
   @override
@@ -253,129 +255,137 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Center(child: new CircularProgressIndicator())),
       renderError: ([error]) =>
           new Text('Sorry, there was an error loading Weather'),
-      renderSuccess: ({data}) => Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-          Container(
-              decoration: BoxDecoration(
-                color: Colors.grey.shade300,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20.0),
-                  topRight: Radius.circular(20.0),
-                ),
-              ),
-              width: double.infinity,
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 5,
+      renderSuccess: ({data}) => GestureDetector(
+        onTap: () {
+          sendToPage(context, WeatherDetails(data: weatherData,));
+        },
+        child: Card(
+          margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          elevation: 5,
+          shape:
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Container(
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade300,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20.0),
+                      topRight: Radius.circular(20.0),
+                    ),
                   ),
-                  Text(
-                    '${weatherJSON['name']} - ${_userLocation['locationName']}',
-                    style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.black45,
-                        fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    _currentDate,
-                    style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.black45,
-                        fontWeight: FontWeight.w300),
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                ],
-              )),
-          Padding(
-            padding: const EdgeInsets.only(
-                left: 12.0, right: 12, top: 8, bottom: 15),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                    child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  width: double.infinity,
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        '${weatherJSON['name']} - ${_userLocation['locationName']}',
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.black45,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        _currentDate,
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.black45,
+                            fontWeight: FontWeight.w300),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                    ],
+                  )),
+              Padding(
+                padding: const EdgeInsets.only(
+                    left: 12.0, right: 12, top: 8, bottom: 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      '${weatherJSON['weather'][0]['main']} - ${weatherJSON['weather'][0]['description']}',
-                      style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.black45,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    RichText(
-                      text: TextSpan(children: [
-                        TextSpan(
-                            text:
-                                '${weatherJSON['main']['temp'].toStringAsFixed(1)}',
-                            style: TextStyle(
-                                fontSize: 55,
-                                color: Colors.black45,
-                                fontWeight: FontWeight.bold)),
-                        WidgetSpan(
-                          child: Transform.translate(
-                            offset: const Offset(2, -4),
-                            child: Text('°C',
-                                //superscript is usually smaller in size
-                                textScaleFactor: 0.7,
+                    Container(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          '${weatherJSON['weather'][0]['main']} - ${weatherJSON['weather'][0]['description']}',
+                          style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black45,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        RichText(
+                          text: TextSpan(children: [
+                            TextSpan(
+                                text:
+                                    '${weatherJSON['main']['temp'].toStringAsFixed(0)}',
                                 style: TextStyle(
-                                    fontSize: 30,
+                                    fontSize: 60,
                                     color: Colors.black45,
                                     fontWeight: FontWeight.bold)),
-                          ),
+                            WidgetSpan(
+                              child: Transform.translate(
+                                offset: const Offset(2, -10),
+                                child: Text('°C',
+                                    //superscript is usually smaller in size
+                                    textScaleFactor: 0.7,
+                                    style: TextStyle(
+                                        fontSize: 60,
+                                        color: Colors.black45,
+                                        fontWeight: FontWeight.bold)),
+                              ),
+                            ),
+                            TextSpan(
+                                text:
+                                '\nMin:${weatherJSON['main']['temp_min'].toStringAsFixed(0)}°C /Max:${weatherJSON['main']['temp_max'].toStringAsFixed(0)}°C ',
+                                style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.black45,
+                                    fontWeight: FontWeight.w800)),
+                          ]),
+                        ),
+                      ],
+                    )),
+                    Container(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          "assets/images/weather.png",
+                          height: 100,
+                          width: 100,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          'Wind: ${weatherJSON['wind']['speed'].toStringAsFixed(2)}m/s',
+                          style: TextStyle(
+                              fontSize: 17,
+                              color: Colors.black45,
+                              fontWeight: FontWeight.w500),
                         )
-                      ]),
-                    ),
+                      ],
+                    )),
                   ],
-                )),
-                Container(
-                    child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      "assets/images/weather.png",
-                      height: 100,
-                      width: 100,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      'Wind: ${weatherJSON['wind']['speed'].toStringAsFixed(2)}m/s',
-                      style: TextStyle(
-                          fontSize: 17,
-                          color: Colors.black45,
-                          fontWeight: FontWeight.w500),
-                    )
-                  ],
-                )),
-              ],
-            ),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
     return SliverToBoxAdapter(
-      child: GestureDetector(
-        onTap: () {
-          sendToPage(context, WeatherDetails());
-        },
-        child: Card(
-            margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            elevation: 5,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            child: _asyncLoader),
-      ),
+      child: _asyncLoader
     );
   }
 }

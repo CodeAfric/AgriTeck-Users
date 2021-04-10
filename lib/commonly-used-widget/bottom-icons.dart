@@ -37,14 +37,14 @@ class _BottomIconsState extends State<BottomIcons> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
                 ),
-                padding: EdgeInsets.only(left: 2, right: 2, top: 3, bottom: 1),
+                padding:  EdgeInsets.symmetric(horizontal: 5,vertical: 5),
                 child: Column(
                   children: <Widget>[
                     Image.asset(
                       widget.icons,
                       color: widget.activeIconColor,
-                      width: 25,
-                      height: 25,
+                      width: 26,
+                      height: 26,
                     ),
                     SizedBox(
                       height: 3,
@@ -53,8 +53,8 @@ class _BottomIconsState extends State<BottomIcons> {
                       widget.text,
                       style: TextStyle(
                           color: widget.textColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16),
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14),
                     ),
                   ],
                 ),
@@ -64,14 +64,16 @@ class _BottomIconsState extends State<BottomIcons> {
             borderRadius: BorderRadius.circular(30),
           ),
           padding:
-          EdgeInsets.only(left: 2, right: 2, top: 3, bottom: 1),
+          EdgeInsets.symmetric(horizontal: 10,vertical: 5),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Image.asset(
                 widget.icons,
                 color: widget.iconColor,
-                width: 20,
-                height: 20,
+                width: 22,
+                height: 22,
               ),
               SizedBox(
                 height: 3,
@@ -80,7 +82,7 @@ class _BottomIconsState extends State<BottomIcons> {
                 widget.text,
                 style: TextStyle(
                     color: Colors.black26,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w400,
                     fontSize: 14),
               ),
             ],

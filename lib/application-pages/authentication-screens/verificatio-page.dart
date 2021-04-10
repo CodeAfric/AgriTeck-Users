@@ -221,7 +221,7 @@ class _OTPScreenState extends State<OTPScreen> {
               sendToPage(
                   context,
                   MainPage(
-                    initPaage: BottomButtons.Home,
+                    initPage: BottomButtons.Home,
                   ));
             } else {
               //id the user do not exist, the we send the user to the registration page to fill the forms

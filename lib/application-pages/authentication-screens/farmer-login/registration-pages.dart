@@ -586,7 +586,7 @@ class _FarmerRegistrationFormState extends State<FarmerRegistrationForm> {
             sendToPage(
                 context,
                 MainPage(
-                  initPaage: BottomButtons.Home,
+                  initPage: BottomButtons.Home,
                 ));
           }
         } catch (error) {
