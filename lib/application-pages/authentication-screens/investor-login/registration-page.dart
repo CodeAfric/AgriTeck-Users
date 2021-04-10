@@ -30,13 +30,8 @@ class InvestorRegistrationForm extends StatefulWidget {
 }
 
 class _InvestorRegistrationFormState extends State<InvestorRegistrationForm> {
-  String _name,
-      _location,
-      _investorId,
-      _gender,
-      _phoneNumber,
-      _email,
-      _investorInterest;
+  String _name, _location, _investorId, _gender, _phoneNumber, _email;
+  List<dynamic> _investorInterest;
   DateTime backButtonPressTime;
   File _image;
   final picker = ImagePicker();
@@ -205,6 +200,30 @@ class _InvestorRegistrationFormState extends State<InvestorRegistrationForm> {
                                     },
                                     prefixIcon: Icon(
                                       Icons.email,
+                                      color: primary,
+                                    ),
+                                    isPassword: false,
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  InputTextField(
+                                    withDecoration: true,
+                                    onSave: (value) {
+                                      setState(() {
+                                        _phoneNumber = value;
+                                      });
+                                    },
+                                    type: TextInputType.phone,
+                                    label: 'Phone',
+                                    validation: (value) {
+                                      if (value.isEmpty) {
+                                        return 'Please Enter your Phone Number';
+                                      } else
+                                        return null;
+                                    },
+                                    prefixIcon: Icon(
+                                      Icons.phone,
                                       color: primary,
                                     ),
                                     isPassword: false,
@@ -520,62 +539,45 @@ class _InvestorRegistrationFormState extends State<InvestorRegistrationForm> {
   }
 
   saveData() async {
-    if (mounted) {
-      setState(() {
-        isLoading = true;
-      });
-    }
     if (_formKey.currentState.validate()) {
-      if (_gender.isEmpty) {
-        await showSnackBar("Please choose gender", _scaffoldKey.currentState);
-      } else if (_dateTime == null) {
-        await showSnackBar(
-            "Please select you Date of Birth", _scaffoldKey.currentState);
-      } else {
-        _formKey.currentState.save();
-        try {
-          // _age = getYears(_dateTime);
-          User user = FirebaseAuth.instance.currentUser;
-          if (user != null) {
-            String photoUrl;
-            if (_image != null) {
-              photoUrl = await UserServices.uploadPic(_image, user.uid);
-            }
-            // Investors investors = new Investors(
-            //   InvestorId: _investorId,
-            //   InvestorName: _name,
-            //   Investorphone: _phoneNumber,
-            //   InvestorEmail: _email,
-            //   InvestorImage: photoUrl,
-            //   InvestorLocation: _location,
-            // );
-            InvestorsData investors = InvestorsData(
-              name: _name,
-              investorID: _investorId,
-              phone: _phoneNumber,
-              location: _location,
-              image: photoUrl,
-              email: _email,
-            );
-
-            await UserServices.saveInvestorInfo(user.uid, investors);
-            await FirebaseAuth.instance.currentUser
-                .updateProfile(displayName: _name, photoURL: photoUrl);
-            isLoading = false;
-            await showToast(context, fToast, Icons.check, primaryDark,
-                "Investor data Saved");
-            sendToPage(
-                context,
-                MainPage(
-                  initPaage: BottomButtons.Home,
-                ));
+      if (mounted) {
+        setState(() {
+          isLoading = true;
+        });
+      }
+      _formKey.currentState.save();
+      try {
+        User user = FirebaseAuth.instance.currentUser;
+        if (user != null) {
+          String photoUrl;
+          if (_image != null) {
+            photoUrl = await UserServices.uploadPic(_image, user.uid);
           }
-        } catch (error) {
-          setState(() {
-            isLoading = false;
-            print('[$error]');
-          });
+          InvestorsData investors = InvestorsData(
+            name: _name,
+            investorID: _investorId,
+            phone: _phoneNumber,
+            location: _location,
+            image: photoUrl,
+            email: _email,
+          );
+          await UserServices.saveUserInfo('Investors', user.uid, investors);
+          await FirebaseAuth.instance.currentUser
+              .updateProfile(displayName: _name, photoURL: photoUrl);
+          isLoading = false;
+          await showToast(
+              context, fToast, Icons.check, primaryDark, "Investor data Saved");
+          sendToPage(
+              context,
+              MainPage(
+                initPaage: BottomButtons.Home,
+              ));
         }
+      } catch (error) {
+        setState(() {
+          isLoading = false;
+          print('[$error]');
+        });
       }
 
       if (mounted) {
