@@ -40,22 +40,16 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     selectedPage = widget.initPaage;
-    getUserType();
+    getUserInfo();
     super.initState();
   }
 
-  String userName, userPhone, userImage;
+  String userName, userPhone, userImage, userType;
   getUserInfo() async {
     userName = await SharedPrefs.getUsername();
     userPhone = await SharedPrefs.getUserPhone();
     userImage = await SharedPrefs.getUserPhoto();
-  }
-
-  String userType;
-  getUserType() async {
     userType = await SharedPrefs.getUserType();
-    print('>><<<');
-    print(userType);
   }
 
 //===============================================================================
@@ -237,48 +231,54 @@ class _MainPageState extends State<MainPage> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              BottomIcons(
-                iconColor: primaryDark,
-                text: 'Home',
-                bottomIcons: selectedPage == BottomButtons.Home ? true : false,
-                icons: 'assets/icons/home.png',
-                textColor: Colors.white,
-                onPressed: () {
-                  setState(() {
-                    selectedPage = BottomButtons.Home;
-                  });
-                },
-                activeColor: primary,
-                activeIconColor: Colors.white,
-              ),
-              BottomIcons(
-                iconColor: primaryDark,
-                text: 'Crops',
-                bottomIcons: selectedPage == BottomButtons.Crops ? true : false,
-                icons: 'assets/icons/cultivate.png',
-                textColor: Colors.white,
-                onPressed: () {
-                  setState(() {
-                    selectedPage = BottomButtons.Crops;
-                  });
-                },
-                activeColor: primary,
-                activeIconColor: Colors.white,
-              ),
-              BottomIcons(
-                iconColor: primaryDark,
-                text: 'Farms',
-                bottomIcons: selectedPage == BottomButtons.Farms ? true : false,
-                icons: 'assets/icons/farm.png',
-                textColor: Colors.white,
-                onPressed: () {
-                  setState(() {
-                    selectedPage = BottomButtons.Farms;
-                  });
-                },
-                activeColor: primary,
-                activeIconColor: Colors.white,
-              ),
+              if (userType == 'Farmers')
+                BottomIcons(
+                  iconColor: primaryDark,
+                  text: 'Home',
+                  bottomIcons:
+                      selectedPage == BottomButtons.Home ? true : false,
+                  icons: 'assets/icons/home.png',
+                  textColor: Colors.white,
+                  onPressed: () {
+                    setState(() {
+                      selectedPage = BottomButtons.Home;
+                    });
+                  },
+                  activeColor: primary,
+                  activeIconColor: Colors.white,
+                ),
+              if (userType == 'Farmers')
+                BottomIcons(
+                  iconColor: primaryDark,
+                  text: 'Crops',
+                  bottomIcons:
+                      selectedPage == BottomButtons.Crops ? true : false,
+                  icons: 'assets/icons/cultivate.png',
+                  textColor: Colors.white,
+                  onPressed: () {
+                    setState(() {
+                      selectedPage = BottomButtons.Crops;
+                    });
+                  },
+                  activeColor: primary,
+                  activeIconColor: Colors.white,
+                ),
+              if (userType == 'Farmers' || userType == 'Investors')
+                BottomIcons(
+                  iconColor: primaryDark,
+                  text: 'Farms',
+                  bottomIcons:
+                      selectedPage == BottomButtons.Farms ? true : false,
+                  icons: 'assets/icons/farm.png',
+                  textColor: Colors.white,
+                  onPressed: () {
+                    setState(() {
+                      selectedPage = BottomButtons.Farms;
+                    });
+                  },
+                  activeColor: primary,
+                  activeIconColor: Colors.white,
+                ),
               BottomIcons(
                 iconColor: primaryDark,
                 text: 'Community',

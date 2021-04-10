@@ -33,13 +33,11 @@ class _HomeScreenState extends State<HomeScreen> {
     waetherForFivedays = await weather.getFiveDayForecast();
     _currentDate = weather.getDateTime();
     _userLocation = await SharedPrefs.getPositionInfo();
-    print(
-        '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+    print('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
     List data = waetherForFivedays['list'];
     data.forEach((element) {
       print('$element');
-      print(
-          '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+      print('+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
     });
   }
 
