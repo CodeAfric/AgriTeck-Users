@@ -23,7 +23,7 @@ class _DiseaseDetectionState extends State<DiseaseDetection> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: primaryLight,
+        backgroundColor: primary,
         title: Text(
           'Disease Detection Details',
           style: TextStyle(

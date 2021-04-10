@@ -7,10 +7,11 @@ import 'package:agriteck_user/commonly-used-widget/floating-buttton.dart';
 import 'package:agriteck_user/commonly-used-widget/floating-menu.dart';
 import 'package:agriteck_user/community-page/commuinity-page.dart';
 import 'package:agriteck_user/crops-page/crops-page.dart';
+import 'package:agriteck_user/diseases-page/diseases-page.dart';
 import 'package:agriteck_user/home-page/home-screen.dart';
 import 'package:agriteck_user/investors/investor.dart';
 import 'package:agriteck_user/pojo-classes/tips-data.dart';
-import 'package:agriteck_user/products/products.dart';
+import 'package:agriteck_user/products-page/products_page.dart';
 import 'package:agriteck_user/services/sharedPrefs.dart';
 import 'package:agriteck_user/vendors/vendor.dart';
 import 'package:async_loader/async_loader.dart';
@@ -21,7 +22,16 @@ import 'package:flutter/services.dart';
 import 'farms-page/farm-screen.dart';
 import 'farms-page/new-farm-page.dart';
 
-enum BottomButtons { Crops, Farms, Home, Vendors, Market, Investors, Community }
+enum BottomButtons {
+  Crops,
+  Farms,
+  Home,
+  Vendors,
+  Market,
+  Investors,
+  Community,
+  Diseases
+}
 
 class MainPage extends StatefulWidget {
   final BottomButtons initPage;
@@ -32,7 +42,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   BottomButtons selectedPage;
-  String userName, userPhone, userImage, userType;
+  String userName, userPhone, userImage, userType, pageTitle = '';
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<AsyncLoaderState> _asyncLoaderState =
       new GlobalKey<AsyncLoaderState>();
@@ -52,6 +62,17 @@ class _MainPageState extends State<MainPage> {
     userName = await SharedPrefs.getUsername();
     userPhone = await SharedPrefs.getUserPhone();
     userImage = await SharedPrefs.getUserPhoto();
+  }
+
+  //===============================================================================
+// here we check which page we are , then we show the user the corressponding Title on the app bar
+  setPageTitle() {
+    String title = '';
+    if (selectedPage == BottomButtons.Farms) title = 'Farms';
+    if (selectedPage == BottomButtons.Diseases) title = 'Diseases';
+    if (selectedPage == BottomButtons.Community) title = 'Community';
+    if (selectedPage == BottomButtons.Market) title = 'Product List';
+    return title;
   }
 
 //===============================================================================
@@ -195,27 +216,43 @@ class _MainPageState extends State<MainPage> {
               children: [
                 _asyncLoader,
                 ListTile(
-                  leading: Icon(Icons.arrow_forward),
+                  leading: Image(
+                    width: 24,
+                    image: AssetImage('assets/icons/cultivate.png'),
+                    color: Colors.black54,
+                  ),
                   trailing: Icon(Icons.arrow_forward),
                   title: Text(
                     'Crops',
-                    style: TextStyle(fontSize: 18),
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.black54,
+                    ),
                   ),
                   onTap: () {
-                    // Update the state of the app.
-                    // ...
+                    Navigator.pop(context);
+                    // Send to Crops Page
+                    sendToPage(context, CropsScreen());
                   },
                 ),
                 ListTile(
-                  leading: Icon(Icons.arrow_forward),
+                  leading: Image(
+                    width: 24,
+                    image: AssetImage('assets/icons/market.png'),
+                    color: Colors.black54,
+                  ),
                   trailing: Icon(Icons.arrow_forward),
                   title: Text(
-                    'Crops',
-                    style: TextStyle(fontSize: 18),
+                    'Market',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.black54,
+                    ),
                   ),
                   onTap: () {
-                    // Update the state of the app.
-                    // ...
+                    Navigator.pop(context);
+                    // Send to Crops Page
+                    sendToPage(context, ProductFullScreen());
                   },
                 ),
                 Divider(),
@@ -262,6 +299,7 @@ class _MainPageState extends State<MainPage> {
         ),
         appBar: CustomAppBar(
           leadingIcon: Icons.menu,
+          title: setPageTitle(),
           onIconPress: () {
             setState(() {
               _scaffoldKey.currentState.openDrawer();
@@ -275,12 +313,12 @@ class _MainPageState extends State<MainPage> {
               )
             : selectedPage == BottomButtons.Community
                 ? CommunityScreen()
-                : selectedPage == BottomButtons.Crops
-                    ? CropsScreen()
+                : selectedPage == BottomButtons.Diseases
+                    ? DiseasesScreen()
                     : selectedPage == BottomButtons.Farms
                         ? FarmScreen()
                         : selectedPage == BottomButtons.Market
-                            ? ProductScreen()
+                            ? ProductsMidScreen()
                             : Container(),
         bottomNavigationBar: Container(
           height: 70,
@@ -310,14 +348,14 @@ class _MainPageState extends State<MainPage> {
               if (userType == 'Farmers')
                 BottomIcons(
                   iconColor: Colors.grey,
-                  text: 'Crops',
+                  text: 'Diseases',
                   bottomIcons:
-                      selectedPage == BottomButtons.Crops ? true : false,
+                      selectedPage == BottomButtons.Diseases ? true : false,
                   icons: 'assets/icons/cultivate.png',
                   textColor: primary,
                   onPressed: () {
                     setState(() {
-                      selectedPage = BottomButtons.Crops;
+                      selectedPage = BottomButtons.Diseases;
                     });
                   },
                   activeColor: primary,
@@ -354,21 +392,22 @@ class _MainPageState extends State<MainPage> {
                 activeColor: primary,
                 activeIconColor: primary,
               ),
-              BottomIcons(
-                iconColor: Colors.grey,
-                text: 'Market',
-                bottomIcons:
-                    selectedPage == BottomButtons.Market ? true : false,
-                icons: 'assets/icons/market.png',
-                textColor: primary,
-                onPressed: () {
-                  setState(() {
-                    selectedPage = BottomButtons.Market;
-                  });
-                },
-                activeColor: primary,
-                activeIconColor: primary,
-              ),
+              if (userType == 'Vendors')
+                BottomIcons(
+                  iconColor: Colors.grey,
+                  text: 'Market',
+                  bottomIcons:
+                      selectedPage == BottomButtons.Market ? true : false,
+                  icons: 'assets/icons/market.png',
+                  textColor: primary,
+                  onPressed: () {
+                    setState(() {
+                      selectedPage = BottomButtons.Market;
+                    });
+                  },
+                  activeColor: primary,
+                  activeIconColor: primary,
+                ),
             ],
           ),
         ),

@@ -14,7 +14,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: primaryLight,
+        backgroundColor: primary,
         title: Text(
           'Post Details',
           style: TextStyle(
