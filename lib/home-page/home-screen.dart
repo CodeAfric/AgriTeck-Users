@@ -1,5 +1,6 @@
 import 'package:agriteck_user/common-functions/helper-functions.dart';
-import 'package:agriteck_user/commonly-used-widget/detect-disease.dart';
+import 'package:agriteck_user/commonly-used-widget/clickable-text.dart';
+import 'package:agriteck_user/diseases-page/diseases-page.dart';
 import 'package:agriteck_user/home-page/weather-details.dart';
 import 'package:agriteck_user/pojo-classes/tips-data.dart';
 import 'package:agriteck_user/services/sharedPrefs.dart';
@@ -19,13 +20,14 @@ class HomeScreen extends StatefulWidget {
   _HomeScreenState createState() => _HomeScreenState();
 }
 
+
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<AsyncLoaderState> _asyncLoaderState =
       new GlobalKey<AsyncLoaderState>();
   Map<String, dynamic> weatherJSON, waetherForFivedays;
   String _currentDate;
   var _userLocation;
-  List weatherData;
+    List weatherData;
   getWeatherUpdate() async {
     WeatherServices weather =
         new WeatherServices("9be7d9f30e6275394f7aa27d8093dd5f");
@@ -35,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _userLocation = await SharedPrefs.getPositionInfo();
     print(
         '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-    weatherData = waetherForFivedays['list'];
+    weatherData= waetherForFivedays['list'];
     print('$weatherJSON');
     // weatherData.forEach((element) {
     //   print('$element');
@@ -222,14 +224,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   horizontal: 60.0,
                 ),
                 onPressed: () {
-                  detectDisease(context);
+                  //ToDo here we open tips details dialog
                 },
                 color: primaryDark,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30.0),
                 ),
                 icon: const Icon(
-                  Icons.photo_camera,
+                  FontAwesomeIcons.camera,
                   color: Colors.white,
                 ),
                 label: Text(
@@ -239,12 +241,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 textColor: Colors.white,
               ),
             ],
+          ),
+          SizedBox(height: 10,),
+          ClickableText(
+            text1: "",
+            text2: 'Click to View Diseases List',
+            press: (){
+              sendToPage(context, DiseasesScreen());
+            },
           )
         ],
       ),
     ));
   }
-
   SliverToBoxAdapter _weatherCard(double screenHeight) {
     var _asyncLoader = new AsyncLoader(
       key: _asyncLoaderState,
@@ -257,17 +266,13 @@ class _HomeScreenState extends State<HomeScreen> {
           new Text('Sorry, there was an error loading Weather'),
       renderSuccess: ({data}) => GestureDetector(
         onTap: () {
-          sendToPage(
-              context,
-              WeatherDetails(
-                data: weatherData,
-              ));
+          sendToPage(context, WeatherDetails(data: weatherData,));
         },
         child: Card(
           margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
           elevation: 5,
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
@@ -350,7 +355,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             TextSpan(
                                 text:
-                                    '\nMin:${weatherJSON['main']['temp_min'].toStringAsFixed(0)}°C /Max:${weatherJSON['main']['temp_max'].toStringAsFixed(0)}°C ',
+                                '\nMin:${weatherJSON['main']['temp_min'].toStringAsFixed(0)}°C /Max:${weatherJSON['main']['temp_max'].toStringAsFixed(0)}°C ',
                                 style: TextStyle(
                                     fontSize: 14,
                                     color: Colors.black45,
@@ -388,6 +393,8 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
-    return SliverToBoxAdapter(child: _asyncLoader);
+    return SliverToBoxAdapter(
+      child: _asyncLoader
+    );
   }
 }

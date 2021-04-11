@@ -599,8 +599,10 @@ class _FarmerRegistrationFormState extends State<FarmerRegistrationForm> {
           }
         } catch (error) {
           setState(() {
+            print('==============================================');
             isLoading = false;
             print('[$error]');
+            print('==============================================');
           });
         }
       }

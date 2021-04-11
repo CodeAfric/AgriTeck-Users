@@ -1,3 +1,6 @@
+import 'package:agriteck_user/api/api_repository.dart';
+import 'package:agriteck_user/pojo-classes/weather-model/current_weather_data.dart';
+import 'package:agriteck_user/pojo-classes/weather-model/five_days_data.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
@@ -8,6 +11,7 @@ class WeatherServices{
   String _apiKey;
  String openWeatherMapURL = "https://api.openweathermap.org/data/2.5/weather";
   String openWeatherForFiveDays = "https://api.openweathermap.org/data/2.5/forecast";
+
   WeatherServices(this._apiKey);
   /// Fetch current weather based on geographical coordinates.
   /// Result is JSON.
@@ -40,6 +44,60 @@ class WeatherServices{
     return formatted;
   }
 
+
+  void getCurrentWeatherData({
+    Function() beforSend,
+    Function(CurrentWeatherData currentWeatherData) onSuccess,
+    Function(dynamic error) onError,
+  }) async{
+    Position loc = await Geolocator.getCurrentPosition();
+    final url = "$openWeatherMapURL?"
+        "lat=${loc.latitude}&lon=${loc.longitude}"
+        "&appid=$_apiKey&units=metric";
+    //print(url);
+    ApiRepository(url: '$url', payload: null).get(
+        beforeSend: () => {
+          if (beforSend != null)
+            {
+              beforSend(),
+            },
+        },
+        onSuccess: (data) => {
+          onSuccess(CurrentWeatherData.fromJson(data)),
+        },
+        onError: (error) => {
+          if (onError != null)
+            {
+              print(error),
+              onError(error),
+            }
+        });
+  }
+
+  void getFiveDaysThreeHoursForcastData({
+    Function() beforSend,
+    Function(List<FiveDayData> fiveDayData) onSuccess,
+    Function(dynamic error) onError,
+  })async {
+    Position loc = await Geolocator.getCurrentPosition();
+    final url = "$openWeatherMapURL?"
+        "lat=${loc.latitude}&lon=${loc.longitude}"
+        "&appid=$_apiKey&units=metric";
+    print(url);
+    ApiRepository(url: '$url', payload: null).get(
+        beforeSend: () => {},
+        onSuccess: (data) => {
+          onSuccess((data['list'] as List)
+              ?.map((t) => FiveDayData.fromJson(t))
+              ?.toList() ??
+              List.empty()),
+        },
+        onError: (error) => {
+          print(error),
+          onError(error),
+        });
+  }
+
 }
 
 class NetworkHelper {
@@ -56,4 +114,6 @@ class NetworkHelper {
       print(response.statusCode);
     }
   }
+
+
 }
