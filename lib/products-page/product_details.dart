@@ -1,40 +1,38 @@
+import 'package:agriteck_user/commonly-used-widget/image-carousel.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:flutter/material.dart';
+import 'package:carousel_pro/carousel_pro.dart';
 
-class ProductDetails extends StatefulWidget {
-  @override
-  _ProductDetails createState() => _ProductDetails();
-}
+class ProductDetails extends StatelessWidget {
+  // final Product diseaseData;
+  // final String diseaseId;
 
-class _ProductDetails extends State<ProductDetails> {
+  // todo: Get the details detal at the init state
+  // DiseaseDetailsScreen({this.diseaseData});
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Card(
-      child: Container(
-        height: size.height * 0.70,
-        padding: EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),
-          boxShadow: [
-            BoxShadow(color: primaryLight, offset: Offset(0, 4), blurRadius: 10)
-          ],
-        ),
-        child: Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10.0),
-                  topRight: Radius.circular(10.0)),
-              color: Colors.white,
-            ),
-            child: ListView(
-              scrollDirection: Axis.vertical,
-              children: [
-                Container(
-                  child: details(
-                    name_of_disease: 'Aphids',
+    return Scaffold(
+      //resizeToAvoidBottomPadding: false,
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Column(
+          children: [
+            // todo: image from network
+            ImageCarousel([]),
+            Container(
+              height: size.height * 0.70,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(15.0),
+                  topRight: Radius.circular(15.0),
+                ),
+              ),
+              child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: ProductContent(
+                    name_of_disease: 'Aphids LKSDkj',
                     plant_types: 'Miaze, Banana, Barley, Bean, Bitter Gourd',
                     disease_symptoms:
                         'Curled and deformed leaves, Small Insects under leaves and shoots, Stunted growth',
@@ -52,18 +50,16 @@ class _ProductDetails extends State<ProductDetails> {
                         'For example if one is coming out with a theory that cannibals lives longer than normal'
                         ' human beings, the researcher will use qualitative research to seek '
                         'peoples belief on cannibalism, analyze',
-                  ),
-                )
-              ],
+                  )),
             ),
-          ),
+          ],
         ),
       ),
     );
   }
 }
 
-class details extends StatelessWidget {
+class ProductContent extends StatelessWidget {
   final String name_of_disease;
   final String plant_types;
   final String disease_symptoms;
@@ -71,7 +67,7 @@ class details extends StatelessWidget {
   final String disease_treatment;
   final String causes_of_disease;
 
-  const details(
+  const ProductContent(
       {Key key,
       this.name_of_disease,
       this.plant_types,

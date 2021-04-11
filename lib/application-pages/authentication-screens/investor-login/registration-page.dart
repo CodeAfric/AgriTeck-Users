@@ -1,6 +1,7 @@
+import 'dart:convert';
 import 'dart:io';
 
-import 'package:agriteck_user/application-pages/authentication-screens/welcome-screen.dart';
+import 'package:agriteck_user/application-pages/authentication-screens/phone_verification.dart';
 import 'package:agriteck_user/common-functions/helper-functions.dart';
 import 'package:agriteck_user/commonly-used-widget/custom-drop-down.dart';
 import 'package:agriteck_user/commonly-used-widget/dailog-box.dart';
@@ -11,6 +12,7 @@ import 'package:agriteck_user/commonly-used-widget/textField.dart';
 import 'package:agriteck_user/model-data/DataModels.dart';
 import 'package:agriteck_user/pojo-classes/farmers-data.dart';
 import 'package:agriteck_user/pojo-classes/investors-data.dart';
+import 'package:agriteck_user/services/sharedPrefs.dart';
 import 'package:agriteck_user/services/user-services.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -74,7 +76,8 @@ class _InvestorRegistrationFormState extends State<InvestorRegistrationForm> {
                   return Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
-                          builder: (BuildContext context) => WelcomeScreen()),
+                          builder: (BuildContext context) =>
+                              PhoneVerification()),
                       (route) => false);
                 },
               );
@@ -272,7 +275,7 @@ class _InvestorRegistrationFormState extends State<InvestorRegistrationForm> {
                                       child: RoundedButton(
                                           isLoading: isLoading,
                                           text: 'SUBMIT',
-                                          color: primary,
+                                          color: primaryDark,
                                           press: isLoading ? null : saveData)),
                                   SizedBox(
                                     height: 20,
@@ -565,6 +568,7 @@ class _InvestorRegistrationFormState extends State<InvestorRegistrationForm> {
             email: _email,
           );
           await UserServices.saveUserInfo('Investors', user.uid, investors);
+          await SharedPrefs.setUserData(json.encode(investors));
           await FirebaseAuth.instance.currentUser
               .updateProfile(displayName: _name, photoURL: photoUrl);
           isLoading = false;

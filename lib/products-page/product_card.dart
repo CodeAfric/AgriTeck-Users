@@ -1,60 +1,12 @@
-import 'package:agriteck_user/products/product-details-screen.dart';
 import 'package:flutter/material.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 
-class ProductList extends StatelessWidget {
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Expanded(
-      //height: size.height * 0.70,
-      child: Container(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.all(10),
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Product List'.toUpperCase(),
-                style: TextStyle(
-                    color: primaryDark,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16),
-              ),
-            ),
-            Expanded(
-              child: ListView.builder(
-                padding: EdgeInsets.only(bottom: 80.0),
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    child: Container(
-                      child: ListItems(
-                        diseaseImage: 'assets/diseases/disease1.jpg',
-                        diseaseName: 'Curly flew Shoot',
-                        plantType: 'general grass',
-                      ),
-                    ),
-                    onTap: () {
-                      navigateToProductDetails(context);
-                    },
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class ListItems extends StatelessWidget {
+class ProductCard extends StatelessWidget {
   final String diseaseImage;
   final String diseaseName;
   final String plantType;
 
-  const ListItems(
+  const ProductCard(
       {Key key, this.diseaseImage, this.diseaseName, this.plantType})
       : super(key: key);
 
@@ -140,9 +92,4 @@ class ListItems extends StatelessWidget {
       ),
     );
   }
-}
-
-Future navigateToProductDetails(context) async {
-  Navigator.push(
-      context, MaterialPageRoute(builder: (context) => ProductDetailsScreen()));
 }

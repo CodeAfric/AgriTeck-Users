@@ -22,7 +22,7 @@ class InvestorScreen extends StatelessWidget {
                   Navigator.pop(context);
                 },
               ),
-              backgroundColor: primaryLight.withOpacity(0.5),
+              backgroundColor: primary.withOpacity(0.5),
               title: Text(
                 'Investors',
                 style: TextStyle(

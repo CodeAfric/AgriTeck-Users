@@ -5,14 +5,14 @@ import 'package:agriteck_user/commonly-used-widget/textField.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'verificatio-page.dart';
+import 'verification_page.dart';
 
-class WelcomeScreen extends StatefulWidget {
+class PhoneVerification extends StatefulWidget {
   @override
-  _WelcomeScreenState createState() => _WelcomeScreenState();
+  _PhoneVerificationState createState() => _PhoneVerificationState();
 }
 
-class _WelcomeScreenState extends State<WelcomeScreen> {
+class _PhoneVerificationState extends State<PhoneVerification> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final _formKey = GlobalKey<FormState>();
   String phoneNumber;
@@ -156,7 +156,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                                 child: RoundedButton(
                                   isLoading: isLoading,
                                   text: 'SUBMIT',
-                                  color: primary,
+                                  color: primaryDark,
                                   press: _verify,
                                 ),
                               ),

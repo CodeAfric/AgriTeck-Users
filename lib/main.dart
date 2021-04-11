@@ -1,9 +1,10 @@
+import 'package:agriteck_user/application-pages/welcome_page.dart';
 import 'package:agriteck_user/services/sharedPrefs.dart';
 import 'package:agriteck_user/services/user-services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'application-pages/authentication-screens/welcome-screen.dart';
+import 'application-pages/authentication-screens/phone_verification.dart';
 import 'main-page.dart';
 
 void main() async {
@@ -23,18 +24,17 @@ class MyApp extends StatelessWidget {
     // FirebaseAuth.instance.signOut();
 
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'AgriTek',
-      theme: ThemeData(),
-      home: FirebaseAuth.instance.currentUser != null
-          ? MainPage(
-              initPage: BottomButtons.Home,
-            )
-          :
-          // WelcomeScreen(),
-          MainPage(
-              initPage: BottomButtons.Home,
-            ),
-    );
+        debugShowCheckedModeBanner: false,
+        title: 'AgriTek',
+        theme: ThemeData(),
+        home: FirebaseAuth.instance.currentUser != null
+            ? MainPage(
+                initPage: BottomButtons.Home,
+              )
+            : WelcomeScreen()
+        // MainPage(
+        //     initPage: BottomButtons.Home,
+        //   ),
+        );
   }
 }

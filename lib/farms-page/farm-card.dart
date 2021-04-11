@@ -1,4 +1,5 @@
 import 'package:agriteck_user/styles/app-colors.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class FarmCard extends StatelessWidget {
@@ -26,12 +27,19 @@ class FarmCard extends StatelessWidget {
                 padding: EdgeInsets.all(3.0),
                 child: ClipRRect(
                   borderRadius: BorderRadius.all(Radius.circular(3)),
-                  child: Image.asset(
-                    farmImage,
-                    fit: BoxFit.cover,
-                    height: 70,
-                    width: 100,
-                  ),
+                  child: farmImage != null
+                      ? CachedNetworkImage(
+                          imageUrl: farmImage,
+                          fit: BoxFit.cover,
+                          height: 80,
+                          width: 100,
+                        )
+                      : Image.asset(
+                          'assets/diseases/disease1.jpg',
+                          fit: BoxFit.cover,
+                          height: 80,
+                          width: 100,
+                        ),
                 ),
               ),
             ),
@@ -48,20 +56,20 @@ class FarmCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      padding: EdgeInsets.only(top: 10),
+                      padding: EdgeInsets.only(top: 0),
                       alignment: Alignment.centerLeft,
                       child: Text(
                         farmName,
                         textAlign: TextAlign.left,
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 18,
                           color: primaryDark,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.only(top: 10),
+                      padding: EdgeInsets.only(top: 5),
                       alignment: Alignment.centerLeft,
                       child: Text(
                         plantType,

@@ -1,16 +1,13 @@
 import 'package:agriteck_user/commonly-used-widget/dailog-box.dart';
 import 'package:agriteck_user/commonly-used-widget/floating-buttton.dart';
 import 'package:agriteck_user/commonly-used-widget/image-carousel.dart';
+import 'package:agriteck_user/pojo-classes/farms-data.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:flutter/material.dart';
 
 class FarmDetailsScreen extends StatelessWidget {
-  final String farmImage;
-  final String farmName;
-  final String farmLocation;
-  const FarmDetailsScreen(
-      {Key key, this.farmImage, this.farmName, this.farmLocation})
-      : super(key: key);
+  final Farm farm;
+  const FarmDetailsScreen({Key key, this.farm}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -47,11 +44,11 @@ class FarmDetailsScreen extends StatelessWidget {
                       children: [
                         Container(
                           child: FarmContent(
-                            farmId: 'F1001',
-                            location: 'Kwadaso Municipal',
-                            farmSymptoms: '0248569654',
-                            causesOfCrop:
-                                'Aphids, these are soft bodied insects with long legs',
+                            farmId: farm.farmId,
+                            location: farm.location,
+                            description: farm.description,
+                            farmCrops: farm.cropType,
+                            farmSize: farm.farmSize.toString(),
                           ),
                         )
                       ],
@@ -89,24 +86,27 @@ class FarmDetailsScreen extends StatelessWidget {
 class FarmContent extends StatelessWidget {
   final String farmId;
   final String location;
-  final String farmSymptoms;
-  final String farmPrevention;
-  final String farmTreatment;
-  final String causesOfCrop;
+  final String description;
+  final String farmSize;
+  final List farmState;
+  final String farmCrops;
+  final Map farmer;
   final TextStyle titleFontStyle = TextStyle(color: primaryDark, fontSize: 22);
   final TextStyle textFontStyle = TextStyle(fontSize: 16, height: 1.5);
-  FarmContent(
-      {Key key,
-      this.farmId,
-      this.location,
-      this.farmSymptoms,
-      this.farmPrevention,
-      this.farmTreatment,
-      this.causesOfCrop})
-      : super(key: key);
+  FarmContent({
+    Key key,
+    this.farmId = '',
+    this.location = '',
+    this.description = '',
+    this.farmSize = '',
+    this.farmState = const [],
+    this.farmer = const {},
+    this.farmCrops = '',
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var _farmCrops = farmCrops.split(', ');
     return Container(
       child: Container(
         child: Column(
@@ -138,7 +138,7 @@ class FarmContent extends StatelessWidget {
                       'Farm Size',
                       style: titleFontStyle,
                     ),
-                    subtitle: Text('20.6')),
+                    subtitle: Text(farmSize)),
                 ListTile(
                   contentPadding: EdgeInsets.symmetric(
                     horizontal: 20,
@@ -156,53 +156,26 @@ class FarmContent extends StatelessWidget {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Row(
-                              children: [
-                                CircleAvatar(
-                                  radius: 3,
-                                  backgroundColor: Colors.grey,
-                                ),
-                                SizedBox(
-                                  width: 2,
-                                ),
-                                Text(
-                                  'Cabbage',
-                                  style: textFontStyle,
-                                ),
-                              ],
-                            ),
-                            SizedBox(width: 6),
-                            Row(
-                              children: [
-                                CircleAvatar(
-                                  radius: 3,
-                                  backgroundColor: Colors.grey,
-                                ),
-                                SizedBox(
-                                  width: 2,
-                                ),
-                                Text(
-                                  'Green Pepper',
-                                  style: textFontStyle,
-                                ),
-                              ],
-                            ),
-                            SizedBox(width: 4),
-                            Row(
-                              children: [
-                                CircleAvatar(
-                                  radius: 3,
-                                  backgroundColor: Colors.grey,
-                                ),
-                                SizedBox(
-                                  width: 2,
-                                ),
-                                Text(
-                                  'Watermelon',
-                                  style: textFontStyle,
-                                ),
-                              ],
-                            ),
+                            ...List.generate(
+                                _farmCrops.length,
+                                (index) => Row(
+                                      children: [
+                                        CircleAvatar(
+                                          radius: 3,
+                                          backgroundColor: Colors.grey,
+                                        ),
+                                        SizedBox(
+                                          width: 2,
+                                        ),
+                                        Text(
+                                          _farmCrops[index],
+                                          style: textFontStyle,
+                                        ),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                      ],
+                                    )),
                           ],
                         ),
                       ),
@@ -219,7 +192,7 @@ class FarmContent extends StatelessWidget {
                     style: titleFontStyle,
                   ),
                   subtitle: Text(
-                    'Old Edubiase',
+                    location,
                     style: textFontStyle,
                   ),
                 ),
@@ -233,7 +206,7 @@ class FarmContent extends StatelessWidget {
                     style: titleFontStyle,
                   ),
                   subtitle: Text(
-                    'The public is providing more thatn 1m per minute in global farm subsidies, much of which is driving the climate crisis and destruction of wildlife, according to a new report',
+                    description,
                     maxLines: 5,
                     overflow: TextOverflow.ellipsis,
                     style: textFontStyle,

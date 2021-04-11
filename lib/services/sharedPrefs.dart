@@ -13,6 +13,16 @@ class SharedPrefs {
     return Future(() => prefs.getString('userType'));
   }
 
+  static Future<bool> setUserData(String id) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.setString('userData', id);
+  }
+
+  static Future<String> getUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return Future(() => prefs.getString('userData'));
+  }
+
   static Future<bool> setUserID(String id) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.setString('userId', id);
