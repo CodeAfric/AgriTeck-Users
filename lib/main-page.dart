@@ -225,21 +225,21 @@ class _MainPageState extends State<MainPage> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          if (userType == 'Farmers')
-            BottomIcons(
-              iconColor: Colors.grey,
-              text: 'Home',
-              bottomIcons: selectedPage == BottomButtons.Home ? true : false,
-              icons: 'assets/icons/home.png',
-              textColor: primary,
-              onPressed: () {
-                setState(() {
-                  selectedPage = BottomButtons.Home;
-                });
-              },
-              activeColor: primary,
-              activeIconColor: primary,
-            ),
+          BottomIcons(
+            iconColor: Colors.grey,
+            text: 'Home',
+            bottomIcons: selectedPage == BottomButtons.Home ? true : false,
+            icons: 'assets/icons/home.png',
+            textColor: primary,
+            onPressed: () {
+              setState(() {
+                selectedPage = BottomButtons.Home;
+              });
+            },
+            activeColor: primary,
+            activeIconColor: primary,
+          ),
+
           if (userType == 'Farmers')
             BottomIcons(
               iconColor: Colors.grey,

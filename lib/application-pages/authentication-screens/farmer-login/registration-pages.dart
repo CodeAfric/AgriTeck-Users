@@ -591,7 +591,7 @@ class _FarmerRegistrationFormState extends State<FarmerRegistrationForm> {
                 telephone: widget.phoneNumber,
                 location: _location);
             await UserServices.saveUserInfo('Farmers', user.uid, farmers);
-            await SharedPrefs.setUserData(json.encode(farmers));
+            //await SharedPrefs.setUserData(json.encode(farmers));
             await FirebaseAuth.instance.currentUser
                 .updateProfile(displayName: _name, photoURL: photoUrl);
             isLoading = false;
@@ -605,8 +605,10 @@ class _FarmerRegistrationFormState extends State<FarmerRegistrationForm> {
           }
         } catch (error) {
           setState(() {
+            print('==============================================');
             isLoading = false;
             print('[$error]');
+            print('==============================================');
           });
         }
       }
