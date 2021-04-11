@@ -573,7 +573,7 @@ class _InvestorRegistrationFormState extends State<InvestorRegistrationForm> {
           sendToPage(
               context,
               MainPage(
-                initPaage: BottomButtons.Home,
+                initPage: BottomButtons.Home,
               ));
         }
       } catch (error) {

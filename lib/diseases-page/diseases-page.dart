@@ -1,4 +1,5 @@
 import 'package:agriteck_user/common-functions/helper-functions.dart';
+import 'package:agriteck_user/commonly-used-widget/custom_app_bar.dart';
 import 'package:agriteck_user/diseases-page/disease-card.dart';
 import 'package:agriteck_user/pojo-classes/diseases-data.dart';
 import 'package:agriteck_user/services/database-services.dart';
@@ -17,31 +18,25 @@ class _DiseasesScreenState extends State<DiseasesScreen> {
   @override
   void initState() {
     super.initState();
-
     DatabaseServices.getDataFromDatabase('Diseases').then((snapshot) {
       setState(() {
         diseasesList = snapshot.docs.toList();
       });
     });
-
     ///whatever you want to run on page build
   }
-
-  //  async DatabaseServices.readDiseases().then((){
-
-  //  });
-  // print(data);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: primaryLight,
-        title: Text(
-          'Diseases',
-          style: TextStyle(
-              fontWeight: FontWeight.w600, fontSize: 18, color: Colors.white),
-        ),
+      appBar: CustomAppBar(
+        title: 'Diseases Page',
+        leadingIcon: Icons.arrow_back,
+        onIconPress: (){
+          setState(() {
+            Navigator.pop(context);
+          });
+        },
       ),
       body: SafeArea(
         child: SingleChildScrollView(

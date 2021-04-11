@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   final IconData leadingIcon;
   final Function onIconPress;
-  CustomAppBar({@required this.leadingIcon,this.onIconPress});
+  final String title;
+  CustomAppBar({@required this.leadingIcon,this.onIconPress,this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +17,7 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
         iconSize: 28.0,
         onPressed: onIconPress,
       ),
+      title: Text(title!=null?title:''),
     );
   }
 

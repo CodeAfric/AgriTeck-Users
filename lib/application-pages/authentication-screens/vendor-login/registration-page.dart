@@ -555,7 +555,7 @@ class _VendorRegistrationForm extends State<VendorRegistrationForm> {
             sendToPage(
                 context,
                 MainPage(
-                  initPaage: BottomButtons.Home,
+                  initPage: BottomButtons.Home,
                 ));
           }
         } catch (error) {

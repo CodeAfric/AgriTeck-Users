@@ -1,4 +1,6 @@
 import 'package:agriteck_user/common-functions/helper-functions.dart';
+import 'package:agriteck_user/commonly-used-widget/clickable-text.dart';
+import 'package:agriteck_user/diseases-page/diseases-page.dart';
 import 'package:agriteck_user/home-page/weather-details.dart';
 import 'package:agriteck_user/pojo-classes/tips-data.dart';
 import 'package:agriteck_user/services/sharedPrefs.dart';
@@ -239,12 +241,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 textColor: Colors.white,
               ),
             ],
+          ),
+          SizedBox(height: 10,),
+          ClickableText(
+            text1: "",
+            text2: 'Click to View Diseases List',
+            press: (){
+              sendToPage(context, DiseasesScreen());
+            },
           )
         ],
       ),
     ));
   }
-
   SliverToBoxAdapter _weatherCard(double screenHeight) {
     var _asyncLoader = new AsyncLoader(
       key: _asyncLoaderState,
