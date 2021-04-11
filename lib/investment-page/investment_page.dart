@@ -1,27 +1,27 @@
 import 'package:agriteck_user/common-functions/helper-functions.dart';
-import 'package:agriteck_user/farms-page/farm-card.dart';
-import 'package:agriteck_user/farms-page/farm-details.dart';
-import 'package:agriteck_user/pojo-classes/farms-data.dart';
+import 'package:agriteck_user/investment-page/investment_card.dart';
+import 'package:agriteck_user/investment-page/investment_details.dart';
+import 'package:agriteck_user/pojo-classes/investment.dart';
 import 'package:agriteck_user/services/database-services.dart';
 import 'package:agriteck_user/services/sharedPrefs.dart';
 import 'package:async_loader/async_loader.dart';
 import 'package:flutter/material.dart';
 
-class FarmsScreen extends StatelessWidget {
+class InvestmentScreen extends StatelessWidget {
   getData() async {
-    List farmList;
+    List investmentList;
     var userType = await SharedPrefs.getUserType();
+    var userId = await SharedPrefs.getUserID();
     var snapshot;
     if (userType == 'Farmers') {
-      var userId = await SharedPrefs.getUserID();
       snapshot = await DatabaseServices.queryFromDatabaseByField(
-          'Farms', 'farmerId', userId);
+          'Investments', 'farmerDetails.farmerId', userId);
     } else if (userType == 'Investors') {
-      snapshot = await DatabaseServices.getDataFromDatabase('Farms');
+      snapshot = await DatabaseServices.queryFromDatabaseByField(
+          'Investments', 'inverstorDetails.investorID', userId);
     }
-
-    farmList = snapshot.docs.toList();
-    return farmList;
+    investmentList = snapshot.docs.toList();
+    return investmentList;
   }
 
   final GlobalKey<AsyncLoaderState> _asyncLoaderState =
@@ -40,17 +40,20 @@ class FarmsScreen extends StatelessWidget {
           padding: EdgeInsets.only(bottom: 80.0),
           itemCount: data.length,
           itemBuilder: (context, index) {
-            var farm = Farm.fromMapObject(data[index].data());
+            var investment = Investment.fromMapObject(data[index].data());
             return InkWell(
-              child: FarmCard(
-                farmImage: farm.images.length > 0 ? farm.images[0] : null,
-                farmName: '${farm.farmerDetails['name']}\'s Farm',
-                plantType: farm.cropType,
+              child: InvestorCard(
+                farmImage: investment.farmDetails['images'].length > 0
+                    ? investment.farmDetails['images'][0]
+                    : null,
+                farmName: '${investment.farmerDetails['name']}\'s Farm',
+                investmentInputs: investment.input,
+                farmLocation: investment.farmDetails['location'],
               ),
               onTap: () {
                 sendToPage(
                   context,
-                  FarmDetailsScreen(farm: farm),
+                  InvestmentDetailsScreen(investment: investment),
                 );
               },
             );
@@ -61,7 +64,7 @@ class FarmsScreen extends StatelessWidget {
       children: [
         Expanded(
           child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 5.0),
+              padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
               child: _asyncLoader),
         ),
       ],

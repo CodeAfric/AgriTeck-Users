@@ -11,6 +11,7 @@ import 'package:agriteck_user/farms-page/farmstate_update.dart';
 import 'package:agriteck_user/farms-page/update-farm-page.dart';
 import 'package:agriteck_user/main-page.dart';
 import 'package:agriteck_user/pojo-classes/farms-data.dart';
+import 'package:agriteck_user/pojo-classes/investment.dart';
 import 'package:agriteck_user/services/database-services.dart';
 import 'package:agriteck_user/services/sharedPrefs.dart';
 import 'package:agriteck_user/services/user-services.dart';
@@ -21,16 +22,17 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
-class FarmDetailsScreen extends StatefulWidget {
-  final Farm farm;
+class InvestmentDetailsScreen extends StatefulWidget {
+  final Investment investment;
 
-  FarmDetailsScreen({Key key, this.farm}) : super(key: key);
+  InvestmentDetailsScreen({Key key, this.investment}) : super(key: key);
 
   @override
-  _FarmDetailsScreenState createState() => _FarmDetailsScreenState();
+  _InvestmentDetailsScreenState createState() =>
+      _InvestmentDetailsScreenState();
 }
 
-class _FarmDetailsScreenState extends State<FarmDetailsScreen> {
+class _InvestmentDetailsScreenState extends State<InvestmentDetailsScreen> {
   String userType;
 
   getUserInfo() async {
@@ -81,15 +83,15 @@ class _FarmDetailsScreenState extends State<FarmDetailsScreen> {
                       padding: EdgeInsets.only(bottom: 80.0),
                       children: [
                         Container(
-                          child: FarmContent(
-                            farmId: widget.farm.farmId,
-                            location: widget.farm.location,
-                            description: widget.farm.description,
-                            farmCrops: widget.farm.cropType,
-                            farmSize: widget.farm.farmSize.toString(),
-                            farmState: widget.farm.farmState,
-                          ),
-                        )
+                            // child: FarmContent(
+                            //   farmId: widget.investment.farmId,
+                            //   location: widget.investment.location,
+                            //   description: widget.investment.description,
+                            //   farmCrops: widget.investment.cropType,
+                            //   farmSize: widget.investment.farmSize.toString(),
+                            //   farmState: widget.investment.farmState,
+                            // ),
+                            )
                       ],
                     ),
                   ),
@@ -108,22 +110,22 @@ class _FarmDetailsScreenState extends State<FarmDetailsScreen> {
                   label: 'Update Farm',
                   icon: Icons.edit,
                   onPress: () {
-                    sendToPage(
-                        context,
-                        UpdateFarm(
-                          farm: widget.farm,
-                        ));
+                    // sendToPage(
+                    //     context,
+                    //     UpdateFarm(
+                    //       farm: widget.farm,
+                    //     ));
                   },
                 ),
                 BubbleMenuItem.create(
                   label: 'Update Farm State',
                   icon: Icons.accessibility,
                   onPress: () {
-                    sendToPage(
-                        context,
-                        FarmStateUpdate(
-                          farm: widget.farm,
-                        ));
+                    // sendToPage(
+                    //     context,
+                    //     FarmStateUpdate(
+                    //       farm: widget.farm,
+                    //     ));
                   },
                 ),
               ],
