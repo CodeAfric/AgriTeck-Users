@@ -211,7 +211,7 @@ class FeedBackOverlay extends ModalRoute<void> {
             press: () => noReturnSendToPage(
                 context,
                 MainPage(
-                  initPage: BottomButtons.Diseases,
+                  initPage: BottomButtons.Home,
                 )),
             text: 'Contribute Later',
           ),

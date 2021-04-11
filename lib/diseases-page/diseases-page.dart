@@ -1,5 +1,7 @@
 import 'package:agriteck_user/common-functions/helper-functions.dart';
 import 'package:agriteck_user/commonly-used-widget/custom_app_bar.dart';
+import 'package:agriteck_user/commonly-used-widget/detect-disease.dart';
+import 'package:agriteck_user/commonly-used-widget/floating-buttton.dart';
 import 'package:agriteck_user/diseases-page/disease-card.dart';
 import 'package:agriteck_user/pojo-classes/diseases-data.dart';
 import 'package:agriteck_user/services/database-services.dart';
@@ -23,6 +25,7 @@ class _DiseasesScreenState extends State<DiseasesScreen> {
         diseasesList = snapshot.docs.toList();
       });
     });
+
     ///whatever you want to run on page build
   }
 
@@ -32,7 +35,7 @@ class _DiseasesScreenState extends State<DiseasesScreen> {
       appBar: CustomAppBar(
         title: 'Diseases Page',
         leadingIcon: Icons.arrow_back,
-        onIconPress: (){
+        onIconPress: () {
           setState(() {
             Navigator.pop(context);
           });
@@ -43,7 +46,7 @@ class _DiseasesScreenState extends State<DiseasesScreen> {
           child: Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height - 61,
-            color: primaryLight.withOpacity(0.1),
+            color: Colors.white,
             child: Column(
               children: [
                 Expanded(
@@ -51,7 +54,6 @@ class _DiseasesScreenState extends State<DiseasesScreen> {
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10.0),
-                      color: primaryLight.withOpacity(0.3),
                     ),
                     child: ListView.builder(
                       padding: EdgeInsets.only(bottom: 80.0),
@@ -90,6 +92,13 @@ class _DiseasesScreenState extends State<DiseasesScreen> {
             ),
           ),
         ),
+      ),
+      floatingActionButton: FloatingButton(
+        label: 'Detect Disease',
+        icon: Icons.photo_camera,
+        onPressHandler: () {
+          detectDisease(context);
+        },
       ),
     );
   }
