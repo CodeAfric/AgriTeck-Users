@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:agriteck_user/application-pages/authentication-screens/investor-login/registration-page.dart';
 import 'package:agriteck_user/application-pages/authentication-screens/vendor-login/registration-page.dart';
 import 'package:agriteck_user/application-pages/authentication-screens/phone_verification.dart';
@@ -216,6 +218,8 @@ class _OTPScreenState extends State<OTPScreen> {
             if (query == null) {
               userFound = false;
             } else {
+              // Save the user data in the pref
+              await SharedPrefs.setUserData(json.encode(query));
               userFound = true;
             }
             if (userFound) {

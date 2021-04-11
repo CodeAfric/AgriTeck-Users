@@ -1,8 +1,10 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:agriteck_user/common-functions/helper-functions.dart';
 import 'package:agriteck_user/commonly-used-widget/round_button.dart';
 import 'package:agriteck_user/commonly-used-widget/shape-painter.dart';
 import 'package:agriteck_user/commonly-used-widget/textField.dart';
+import 'package:agriteck_user/pojo-classes/farmers-data.dart';
 import 'package:agriteck_user/pojo-classes/farms-data.dart';
 import 'package:agriteck_user/services/sharedPrefs.dart';
 import 'package:agriteck_user/services/user-services.dart';
@@ -50,13 +52,12 @@ class _NewFarmState extends State<NewFarm> {
         backgroundColor: primary,
         elevation: 0,
         title: Text(
-          'New Farm',
+          'Add New Farm',
           style: TextStyle(
-            fontSize: 32,
+            fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
         ),
-        centerTitle: true,
         leading: BackButton(
           color: Colors.white,
         ),
@@ -70,128 +71,122 @@ class _NewFarmState extends State<NewFarm> {
             painter: ShapePainter(),
           ),
         ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(
-            color: Colors.white.withOpacity(.6),
-            height: MediaQuery.of(context).size.height * 0.85,
-            child: Center(
-              child: SingleChildScrollView(
-                child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 12),
-                  child: Center(
+        Container(
+          color: Colors.white.withOpacity(.6),
+          height: _height,
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Form(
+                  key: _formKey,
+                  child: Container(
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Form(
-                          key: _formKey,
-                          child: Container(
-                            child: Column(
-                              children: [
-                                _imageChooser(),
-                                SizedBox(
-                                  height: 30,
-                                ),
-                                InputTextField(
-                                  withDecoration: true,
-                                  maxLine: 5,
-                                  onSave: (value) {
-                                    setState(() {
-                                      description = value;
-                                    });
-                                  },
-                                  type: TextInputType.text,
-                                  label: 'Farm Descriptions',
-                                  alignText: true,
-                                  validation: (value) {
-                                    if (value.isEmpty) {
-                                      return 'Please Enter Farm Description';
-                                    } else
-                                      return null;
-                                  },
-                                  isPassword: false,
-                                ),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                InputTextField(
-                                  withDecoration: true,
-                                  onSave: (value) {
-                                    setState(() {
-                                      cropType = value;
-                                    });
-                                  },
-                                  type: TextInputType.text,
-                                  label: 'Crop on Farm',
-                                  alignText: true,
-                                  validation: (value) {
-                                    if (value.isEmpty) {
-                                      return 'Please Enter Type of Crop on farm';
-                                    } else
-                                      return null;
-                                  },
-                                  isPassword: false,
-                                ),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                InputTextField(
-                                  withDecoration: true,
-                                  onSave: (value) {
-                                    setState(() {
-                                      location = value;
-                                    });
-                                  },
-                                  type: TextInputType.text,
-                                  label: 'Enter Farm Location',
-                                  validation: (value) {
-                                    if (value.isEmpty) {
-                                      return 'Please Enter farm Location';
-                                    } else
-                                      return null;
-                                  },
-                                  isPassword: false,
-                                ),
-                                SizedBox(height: 20.0),
-                                InputTextField(
-                                  withDecoration: true,
-                                  onSave: (value) {
-                                    setState(() {
-                                      try {
-                                        farmSize = double.parse(value);
-                                      } catch (e) {}
-                                    });
-                                  },
-                                  type: TextInputType.number,
-                                  label: 'Total farm Size',
-                                  validation: (value) {
-                                    if (value.isEmpty) {
-                                      return 'Please Enter the farm size';
-                                    } else
-                                      return null;
-                                  },
-                                  isPassword: false,
-                                ),
-                                SizedBox(height: 30.0),
-                                SizedBox(
-                                    width: 200,
-                                    child: RoundedButton(
-                                        isLoading: isLoading,
-                                        text: 'SAVE DATA',
-                                        color: primary,
-                                        press: isLoading ? null : saveData)),
-                                SizedBox(
-                                  height: 20,
-                                )
-                              ],
-                            ),
-                          ),
+                      children: [
+                        SizedBox(
+                          height: 20,
                         ),
+                        _imageChooser(),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        InputTextField(
+                          withDecoration: true,
+                          maxLine: 5,
+                          onSave: (value) {
+                            setState(() {
+                              description = value;
+                            });
+                          },
+                          type: TextInputType.text,
+                          label: 'Farm Descriptions',
+                          alignText: true,
+                          validation: (value) {
+                            if (value.isEmpty) {
+                              return 'Please Enter Farm Description';
+                            } else
+                              return null;
+                          },
+                          isPassword: false,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        InputTextField(
+                          withDecoration: true,
+                          onSave: (value) {
+                            setState(() {
+                              cropType = value;
+                            });
+                          },
+                          type: TextInputType.text,
+                          label: 'Crop on Farm',
+                          alignText: true,
+                          validation: (value) {
+                            if (value.isEmpty) {
+                              return 'Please Enter Type of Crop on farm';
+                            } else
+                              return null;
+                          },
+                          isPassword: false,
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        InputTextField(
+                          withDecoration: true,
+                          onSave: (value) {
+                            setState(() {
+                              location = value;
+                            });
+                          },
+                          type: TextInputType.text,
+                          label: 'Enter Farm Location',
+                          validation: (value) {
+                            if (value.isEmpty) {
+                              return 'Please Enter farm Location';
+                            } else
+                              return null;
+                          },
+                          isPassword: false,
+                        ),
+                        SizedBox(height: 20.0),
+                        InputTextField(
+                          withDecoration: true,
+                          onSave: (value) {
+                            setState(() {
+                              try {
+                                farmSize = double.parse(value);
+                              } catch (e) {}
+                            });
+                          },
+                          type: TextInputType.number,
+                          label: 'Total farm Size',
+                          validation: (value) {
+                            if (value.isEmpty) {
+                              return 'Please Enter the farm size';
+                            } else
+                              return null;
+                          },
+                          isPassword: false,
+                        ),
+                        SizedBox(height: 30.0),
+                        SizedBox(
+                            width: 200,
+                            child: RoundedButton(
+                                isLoading: isLoading,
+                                text: 'SAVE DATA',
+                                color: primaryDark,
+                                press: isLoading ? null : saveData)),
+                        SizedBox(
+                          height: 20,
+                        )
                       ],
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
           ),
         ),
@@ -207,21 +202,36 @@ class _NewFarmState extends State<NewFarm> {
         },
         child: Container(
           child: image != null
-              ? ClipRRect(
-                  borderRadius: BorderRadius.circular(5),
-                  child: Image.file(
-                    image,
-                    width: MediaQuery.of(context).size.width,
-                    height: 200,
-                    fit: BoxFit.fill,
-                  ),
+              ? Column(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(30),
+                      child: Image.file(
+                        image,
+                        width: 150,
+                        height: 100,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(left: 8.0, right: 8, bottom: 0),
+                      child: Text(
+                        'Change Image',
+                        style: TextStyle(
+                            color: primary,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    )
+                  ],
                 )
               : Container(
                   decoration: BoxDecoration(
                       color: Colors.white24,
                       borderRadius: BorderRadius.circular(50)),
                   width: MediaQuery.of(context).size.width,
-                  height: 200,
+                  height: 100,
                   child: Stack(children: <Widget>[
                     Align(
                       alignment: Alignment.center,
@@ -236,8 +246,11 @@ class _NewFarmState extends State<NewFarm> {
                         padding: const EdgeInsets.only(
                             left: 8.0, right: 8, bottom: 25),
                         child: Text(
-                          'Take photo',
-                          style: TextStyle(color: primaryDark),
+                          'Upload Image',
+                          style: TextStyle(
+                              color: primary,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold),
                         ),
                       ),
                     )
@@ -310,6 +323,8 @@ class _NewFarmState extends State<NewFarm> {
       _formKey.currentState.save();
       try {
         String userId = await SharedPrefs.getUserID();
+        String userData = await SharedPrefs.getUserData();
+        Map farmer = json.decode(userData);
         // String user=await SharedPrefs.getUserID();
         var formatter = new DateFormat('MM/dd/yyyy');
         User user = FirebaseAuth.instance.currentUser;
@@ -318,18 +333,24 @@ class _NewFarmState extends State<NewFarm> {
           if (image != null) {
             photoUrl = await UserServices.uploadFarmPic(image, user.uid);
           }
-          Farms farms = new Farms(
+          Farm farm = new Farm(
             farmSize: farmSize,
             farmerId: userId,
+            farmerDetails: {
+              'name': farmer['name'],
+              'telephone': farmer['telephone'],
+              'location': farmer['location'],
+              'specialized': farmer['specialized'],
+            },
             farmId: userId + '-${formatter.format(DateTime.now())}',
             farmState: [],
             location: location,
-            images: photoUrl,
+            images: [photoUrl],
             cropType: cropType,
             description: description,
           );
           await UserServices.saveFarm(
-              user.uid + DateTime.now().toIso8601String(), farms);
+              user.uid + DateTime.now().toIso8601String(), farm);
           isLoading = false;
           await showToast(context, fToast, Icons.check, primaryDark,
               "Farm data Saved successfully");

@@ -230,7 +230,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   borderRadius: BorderRadius.circular(30.0),
                 ),
                 icon: const Icon(
-                  FontAwesomeIcons.camera,
+                  Icons.photo_camera,
                   color: Colors.white,
                 ),
                 label: Text(

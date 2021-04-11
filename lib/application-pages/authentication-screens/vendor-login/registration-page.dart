@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:agriteck_user/application-pages/authentication-screens/phone_verification.dart';
 import 'package:agriteck_user/application-pages/welcome_page.dart';
@@ -12,6 +13,7 @@ import 'package:agriteck_user/main-page.dart';
 import 'package:agriteck_user/model-data/DataModels.dart';
 import 'package:agriteck_user/pojo-classes/farmers-data.dart';
 import 'package:agriteck_user/pojo-classes/vendors-data.dart';
+import 'package:agriteck_user/services/sharedPrefs.dart';
 import 'package:agriteck_user/services/user-services.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -252,7 +254,7 @@ class _VendorRegistrationForm extends State<VendorRegistrationForm> {
                                       child: RoundedButton(
                                           isLoading: isLoading,
                                           text: 'SUBMIT',
-                                          color: primary,
+                                          color: primaryDark,
                                           press: isLoading ? null : saveData)),
                                   SizedBox(
                                     height: 20,
@@ -549,6 +551,7 @@ class _VendorRegistrationForm extends State<VendorRegistrationForm> {
               location: _location,
             );
             await UserServices.saveUserInfo('Vendors', user.uid, vendors);
+            await SharedPrefs.setUserData(json.encode(vendors));
             await FirebaseAuth.instance.currentUser
                 .updateProfile(displayName: _name, photoURL: photoUrl);
             isLoading = false;

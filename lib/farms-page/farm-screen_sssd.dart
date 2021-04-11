@@ -32,12 +32,13 @@ class _FarmScreenState extends State<FarmScreen> {
 }
 
 class ListItems extends StatelessWidget {
-  final Farms farms;
+  final Farm farms;
   final String farmImage;
   final String farmName;
   final String farmLocation;
 
-  const ListItems({Key key,this.farms, this.farmImage, this.farmName, this.farmLocation})
+  const ListItems(
+      {Key key, this.farms, this.farmImage, this.farmName, this.farmLocation})
       : super(key: key);
 
   @override
@@ -111,6 +112,5 @@ class ListItems extends StatelessWidget {
         ),
       ),
     );
-
   }
 }

@@ -38,7 +38,7 @@ class UserServices {
   //       .set(vendors.toMap());
   // }
 
-  static Future<void> saveFarm(String id, Farms farms) async {
+  static Future<void> saveFarm(String id, Farm farms) async {
     FirebaseFirestore.instance.collection("Farms").doc(id).set(farms.toMap());
   }
 

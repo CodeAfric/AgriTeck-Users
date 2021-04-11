@@ -156,7 +156,7 @@ class _PhoneVerificationState extends State<PhoneVerification> {
                                 child: RoundedButton(
                                   isLoading: isLoading,
                                   text: 'SUBMIT',
-                                  color: primary,
+                                  color: primaryDark,
                                   press: _verify,
                                 ),
                               ),

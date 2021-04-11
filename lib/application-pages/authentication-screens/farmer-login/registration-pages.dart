@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:agriteck_user/common-functions/helper-functions.dart';
 import 'package:agriteck_user/commonly-used-widget/custom-drop-down.dart';
@@ -7,6 +8,7 @@ import 'package:agriteck_user/commonly-used-widget/round_button.dart';
 import 'package:agriteck_user/commonly-used-widget/shape-painter.dart';
 import 'package:agriteck_user/commonly-used-widget/textField.dart';
 import 'package:agriteck_user/pojo-classes/farmers-data.dart';
+import 'package:agriteck_user/services/sharedPrefs.dart';
 import 'package:agriteck_user/services/user-services.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -279,7 +281,7 @@ class _FarmerRegistrationFormState extends State<FarmerRegistrationForm> {
                                       child: RoundedButton(
                                           isLoading: isLoading,
                                           text: 'SUBMIT',
-                                          color: primary,
+                                          color: primaryDark,
                                           press: isLoading ? null : saveData)),
                                   SizedBox(
                                     height: 20,
@@ -589,6 +591,7 @@ class _FarmerRegistrationFormState extends State<FarmerRegistrationForm> {
                 telephone: widget.phoneNumber,
                 location: _location);
             await UserServices.saveUserInfo('Farmers', user.uid, farmers);
+            await SharedPrefs.setUserData(json.encode(farmers));
             await FirebaseAuth.instance.currentUser
                 .updateProfile(displayName: _name, photoURL: photoUrl);
             isLoading = false;
