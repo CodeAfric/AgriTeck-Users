@@ -551,7 +551,7 @@ class _VendorRegistrationForm extends State<VendorRegistrationForm> {
               location: _location,
             );
             await UserServices.saveUserInfo('Vendors', user.uid, vendors);
-            await SharedPrefs.setUserData(json.encode(vendors));
+            await SharedPrefs.setUserData(json.encode(vendors.toMap()));
             await FirebaseAuth.instance.currentUser
                 .updateProfile(displayName: _name, photoURL: photoUrl);
             isLoading = false;

@@ -18,12 +18,14 @@ import 'package:intl/intl.dart';
 
 import '../main-page.dart';
 
-class NewFarm extends StatefulWidget {
+class UpdateFarm extends StatefulWidget {
+  final Farm farm;
+  UpdateFarm({this.farm});
   @override
-  _NewFarmState createState() => _NewFarmState();
+  _UpdateFarmState createState() => _UpdateFarmState();
 }
 
-class _NewFarmState extends State<NewFarm> {
+class _UpdateFarmState extends State<UpdateFarm> {
   String farmId, description;
   List<Map<String, dynamic>> farmState;
   String cropType;
@@ -35,11 +37,20 @@ class _NewFarmState extends State<NewFarm> {
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   FToast fToast;
+  TextEditingController descpController,
+      cropsController,
+      locController,
+      sizeController;
 
   @override
   void initState() {
     super.initState();
     fToast = FToast();
+    descpController = TextEditingController(text: widget.farm.description);
+    cropsController = TextEditingController(text: widget.farm.cropType);
+    locController = TextEditingController(text: widget.farm.location);
+    sizeController =
+        TextEditingController(text: widget.farm.farmSize.toString());
     fToast.init(context);
   }
 
@@ -53,7 +64,7 @@ class _NewFarmState extends State<NewFarm> {
         backgroundColor: primary,
         elevation: 0,
         title: Text(
-          'Add New Farm',
+          'Update Farm',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -95,9 +106,10 @@ class _NewFarmState extends State<NewFarm> {
                         InputTextField(
                           withDecoration: true,
                           maxLine: 5,
+                          controller: descpController,
                           onSave: (value) {
                             setState(() {
-                              description = value;
+                              widget.farm.description = value;
                             });
                           },
                           type: TextInputType.text,
@@ -116,9 +128,10 @@ class _NewFarmState extends State<NewFarm> {
                         ),
                         InputTextField(
                           withDecoration: true,
+                          controller: cropsController,
                           onSave: (value) {
                             setState(() {
-                              cropType = value;
+                              widget.farm.cropType = value;
                             });
                           },
                           type: TextInputType.text,
@@ -137,9 +150,10 @@ class _NewFarmState extends State<NewFarm> {
                         ),
                         InputTextField(
                           withDecoration: true,
+                          controller: locController,
                           onSave: (value) {
                             setState(() {
-                              location = value;
+                              widget.farm.location = value;
                             });
                           },
                           type: TextInputType.text,
@@ -155,10 +169,11 @@ class _NewFarmState extends State<NewFarm> {
                         SizedBox(height: 20.0),
                         InputTextField(
                           withDecoration: true,
+                          controller: sizeController,
                           onSave: (value) {
                             setState(() {
                               try {
-                                farmSize = double.parse(value);
+                                widget.farm.farmSize = double.parse(value);
                               } catch (e) {}
                             });
                           },
@@ -179,7 +194,9 @@ class _NewFarmState extends State<NewFarm> {
                                 isLoading: isLoading,
                                 text: 'SAVE DATA',
                                 color: primaryDark,
-                                press: isLoading ? null : saveData)),
+                                press: isLoading
+                                    ? null
+                                    : updateDataFunction(widget.farm))),
                         SizedBox(
                           height: 20,
                         )
@@ -314,65 +331,55 @@ class _NewFarmState extends State<NewFarm> {
         });
   }
 
-  saveData() async {
-    if (mounted) {
-      setState(() {
-        isLoading = true;
-      });
-    }
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
-      try {
-        String userId = await SharedPrefs.getUserID();
-        String userData = await SharedPrefs.getUserData();
-        Map farmer = json.decode(userData);
-        // String user=await SharedPrefs.getUserID();
-        User user = FirebaseAuth.instance.currentUser;
-        if (user != null) {
-          String photoUrl;
-          if (image != null) {
-            photoUrl = await UserServices.uploadFarmPic(image, user.uid);
-          }
-          Farm farm = new Farm(
-            farmSize: farmSize,
-            farmerId: userId,
-            farmerDetails: {
+  Function updateDataFunction(Farm farm) {
+    return () async {
+      print(farm);
+      if (mounted) {
+        setState(() {
+          isLoading = true;
+        });
+      }
+      if (_formKey.currentState.validate()) {
+        _formKey.currentState.save();
+        try {
+          String userId = await SharedPrefs.getUserID();
+          String userData = await SharedPrefs.getUserData();
+          Map farmer = json.decode(userData);
+          User user = FirebaseAuth.instance.currentUser;
+
+          if (user != null) {
+            // Udate Farmer Details
+            farm.farmerDetails = {
               'name': farmer['name'],
               'telephone': farmer['telephone'],
               'location': farmer['location'],
               'specialized': farmer['specialized'],
-            },
-            farmState: [],
-            location: location,
-            images: [photoUrl],
-            cropType: cropType,
-            description: description,
-          );
-          var snapshot = await UserServices.saveFarm(farm);
-          print(snapshot);
-          Map<String, dynamic> update = {'farmId': snapshot.id};
-          await DatabaseServices.updateDocument('Farms', snapshot.id, update);
-          isLoading = false;
-          await showToast(context, fToast, Icons.check, primaryDark,
-              "Farm data Saved successfully");
-          sendToPage(
-              context,
-              MainPage(
-                initPage: BottomButtons.Farms,
-              ));
+            };
+            // Update from database
+            await DatabaseServices.setDocument(
+                'Farms', farm.farmId, farm.toMap());
+            isLoading = false;
+            await showToast(context, fToast, Icons.check, primaryDark,
+                "Farm data Updated successfully");
+            sendToPage(
+                context,
+                MainPage(
+                  initPage: BottomButtons.Farms,
+                ));
+          }
+        } catch (error) {
+          setState(() {
+            isLoading = false;
+            print('[$error]');
+          });
         }
-      } catch (error) {
+      }
+
+      if (mounted) {
         setState(() {
           isLoading = false;
-          print('[$error]');
         });
       }
-    }
-
-    if (mounted) {
-      setState(() {
-        isLoading = false;
-      });
-    }
+    };
   }
 }

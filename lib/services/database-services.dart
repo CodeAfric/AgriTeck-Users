@@ -21,11 +21,11 @@ class DatabaseServices {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     return firebaseFirestore
         .collection(collection)
-        .where('id', isEqualTo: 'userId')
+        .where('id', isEqualTo: userId)
         .get();
   }
 
-  static Future<QuerySnapshot> querySingleFromDatabaseByField(
+  static Future<QuerySnapshot> queryFromDatabaseByField(
       String collection, String fieldName, dynamic value) async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     return firebaseFirestore
@@ -34,18 +34,34 @@ class DatabaseServices {
         .get();
   }
 
-  static Future<String> uploadFarmPic(
-      File image, String userID, String path) async {
+  static Future<String> uploadFile(File file, String folederPath) async {
     firebase_storage.Reference reference = firebase_storage
         .FirebaseStorage.instance
-        .ref()
-        .child(path)
-        .child(userID)
-        .child(image.path);
+        .ref('$folederPath/${getFileName(file)}');
     firebase_storage.TaskSnapshot storageTaskSnapshot =
-        await reference.putFile(image);
+        await reference.putFile(file);
     final String downloadUrl = await storageTaskSnapshot.ref.getDownloadURL();
 
     return downloadUrl;
+  }
+
+  static String getFileName(File file) {
+    var path = file.path.split('/');
+    var name = path.last;
+    return name;
+  }
+
+  static updateDocument(String collection, String docId, Map update) async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    return firebaseFirestore.collection(collection).doc(docId).update(update);
+  }
+
+  static setDocument(String collection, String docId, Map update) async {
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    return firebaseFirestore.collection(collection).doc(docId).set(update);
+  }
+
+  static Future<DocumentReference> saveData(String collection, Map data) async {
+    return await FirebaseFirestore.instance.collection(collection).add(data);
   }
 }

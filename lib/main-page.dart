@@ -49,6 +49,8 @@ class _MainPageState extends State<MainPage> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   final GlobalKey<AsyncLoaderState> _asyncLoaderState =
       new GlobalKey<AsyncLoaderState>();
+  final GlobalKey<AsyncLoaderState> _asyncLoaderState2 =
+      new GlobalKey<AsyncLoaderState>();
 
   @override
   void initState() {
@@ -77,7 +79,7 @@ class _MainPageState extends State<MainPage> {
 //===============================================================================
 // here we check which page we are , then we show the user the corressponding floating action buton
   Widget setFloatBott(selectedPage) {
-    return selectedPage == BottomButtons.Farms
+    return selectedPage == BottomButtons.Farms && (userType == 'Farmers')
         ? FloatingMenu(
             // label: 'Post Product',
             animatedIcon: AnimatedIcons.menu_close,
@@ -215,7 +217,7 @@ class _MainPageState extends State<MainPage> {
 
     //  Asyn Load the Bottom Nav Button
     var _asyncLoadBottomNav = new AsyncLoader(
-      key: _asyncLoaderState,
+      key: _asyncLoaderState2,
       initState: () async => await getUserInfo(),
       renderLoad: () => Center(child: new CircularProgressIndicator()),
       renderError: ([error]) =>

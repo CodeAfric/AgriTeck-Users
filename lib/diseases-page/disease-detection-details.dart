@@ -149,7 +149,7 @@ class DiseaseDetectionDetails extends StatelessWidget {
                           .replaceAll(new RegExp(r'  '), ' ')
                           .replaceAll(new RegExp(r'   '), ' ');
                       print(diseaseName);
-                      DatabaseServices.querySingleFromDatabaseByField(
+                      DatabaseServices.queryFromDatabaseByField(
                         'Diseases',
                         'name',
                         diseaseName,

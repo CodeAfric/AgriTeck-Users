@@ -303,12 +303,6 @@ class _FarmerRegistrationFormState extends State<FarmerRegistrationForm> {
     );
   }
 
-  savemyData() async {
-    await FirebaseFirestore.instance.collection('users').doc('id1').set(
-      {'id': '123', 'name': 'Prince'},
-    );
-  }
-
   Widget getGender() {
     return Container(
       decoration: BoxDecoration(
@@ -591,7 +585,7 @@ class _FarmerRegistrationFormState extends State<FarmerRegistrationForm> {
                 telephone: widget.phoneNumber,
                 location: _location);
             await UserServices.saveUserInfo('Farmers', user.uid, farmers);
-            await SharedPrefs.setUserData(json.encode(farmers));
+            await SharedPrefs.setUserData(json.encode(farmers.toMap()));
             await FirebaseAuth.instance.currentUser
                 .updateProfile(displayName: _name, photoURL: photoUrl);
             isLoading = false;

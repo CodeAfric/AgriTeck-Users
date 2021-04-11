@@ -568,7 +568,7 @@ class _InvestorRegistrationFormState extends State<InvestorRegistrationForm> {
             email: _email,
           );
           await UserServices.saveUserInfo('Investors', user.uid, investors);
-          await SharedPrefs.setUserData(json.encode(investors));
+          await SharedPrefs.setUserData(json.encode(investors.toMap()));
           await FirebaseAuth.instance.currentUser
               .updateProfile(displayName: _name, photoURL: photoUrl);
           isLoading = false;
