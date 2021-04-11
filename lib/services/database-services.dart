@@ -30,7 +30,7 @@ class DatabaseServices {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     return firebaseFirestore
         .collection(collection)
-        .where(fieldName, isGreaterThanOrEqualTo: value)
+        .where(fieldName, isEqualTo: value)
         .get();
   }
 

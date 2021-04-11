@@ -222,7 +222,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   horizontal: 60.0,
                 ),
                 onPressed: () {
-                  //ToDo here we open tips details dialog
                   detectDisease(context);
                 },
                 color: primaryDark,
