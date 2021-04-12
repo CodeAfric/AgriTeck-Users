@@ -46,6 +46,7 @@ class FarmsScreen extends StatelessWidget {
                 farmImage: farm.images.length > 0 ? farm.images[0] : null,
                 farmName: '${farm.farmerDetails['name']}\'s Farm',
                 plantType: farm.cropType,
+                farmLoc: farm.location,
               ),
               onTap: () {
                 sendToPage(

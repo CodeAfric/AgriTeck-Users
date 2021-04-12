@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class ProductCard extends StatelessWidget {
-  final String diseaseImage;
-  final String diseaseName;
-  final String plantType;
+  final String productImage;
+  final String productName;
+  final String productDesc;
 
   const ProductCard(
-      {Key key, this.diseaseImage, this.diseaseName, this.plantType})
+      {Key key, this.productImage, this.productName, this.productDesc})
       : super(key: key);
 
   @override
@@ -28,12 +29,19 @@ class ProductCard extends StatelessWidget {
                   padding: EdgeInsets.all(3.0),
                   child: ClipRRect(
                     borderRadius: BorderRadius.all(Radius.circular(3)),
-                    child: Image.asset(
-                      diseaseImage,
-                      fit: BoxFit.cover,
-                      height: 90,
-                      width: 100,
-                    ),
+                    child: productImage != null
+                        ? CachedNetworkImage(
+                            imageUrl: productImage,
+                            fit: BoxFit.cover,
+                            height: 80,
+                            width: 100,
+                          )
+                        : Image.asset(
+                            'assets/diseases/disease1.jpg',
+                            fit: BoxFit.cover,
+                            height: 80,
+                            width: 100,
+                          ),
                   ),
                 ),
               ),
@@ -53,7 +61,7 @@ class ProductCard extends StatelessWidget {
                         padding: EdgeInsets.only(top: 10),
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          diseaseName,
+                          productName,
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             fontSize: 16,
@@ -66,7 +74,7 @@ class ProductCard extends StatelessWidget {
                         padding: EdgeInsets.only(top: 10),
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          plantType,
+                          productDesc,
                           textAlign: TextAlign.left,
                           style: TextStyle(
                             fontSize: 16,

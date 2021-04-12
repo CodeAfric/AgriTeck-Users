@@ -6,8 +6,10 @@ class FarmCard extends StatelessWidget {
   final String farmImage;
   final String farmName;
   final String plantType;
+  final String farmLoc;
 
-  const FarmCard({Key key, this.farmImage, this.farmName, this.plantType})
+  const FarmCard(
+      {Key key, this.farmImage, this.farmName, this.plantType, this.farmLoc})
       : super(key: key);
 
   @override
@@ -76,6 +78,19 @@ class FarmCard extends StatelessWidget {
                         textAlign: TextAlign.left,
                         style: TextStyle(
                           fontSize: 16,
+                          color: primary,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(top: 5),
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        farmLoc,
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
                           color: primary,
                         ),
                       ),

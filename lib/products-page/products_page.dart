@@ -1,8 +1,16 @@
 import 'package:agriteck_user/common-functions/helper-functions.dart';
 import 'package:agriteck_user/commonly-used-widget/custom_app_bar.dart';
+import 'package:agriteck_user/commonly-used-widget/floating-buttton.dart';
+import 'package:agriteck_user/commonly-used-widget/floating-menu.dart';
+import 'package:agriteck_user/investment-page/new-farm-page.dart';
+import 'package:agriteck_user/investors/investor.dart';
+import 'package:agriteck_user/pojo-classes/product-data.dart';
+import 'package:agriteck_user/products-page/add_new_product.dart';
 import 'package:agriteck_user/products-page/product_card.dart';
 import 'package:agriteck_user/products-page/product_details.dart';
+import 'package:agriteck_user/services/sharedPrefs.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
+import 'package:async_loader/async_loader.dart';
 import 'package:flutter/material.dart';
 
 import 'package:agriteck_user/common-functions/helper-functions.dart';
@@ -26,62 +34,84 @@ class ProductFullScreen extends StatefulWidget {
 
 class _ProductFullScreenState extends State<ProductFullScreen> {
   List diseasesList = [];
+  getData() async {
+    List productList;
+    var userType = await SharedPrefs.getUserType();
+    var snapshot;
+    if (userType == 'Farmers') {
+      var userId = await SharedPrefs.getUserID();
+      snapshot = await DatabaseServices.queryFromDatabaseByField(
+          'Products', 'farmer.farmerId', userId);
+    } else if (userType == 'Investors') {
+      snapshot = await DatabaseServices.getDataFromDatabase('Products');
+    }
 
-  @override
-  void initState() {
-    super.initState();
-
-    DatabaseServices.getDataFromDatabase('Diseases').then((snapshot) {
-      setState(() {
-        diseasesList = snapshot.docs.toList();
-      });
-    });
-
-    ///whatever you want to run on page build
+    productList = snapshot.docs.toList();
+    return productList;
   }
+
+  final GlobalKey<AsyncLoaderState> _asyncLoaderStateProduct =
+      new GlobalKey<AsyncLoaderState>();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: primary,
-        title: Text(
-          'Product List',
-          style: TextStyle(
-              fontWeight: FontWeight.w600, fontSize: 18, color: Colors.white),
-        ),
+    var _asyncLoader = new AsyncLoader(
+      key: _asyncLoaderStateProduct,
+      initState: () async => getData(),
+      renderLoad: () => Center(child: new CircularProgressIndicator()),
+      renderError: ([error]) => Center(
+        child: new Text('Sorry, there was an error loading your Information'),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height - 61,
-            color: primaryLight.withOpacity(0.1),
-            child: ListView.builder(
-              padding: EdgeInsets.only(bottom: 80.0),
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  child: Container(
-                    child: ProductCard(
-                      diseaseImage: 'assets/diseases/disease1.jpg',
-                      diseaseName: 'Curly flew Shoot',
-                      plantType: 'general grass',
-                    ),
-                  ),
-                  onTap: () {
-                    sendToPage(
-                      context,
-                      ProductDetails(),
-                    );
-                  },
-                );
-              },
+      renderSuccess: ({data}) => ListView.builder(
+        padding: EdgeInsets.only(bottom: 80.0),
+        itemCount: data.length,
+        itemBuilder: (context, index) {
+          var product = Product.fromMapObject(data[index].data());
+          return InkWell(
+            child: Container(
+              child: ProductCard(
+                productImage:
+                    product.images.length > 0 ? product.images[0] : null,
+                productName: product.productName,
+                productDesc: product.productDescription,
+              ),
+            ),
+            onTap: () {
+              sendToPage(
+                context,
+                ProductDetails(productData: product),
+              );
+            },
+          );
+        },
+      ),
+    );
+    return Scaffold(
+        appBar: AppBar(
+          backgroundColor: primary,
+          title: Text(
+            'Product List',
+            style: TextStyle(
+                fontWeight: FontWeight.w600, fontSize: 18, color: Colors.white),
+          ),
+        ),
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height - 61,
+              color: Colors.white,
+              child: _asyncLoader,
             ),
           ),
         ),
-      ),
-    );
+        floatingActionButton: FloatingButton(
+          label: 'Add Product',
+          icon: Icons.add,
+          onPressHandler: () {
+            sendToPage(context, AddNewProduct());
+          },
+        ));
   }
 }
 
@@ -146,9 +176,9 @@ class ProductScreens extends StatelessWidget {
                 return InkWell(
                   child: Container(
                     child: ProductCard(
-                      diseaseImage: 'assets/diseases/disease1.jpg',
-                      diseaseName: 'Curly flew Shoot',
-                      plantType: 'general grass',
+                      productImage: 'assets/diseases/disease1.jpg',
+                      productName: 'Curly flew Shoot',
+                      productDesc: 'general grass',
                     ),
                   ),
                   onTap: () {
