@@ -1,4 +1,4 @@
-# agriteck_user
+# Agriteck Mobile App - Users
 
 # Setting up the environment
 
