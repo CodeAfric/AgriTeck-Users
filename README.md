@@ -1,4 +1,4 @@
-# agriteck_user
+ agriteck_user
 
 # Setting up the environment
 
@@ -7,7 +7,7 @@
 3. Run "flutter pub get" to download all dependencies.
 
 
- Adding firebase to the project
+# Adding firebase to the project
 
 1. Create a new project in firebase and name it as "AgriTeck" if you have not created it yet.
 2. Add Android app in your firebase console from 'Project Overview'.
