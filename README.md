@@ -19,7 +19,8 @@
 
 ## Download the test-dataset from the project to test the disease detection model
 
-## Download the docs folder to read more about the project
+## Follow this link to read more about AgriTeck
+https://docs.google.com/document/d/1Gh3otbX27iAJb0HZ_U7-2SV7sqaQCtpRSqf0b-0feyM/edit?usp=sharing
 
 ## Getting Started
 
