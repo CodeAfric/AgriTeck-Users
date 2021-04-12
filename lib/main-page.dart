@@ -12,6 +12,7 @@ import 'package:agriteck_user/crops-page/crops-page.dart';
 import 'package:agriteck_user/diseases-page/diseases-page.dart';
 import 'package:agriteck_user/farms-page/farm-page.dart';
 import 'package:agriteck_user/home-page/home-screen.dart';
+import 'package:agriteck_user/investment-page/investment_page.dart';
 import 'package:agriteck_user/investors/investor.dart';
 import 'package:agriteck_user/pojo-classes/tips-data.dart';
 import 'package:agriteck_user/products-page/products_page.dart';
@@ -33,7 +34,8 @@ enum BottomButtons {
   Market,
   Investors,
   Community,
-  Diseases
+  Diseases,
+  Investments
 }
 
 class MainPage extends StatefulWidget {
@@ -74,6 +76,7 @@ class _MainPageState extends State<MainPage> {
     if (selectedPage == BottomButtons.Diseases) title = 'Diseases';
     if (selectedPage == BottomButtons.Community) title = 'Community';
     if (selectedPage == BottomButtons.Market) title = 'Product List';
+    if (selectedPage == BottomButtons.Investments) title = 'Investments';
     return title;
   }
 
@@ -273,6 +276,22 @@ class _MainPageState extends State<MainPage> {
               activeColor: primary,
               activeIconColor: primary,
             ),
+          if (userType == 'Farmers' || userType == 'Investors')
+            BottomIcons(
+              iconColor: Colors.grey,
+              text: 'Investments',
+              bottomIcons:
+                  selectedPage == BottomButtons.Investments ? true : false,
+              icons: 'assets/icons/community.png',
+              textColor: primary,
+              onPressed: () {
+                setState(() {
+                  selectedPage = BottomButtons.Investments;
+                });
+              },
+              activeColor: primary,
+              activeIconColor: primary,
+            ),
           BottomIcons(
             iconColor: Colors.grey,
             text: 'Community',
@@ -459,9 +478,11 @@ class _MainPageState extends State<MainPage> {
                     ? DiseasesScreen()
                     : selectedPage == BottomButtons.Farms
                         ? FarmsScreen()
-                        : selectedPage == BottomButtons.Market
-                            ? ProductsMidScreen()
-                            : Container(),
+                        : selectedPage == BottomButtons.Investments
+                            ? InvestmentScreen()
+                            : selectedPage == BottomButtons.Market
+                                ? ProductsMidScreen()
+                                : Container(),
         bottomNavigationBar: Container(
             height: 70,
             width: MediaQuery.of(context).size.width,

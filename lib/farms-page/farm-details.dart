@@ -9,6 +9,7 @@ import 'package:agriteck_user/commonly-used-widget/round_button.dart';
 import 'package:agriteck_user/commonly-used-widget/textField.dart';
 import 'package:agriteck_user/farms-page/farmstate_update.dart';
 import 'package:agriteck_user/farms-page/update-farm-page.dart';
+import 'package:agriteck_user/investment-page/investment_request.dart';
 import 'package:agriteck_user/main-page.dart';
 import 'package:agriteck_user/pojo-classes/farms-data.dart';
 import 'package:agriteck_user/services/database-services.dart';
@@ -132,29 +133,14 @@ class _FarmDetailsScreenState extends State<FarmDetailsScreen> {
           : FloatingButton(
               label: 'Request for Investment',
               icon: Icons.edit,
-              onPressHandler: () {},
+              onPressHandler: () {
+                sendToPage(
+                    context,
+                    InvestmentRequest(
+                      farm: widget.farm.toMap(),
+                    ));
+              },
             ),
-
-      // FloatingButton(
-      //     label: 'Request Investment',
-      //     icon: Icons.person,
-      //     onPressHandler: () {
-      //       showDialog(
-      //           context: context,
-      //           builder: (BuildContext context) {
-      //             return CustomDialogBox(
-      //               title: 'Investment Request',
-      //               descriptions: 'Your request has been submitted.',
-      //               btn1Text: '',
-      //               btn2Text: 'okay',
-      //               img: 'assets/images/person.png',
-      //               btn1Press: () {
-      //                 Navigator.pop(context);
-      //               },
-      //             );
-      //           });
-      //     }),
-      //
     );
   }
 }
