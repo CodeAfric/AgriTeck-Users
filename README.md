@@ -8,11 +8,11 @@
 
 
 # Adding firebase to the project
-Create a new project in firebase and name it as "AgriTeck" if you have not created it yet.
 
-Add Android app in your firebase console from 'Project Overview'.
-Follow the steps involved in adding android app to firebase 
-Run the app to connect to firebase backend.
+> Create a new project in firebase and name it as "AgriTeck" if you have not created it yet.
+> Add Android app in your firebase console from 'Project Overview'.
+> Follow the steps involved in adding android app to firebase 
+> Run the app to connect to firebase backend.
 
 
 
