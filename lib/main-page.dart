@@ -181,8 +181,18 @@ class _MainPageState extends State<MainPage> {
               style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
             ),
             accountEmail: Padding(
-              padding: const EdgeInsets.only(bottom: 25),
-              child: Text(userPhone != null ? userPhone : "Telephone"),
+              padding: const EdgeInsets.only(bottom: 0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(userPhone != null ? userPhone : "Telephone"),
+                  SizedBox(height: 3),
+                  Text(userType != null
+                      ? 'Signed In As: ${userType.characters.getRange(0, userType.length - 1)}'
+                      : '')
+                ],
+              ),
             ),
             currentAccountPicture: CircleAvatar(
               radius: 100,
@@ -319,7 +329,7 @@ class _MainPageState extends State<MainPage> {
                     image: AssetImage('assets/icons/cultivate.png'),
                     color: Colors.black54,
                   ),
-                  trailing: Icon(Icons.arrow_forward),
+                  trailing: Icon(Icons.chevron_right),
                   title: Text(
                     'Crops',
                     style: TextStyle(
@@ -340,7 +350,7 @@ class _MainPageState extends State<MainPage> {
                       image: AssetImage('assets/icons/market.png'),
                       color: Colors.black54,
                     ),
-                    trailing: Icon(Icons.arrow_forward),
+                    trailing: Icon(Icons.chevron_right),
                     title: Text(
                       'Market',
                       style: TextStyle(
@@ -360,7 +370,7 @@ class _MainPageState extends State<MainPage> {
                     image: AssetImage('assets/icons/cultivate.png'),
                     color: Colors.black54,
                   ),
-                  trailing: Icon(Icons.arrow_forward),
+                  trailing: Icon(Icons.chevron_right),
                   title: Text(
                     'Diseases',
                     style: TextStyle(
@@ -380,7 +390,7 @@ class _MainPageState extends State<MainPage> {
                     image: AssetImage('assets/icons/community.png'),
                     color: Colors.black54,
                   ),
-                  trailing: Icon(Icons.arrow_forward),
+                  trailing: Icon(Icons.chevron_right),
                   title: Text(
                     'Comm. Contributions',
                     style: TextStyle(
@@ -396,7 +406,7 @@ class _MainPageState extends State<MainPage> {
                 ),
                 Divider(),
                 ListTile(
-                  leading: Icon(Icons.arrow_forward),
+                  leading: Icon(Icons.chevron_right),
                   title: Text(
                     'Profile',
                     style: TextStyle(fontSize: 18),
@@ -407,7 +417,7 @@ class _MainPageState extends State<MainPage> {
                   },
                 ),
                 ListTile(
-                  leading: Icon(Icons.arrow_forward),
+                  leading: Icon(Icons.chevron_right),
                   title: Text(
                     'Sign Out',
                     style: TextStyle(fontSize: 18),

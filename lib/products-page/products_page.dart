@@ -190,7 +190,6 @@ class ProductScreens extends StatelessWidget {
       color: primaryLight.withOpacity(0.1),
       child: Column(
         children: [
-          //Filter(),
           Container(
             padding: EdgeInsets.all(10),
             alignment: Alignment.centerLeft,
