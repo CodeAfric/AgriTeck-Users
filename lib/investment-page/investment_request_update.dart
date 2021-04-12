@@ -4,8 +4,10 @@ import 'package:agriteck_user/common-functions/helper-functions.dart';
 import 'package:agriteck_user/commonly-used-widget/round_button.dart';
 import 'package:agriteck_user/commonly-used-widget/shape-painter.dart';
 import 'package:agriteck_user/commonly-used-widget/textField.dart';
+import 'package:agriteck_user/investment-page/investment_page.dart';
 import 'package:agriteck_user/pojo-classes/farmers-data.dart';
 import 'package:agriteck_user/pojo-classes/farms-data.dart';
+import 'package:agriteck_user/pojo-classes/investment.dart';
 import 'package:agriteck_user/services/database-services.dart';
 import 'package:agriteck_user/services/sharedPrefs.dart';
 import 'package:agriteck_user/services/user-services.dart';
@@ -18,32 +20,29 @@ import 'package:intl/intl.dart';
 
 import '../main-page.dart';
 
-class FarmStateUpdate extends StatefulWidget {
-  final Farm farm;
-  FarmStateUpdate({this.farm});
+class InvestmentRequestUpdate extends StatefulWidget {
+  final Investment investment;
+  InvestmentRequestUpdate({this.investment});
   @override
-  _FarmStateUpdateState createState() => _FarmStateUpdateState();
+  _InvestmentRequestUpdateState createState() =>
+      _InvestmentRequestUpdateState();
 }
 
-class _FarmStateUpdateState extends State<FarmStateUpdate> {
-  Map<String, dynamic> farmState = {
-    'input': '',
-    'state': '',
-    'dateTime': '',
-  };
+class _InvestmentRequestUpdateState extends State<InvestmentRequestUpdate> {
   bool isLoading = false;
-  final picker = ImagePicker();
   final _formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   FToast fToast;
-  TextEditingController _pickDateController =
-      TextEditingController(text: 'choose time ');
+  TextEditingController inputController;
+  TextEditingController paybackController;
 
   @override
   void initState() {
     super.initState();
     fToast = FToast();
     fToast.init(context);
+    paybackController = TextEditingController(text: widget.investment.payback);
+    inputController = TextEditingController(text: widget.investment.input);
   }
 
   @override
@@ -56,7 +55,7 @@ class _FarmStateUpdateState extends State<FarmStateUpdate> {
         backgroundColor: primary,
         elevation: 0,
         title: Text(
-          'Update Farm State',
+          'Update Investment Request',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -91,23 +90,24 @@ class _FarmStateUpdateState extends State<FarmStateUpdate> {
                         SizedBox(
                           height: 20,
                         ),
-                        getDate(),
                         SizedBox(
                           height: 20,
                         ),
                         InputTextField(
                           withDecoration: true,
+                          maxLine: 5,
                           onSave: (value) {
                             setState(() {
-                              farmState['state'] = value;
+                              widget.investment.input = value;
                             });
                           },
+                          controller: inputController,
                           type: TextInputType.text,
-                          label: 'State',
+                          label: 'Investment Inputs',
                           alignText: true,
                           validation: (value) {
                             if (value.isEmpty) {
-                              return 'Please Enter State of the Farm';
+                              return 'Please Enter Investment Inputs';
                             } else
                               return null;
                           },
@@ -118,35 +118,37 @@ class _FarmStateUpdateState extends State<FarmStateUpdate> {
                         ),
                         InputTextField(
                           withDecoration: true,
-                          maxLine: 3,
+                          maxLine: 5,
                           onSave: (value) {
                             setState(() {
-                              farmState['input'] = value;
+                              widget.investment.payback = value;
                             });
                           },
+                          controller: paybackController,
                           type: TextInputType.text,
-                          label: 'Input',
+                          label: 'What do you want from in return',
                           alignText: true,
                           validation: (value) {
                             if (value.isEmpty) {
-                              return 'Please Enter Farm State Input';
+                              return 'Please Enter Type of Crop on farm';
                             } else
                               return null;
                           },
                           isPassword: false,
                         ),
-                        SizedBox(height: 20.0),
                         SizedBox(
-                          width: 200,
-                          child: RoundedButton(
-                            isLoading: isLoading,
-                            text: 'UPDATE DATA',
-                            color: primaryDark,
-                            press: isLoading
-                                ? null
-                                : updateDataFunction(widget.farm),
-                          ),
+                          height: 20,
                         ),
+                        SizedBox(
+                            width: 200,
+                            child: RoundedButton(
+                                isLoading: isLoading,
+                                text: 'SAVE DATA',
+                                color: primaryDark,
+                                press: isLoading
+                                    ? null
+                                    : updateInvestmentFunction(
+                                        widget.investment))),
                         SizedBox(
                           height: 20,
                         )
@@ -162,85 +164,8 @@ class _FarmStateUpdateState extends State<FarmStateUpdate> {
     );
   }
 
-  Widget getDate() {
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: primary.withOpacity(.98),
-              blurRadius: 2,
-              offset: Offset(0, 2),
-            )
-          ]),
-      child: Card(
-        elevation: 2,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-        //margin: EdgeInsets.only(left: 70, right: 20),
-        child: TextFormField(
-          onTap: () async {
-            await showDatePicker(
-              context: context,
-              initialDate: DateTime(1900, 1, 1),
-              firstDate: DateTime(1900, 1, 1),
-              lastDate: DateTime.now(),
-              initialDatePickerMode: DatePickerMode.year,
-              builder: (BuildContext context, Widget child) {
-                return Theme(
-                  data: ThemeData(
-                    primaryColor: primary,
-                    accentColor: primaryLight,
-                    buttonBarTheme: ButtonBarThemeData(
-                      buttonTextTheme: ButtonTextTheme.accent,
-                    ),
-                  ),
-                  child: child,
-                );
-              },
-            ).then((value) {
-              if (value != null) {
-                farmState['dateTime'] = value;
-                var formatter = new DateFormat('MM/dd/yyyy');
-                _pickDateController.text = formatter.format(value);
-              }
-            });
-          },
-          decoration: InputDecoration(
-            contentPadding: const EdgeInsets.all(16.0),
-            prefixIcon: Container(
-                padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
-                margin: const EdgeInsets.only(right: 8.0),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30.0),
-                        bottomLeft: Radius.circular(30.0),
-                        topRight: Radius.circular(30.0),
-                        bottomRight: Radius.circular(10.0))),
-                child: Icon(
-                  Icons.date_range_outlined,
-                  color: primary,
-                )),
-            hintStyle: TextStyle(color: primaryLight),
-            border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30.0),
-                borderSide: BorderSide.none),
-            filled: true,
-            fillColor: Colors.white54,
-          ),
-          style: TextStyle(fontWeight: FontWeight.w600, color: Colors.black87),
-          cursorColor: primary,
-          controller: _pickDateController,
-          readOnly: true,
-        ),
-      ),
-    );
-  }
-
-  Function updateDataFunction(Farm farm) {
+  updateInvestmentFunction(Investment investment) {
     return () async {
-      print(farm);
       if (mounted) {
         setState(() {
           isLoading = true;
@@ -249,23 +174,36 @@ class _FarmStateUpdateState extends State<FarmStateUpdate> {
       if (_formKey.currentState.validate()) {
         _formKey.currentState.save();
         try {
+          // Get farmer details
+          // farmerDetails = widget.investment['farmerDetails'];
+          // farmerDetails['farmerId'] = widget.investment['farmerId'];
+          // // Then farm details
+          // widget.investment.remove('farmerDetails');
+          // widget.investment.remove('farmState');
+          // widget.investment.remove('description');
+          // widget.investment.remove('farmerId');
+          // farmDetails = widget.investment;
+
+          String userId = await SharedPrefs.getUserID();
+          String userData = await SharedPrefs.getUserData();
+          Map investor = json.decode(userData);
           // String user=await SharedPrefs.getUserID();
-          var formatter = new DateFormat('MM/dd/yyyy');
           User user = FirebaseAuth.instance.currentUser;
           if (user != null) {
-            farm.farmState.add(farmState);
-            Map<String, dynamic> update = {'farmState': farm.farmState};
-
+            investment.inverstorDetails = {
+              'investorID': userId,
+              'name': investor['name'],
+              'phone': investor['phone'],
+              'location': investor['location'],
+              'interest': investor['interest'],
+            };
             // Update from database
-            await DatabaseServices.updateDocument('Farms', farm.farmId, update);
+            await DatabaseServices.setDocument(
+                'Investments', investment.investmentID, investment.toMap());
             isLoading = false;
             await showToast(context, fToast, Icons.check, primaryDark,
-                "Farm data Saved successfully");
-            sendToPage(
-                context,
-                MainPage(
-                  initPage: BottomButtons.Farms,
-                ));
+                "Request Updated successfully");
+            Navigator.pop(context);
           }
         } catch (error) {
           setState(() {

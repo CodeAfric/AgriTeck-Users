@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:agriteck_user/common-functions/helper-functions.dart';
+import 'package:agriteck_user/commonly-used-widget/dailog-box.dart';
 import 'package:agriteck_user/commonly-used-widget/floating-buttton.dart';
 import 'package:agriteck_user/commonly-used-widget/floating-menu.dart';
 import 'package:agriteck_user/commonly-used-widget/image-carousel.dart';
@@ -9,6 +10,7 @@ import 'package:agriteck_user/commonly-used-widget/round_button.dart';
 import 'package:agriteck_user/commonly-used-widget/textField.dart';
 import 'package:agriteck_user/farms-page/farmstate_update.dart';
 import 'package:agriteck_user/farms-page/update-farm-page.dart';
+import 'package:agriteck_user/investment-page/investment_request_update.dart';
 import 'package:agriteck_user/main-page.dart';
 import 'package:agriteck_user/pojo-classes/farms-data.dart';
 import 'package:agriteck_user/pojo-classes/investment.dart';
@@ -57,11 +59,7 @@ class _InvestmentDetailsScreenState extends State<InvestmentDetailsScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              ImageCarousel([
-                'assets/diseases/disease1.jpg',
-                'assets/diseases/disease1.jpg',
-                'assets/diseases/disease1.jpg',
-              ]),
+              ImageCarousel([...widget.investment.farmDetails['images']]),
               Container(
                 height: size.height * 0.70,
                 decoration: BoxDecoration(
@@ -83,15 +81,17 @@ class _InvestmentDetailsScreenState extends State<InvestmentDetailsScreen> {
                       padding: EdgeInsets.only(bottom: 80.0),
                       children: [
                         Container(
-                            // child: FarmContent(
-                            //   farmId: widget.investment.farmId,
-                            //   location: widget.investment.location,
-                            //   description: widget.investment.description,
-                            //   farmCrops: widget.investment.cropType,
-                            //   farmSize: widget.investment.farmSize.toString(),
-                            //   farmState: widget.investment.farmState,
-                            // ),
-                            )
+                          child: InvestmentContent(
+                            input: widget.investment.input,
+                            payback: widget.investment.payback,
+                            farmDetails: widget.investment.farmDetails,
+                            farmerDetails: widget.investment.farmerDetails,
+                            inverstorDetails:
+                                widget.investment.inverstorDetails,
+                            approved: widget.investment.approved,
+                            accepted: widget.investment.accepted,
+                          ),
+                        )
                       ],
                     ),
                   ),
@@ -102,90 +102,75 @@ class _InvestmentDetailsScreenState extends State<InvestmentDetailsScreen> {
         ),
       ),
       floatingActionButton: (userType == 'Farmers')
-          ? FloatingMenu(
-              // label: 'Post Product',
-              animatedIcon: AnimatedIcons.menu_close,
-              menuItems: [
-                BubbleMenuItem.create(
-                  label: 'Update Farm',
-                  icon: Icons.edit,
-                  onPress: () {
-                    // sendToPage(
-                    //     context,
-                    //     UpdateFarm(
-                    //       farm: widget.farm,
-                    //     ));
+          ? FloatingButton(
+              label: 'Accept Request',
+              icon: Icons.check,
+              onPressHandler: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return CustomDialogBox(
+                      title: 'Accept Request',
+                      descriptions:
+                          'Are you sure you want to accept the request.',
+                      btn1Text: 'No',
+                      btn2Text: 'Yes',
+                      img: 'assets/images/person.png',
+                      btn1Press: () {
+                        Navigator.pop(context);
+                      },
+                    );
                   },
-                ),
-                BubbleMenuItem.create(
-                  label: 'Update Farm State',
-                  icon: Icons.accessibility,
-                  onPress: () {
-                    // sendToPage(
-                    //     context,
-                    //     FarmStateUpdate(
-                    //       farm: widget.farm,
-                    //     ));
-                  },
-                ),
-              ],
-              // onPressHandler: () {},
+                );
+              },
             )
           : FloatingButton(
-              label: 'Request for Investment',
+              label: 'Update Request',
               icon: Icons.edit,
-              onPressHandler: () {},
+              onPressHandler: () {
+                sendToPage(
+                  context,
+                  InvestmentRequestUpdate(
+                    investment: widget.investment,
+                  ),
+                );
+              },
             ),
-
-      // FloatingButton(
-      //     label: 'Request Investment',
-      //     icon: Icons.person,
-      //     onPressHandler: () {
-      //       showDialog(
-      //           context: context,
-      //           builder: (BuildContext context) {
-      //             return CustomDialogBox(
-      //               title: 'Investment Request',
-      //               descriptions: 'Your request has been submitted.',
-      //               btn1Text: '',
-      //               btn2Text: 'okay',
-      //               img: 'assets/images/person.png',
-      //               btn1Press: () {
-      //                 Navigator.pop(context);
-      //               },
-      //             );
-      //           });
-      //     }),
-      //
     );
   }
 }
 
-class FarmContent extends StatelessWidget {
-  final String farmId;
-  final String location;
-  final String description;
-  final String farmSize;
-  final List farmState;
-  final String farmCrops;
-  final Map farmer;
+class InvestmentContent extends StatelessWidget {
+  String input, payback;
+  Map farmDetails, inverstorDetails, farmerDetails;
+  bool approved, accepted;
+  DateTime time, startTime, endTime;
   final TextStyle titleFontStyle = TextStyle(color: primaryDark, fontSize: 22);
   final TextStyle textFontStyle = TextStyle(fontSize: 16, height: 1.5);
+  final TextStyle textFontStyle2 = TextStyle(
+    fontWeight: FontWeight.bold,
+    color: primary,
+    fontSize: 16,
+    height: 1.5,
+  );
   var formatter = new DateFormat('MM/dd/yyyy');
-  FarmContent({
-    Key key,
-    this.farmId = '',
-    this.location = '',
-    this.description = '',
-    this.farmSize = '',
-    this.farmState = const [],
-    this.farmer = const {},
-    this.farmCrops = '',
-  }) : super(key: key);
+  InvestmentContent({
+    this.input = '',
+    this.payback = '',
+    this.farmDetails = const {},
+    this.farmerDetails = const {},
+    this.inverstorDetails = const {},
+    this.approved = false,
+    this.accepted = false,
+    this.time,
+    this.startTime,
+    this.endTime,
+  });
 
   @override
   Widget build(BuildContext context) {
-    var _farmCrops = farmCrops.split(', ');
+    var _inputs = input.split(', ');
+    var _payback = payback.split(', ');
     return Container(
       child: Container(
         child: Column(
@@ -200,31 +185,39 @@ class FarmContent extends StatelessWidget {
                     vertical: 4,
                   ),
                   title: Text(
-                    'Farm ID',
+                    'Approved Status',
                     style: titleFontStyle,
                   ),
                   subtitle: Text(
-                    farmId,
+                    approved ? 'Approved By Admin' : 'Not Approved By Admin',
+                    maxLines: 5,
+                    overflow: TextOverflow.ellipsis,
                     style: textFontStyle,
                   ),
                 ),
-                ListTile(
-                    contentPadding: EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 4,
-                    ),
-                    title: Text(
-                      'Farm Size',
-                      style: titleFontStyle,
-                    ),
-                    subtitle: Text(farmSize)),
                 ListTile(
                   contentPadding: EdgeInsets.symmetric(
                     horizontal: 20,
                     vertical: 4,
                   ),
                   title: Text(
-                    'Crop Type',
+                    'Acceptance Status',
+                    style: titleFontStyle,
+                  ),
+                  subtitle: Text(
+                    accepted ? 'Accepted by Farmer' : 'Not Accepted by Farmer',
+                    maxLines: 5,
+                    overflow: TextOverflow.ellipsis,
+                    style: textFontStyle,
+                  ),
+                ),
+                ListTile(
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 4,
+                  ),
+                  title: Text(
+                    'Investor Inputs',
                     style: titleFontStyle,
                   ),
                   subtitle: Row(
@@ -236,25 +229,26 @@ class FarmContent extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             ...List.generate(
-                                _farmCrops.length,
-                                (index) => Row(
-                                      children: [
-                                        CircleAvatar(
-                                          radius: 3,
-                                          backgroundColor: Colors.grey,
-                                        ),
-                                        SizedBox(
-                                          width: 2,
-                                        ),
-                                        Text(
-                                          _farmCrops[index],
-                                          style: textFontStyle,
-                                        ),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                      ],
-                                    )),
+                              _inputs.length,
+                              (index) => Row(
+                                children: [
+                                  CircleAvatar(
+                                    radius: 3,
+                                    backgroundColor: Colors.grey,
+                                  ),
+                                  SizedBox(
+                                    width: 2,
+                                  ),
+                                  Text(
+                                    _inputs[index],
+                                    style: textFontStyle,
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -267,12 +261,42 @@ class FarmContent extends StatelessWidget {
                     vertical: 4,
                   ),
                   title: Text(
-                    'Location',
+                    'Farmer Payback',
                     style: titleFontStyle,
                   ),
-                  subtitle: Text(
-                    location,
-                    style: textFontStyle,
+                  subtitle: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 2),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            ...List.generate(
+                              _payback.length,
+                              (index) => Row(
+                                children: [
+                                  CircleAvatar(
+                                    radius: 3,
+                                    backgroundColor: Colors.grey,
+                                  ),
+                                  SizedBox(
+                                    width: 2,
+                                  ),
+                                  Text(
+                                    _payback[index],
+                                    style: textFontStyle,
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 ListTile(
@@ -281,50 +305,129 @@ class FarmContent extends StatelessWidget {
                     vertical: 4,
                   ),
                   title: Text(
-                    'Description',
+                    'Farm Details',
                     style: titleFontStyle,
                   ),
-                  subtitle: Text(
-                    description,
-                    maxLines: 5,
-                    overflow: TextOverflow.ellipsis,
-                    style: textFontStyle,
+                  subtitle: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Wrap(
+                        children: [
+                          Text('Farm ID: ', style: textFontStyle2),
+                          SizedBox(width: 2),
+                          Text(farmDetails['farmId'], style: textFontStyle),
+                        ],
+                      ),
+                      Wrap(
+                        children: [
+                          Text('Crops: ', style: textFontStyle2),
+                          SizedBox(width: 2),
+                          Text(farmDetails['cropType'], style: textFontStyle),
+                        ],
+                      ),
+                      Wrap(
+                        children: [
+                          Text('Farm Size: ', style: textFontStyle2),
+                          SizedBox(width: 2),
+                          Text(farmDetails['farmSize'].toString(),
+                              style: textFontStyle),
+                        ],
+                      ),
+                      Wrap(
+                        children: [
+                          Text('Farm Lacation: ', style: textFontStyle2),
+                          SizedBox(width: 2),
+                          Text(farmDetails['location'], style: textFontStyle),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
                 ListTile(
-                    contentPadding: EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 4,
-                    ),
-                    title: Text(
-                      'Farm State',
-                      style: titleFontStyle,
-                    ),
-                    subtitle: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: farmState
-                          .map(
-                            (state) => Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  formatter.format(state['dateTime'].toDate()),
-                                  style: textFontStyle,
-                                ),
-                                SizedBox(height: 4),
-                                Text(state['state'], style: textFontStyle),
-                                SizedBox(height: 4),
-                                Text(state['input'], style: textFontStyle),
-                                Divider(
-                                  color: Colors.red,
-                                ),
-                              ],
-                            ),
-                          )
-                          .toList(),
-                    )),
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 4,
+                  ),
+                  title: Text(
+                    'Farmer Details',
+                    style: titleFontStyle,
+                  ),
+                  subtitle: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Wrap(
+                        children: [
+                          Text('Name: ', style: textFontStyle2),
+                          SizedBox(width: 2),
+                          Text(farmerDetails['name'], style: textFontStyle),
+                        ],
+                      ),
+                      Wrap(
+                        children: [
+                          Text('Phone: ', style: textFontStyle2),
+                          SizedBox(width: 2),
+                          Text(farmerDetails['telephone'],
+                              style: textFontStyle),
+                        ],
+                      ),
+                      Wrap(
+                        children: [
+                          Text('Location: ', style: textFontStyle2),
+                          SizedBox(width: 2),
+                          Text(farmerDetails['location'], style: textFontStyle),
+                        ],
+                      ),
+                      Wrap(
+                        children: [
+                          Text('Specialization: ', style: textFontStyle2),
+                          SizedBox(width: 2),
+                          Text(farmerDetails['specialized'],
+                              style: textFontStyle),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                ListTile(
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 4,
+                  ),
+                  title: Text(
+                    'Investor Details',
+                    style: titleFontStyle,
+                  ),
+                  subtitle: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Wrap(
+                        children: [
+                          Text('Name: ', style: textFontStyle2),
+                          SizedBox(width: 2),
+                          Text(inverstorDetails['name'], style: textFontStyle),
+                        ],
+                      ),
+                      Wrap(
+                        children: [
+                          Text('Phone: ', style: textFontStyle2),
+                          SizedBox(width: 2),
+                          Text(inverstorDetails['phone'], style: textFontStyle),
+                        ],
+                      ),
+                      Wrap(
+                        children: [
+                          Text('Location: ', style: textFontStyle2),
+                          SizedBox(width: 2),
+                          Text(inverstorDetails['location'],
+                              style: textFontStyle),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ],

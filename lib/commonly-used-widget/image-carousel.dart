@@ -13,7 +13,11 @@ class ImageCarousel extends StatelessWidget {
       child: Carousel(
         boxFit: BoxFit.cover,
         images: [
-          ...this.imagePaths.map((path) => NetworkImage(path)),
+          ...this.imagePaths.map(
+                (path) => path != null
+                    ? NetworkImage(path)
+                    : AssetImage('assets/images/invest.jpg'),
+              ),
         ],
         animationCurve: Curves.fastOutSlowIn,
         animationDuration: Duration(milliseconds: 2000),

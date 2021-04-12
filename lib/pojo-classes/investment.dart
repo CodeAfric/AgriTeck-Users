@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Investment {
-  String input, payback;
+  String input, payback, investmentID;
   Map farmDetails, inverstorDetails, farmerDetails;
   bool approved, accepted;
   DateTime time, startTime, endTime;
@@ -11,6 +11,7 @@ class Investment {
     this.farmDetails,
     this.farmerDetails,
     this.inverstorDetails,
+    this.investmentID,
     this.approved = false,
     this.accepted = false,
   }) : this.time = DateTime.now();
@@ -19,6 +20,7 @@ class Investment {
   Map<String, dynamic> toMap() {
     var map = Map<String, dynamic>();
     map['input'] = input;
+    map['investmentID'] = investmentID;
     map['payback'] = payback;
     map['farmDetails'] = farmDetails;
     map['farmerDetails'] = farmerDetails;
@@ -30,6 +32,7 @@ class Investment {
   }
 
   Investment.fromMapObject(Map<String, dynamic> map) {
+    investmentID = map['investmentID'];
     input = map['input'];
     payback = map['payback'];
     farmDetails = map['farmDetails'];

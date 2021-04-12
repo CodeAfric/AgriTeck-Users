@@ -167,7 +167,7 @@ class _InvestmentRequestState extends State<InvestmentRequest> {
       try {
         // Get farmer details
         farmerDetails = widget.farm['farmerDetails'];
-        // farmerDetails['farmerId'] = widget.farm['farmerId'];
+        farmerDetails['farmerId'] = widget.farm['farmerId'];
         // Then farm details
         widget.farm.remove('farmerDetails');
         widget.farm.remove('farmState');
@@ -196,7 +196,9 @@ class _InvestmentRequestState extends State<InvestmentRequest> {
           );
           var snapshot = await DatabaseServices.saveData(
               'Investments', investment.toMap());
-          print(snapshot);
+          Map<String, dynamic> update = {'farmId': snapshot.id};
+          await DatabaseServices.updateDocument(
+              'Investments', snapshot.id, update);
           isLoading = false;
           await showToast(context, fToast, Icons.check, primaryDark,
               "Request sent successfully");

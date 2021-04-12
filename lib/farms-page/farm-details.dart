@@ -56,11 +56,7 @@ class _FarmDetailsScreenState extends State<FarmDetailsScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              ImageCarousel([
-                'assets/diseases/disease1.jpg',
-                'assets/diseases/disease1.jpg',
-                'assets/diseases/disease1.jpg',
-              ]),
+              ImageCarousel([...widget.farm.images]),
               Container(
                 height: size.height * 0.70,
                 decoration: BoxDecoration(
