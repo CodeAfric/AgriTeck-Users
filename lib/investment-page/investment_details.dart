@@ -18,6 +18,7 @@ import 'package:agriteck_user/services/database-services.dart';
 import 'package:agriteck_user/services/sharedPrefs.dart';
 import 'package:agriteck_user/services/user-services.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
+import 'package:async_loader/async_loader.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -36,6 +37,10 @@ class InvestmentDetailsScreen extends StatefulWidget {
 
 class _InvestmentDetailsScreenState extends State<InvestmentDetailsScreen> {
   String userType;
+  bool isLoading = false;
+  FToast fToast;
+  final GlobalKey<AsyncLoaderState> _asyncLoaderState =
+      new GlobalKey<AsyncLoaderState>();
 
   getUserInfo() async {
     userType = await SharedPrefs.getUserType();
@@ -44,6 +49,8 @@ class _InvestmentDetailsScreenState extends State<InvestmentDetailsScreen> {
   @override
   void initState() {
     getUserInfo();
+    fToast = FToast();
+    fToast.init(context);
     super.initState();
   }
 
@@ -52,56 +59,15 @@ class _InvestmentDetailsScreenState extends State<InvestmentDetailsScreen> {
     Size size = MediaQuery.of(context).size;
     double _width = MediaQuery.of(context).size.width;
     double _height = MediaQuery.of(context).size.height;
-    return Scaffold(
-      //resizeToAvoidBottomPadding: false,
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              ImageCarousel([...widget.investment.farmDetails['images']]),
-              Container(
-                height: size.height * 0.70,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(15.0),
-                    topRight: Radius.circular(15.0),
-                  ),
-                ),
-                child: Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(10.0),
-                          topRight: Radius.circular(10.0)),
-                      color: Colors.white,
-                    ),
-                    child: ListView(
-                      scrollDirection: Axis.vertical,
-                      padding: EdgeInsets.only(bottom: 80.0),
-                      children: [
-                        Container(
-                          child: InvestmentContent(
-                            input: widget.investment.input,
-                            payback: widget.investment.payback,
-                            farmDetails: widget.investment.farmDetails,
-                            farmerDetails: widget.investment.farmerDetails,
-                            inverstorDetails:
-                                widget.investment.inverstorDetails,
-                            approved: widget.investment.approved,
-                            accepted: widget.investment.accepted,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-      floatingActionButton: (userType == 'Farmers')
+
+    // Asyn Load the Drawer Info
+    var _asyncLoader = new AsyncLoader(
+      key: _asyncLoaderState,
+      initState: () async => await getUserInfo(),
+      renderLoad: () => Center(child: new CircularProgressIndicator()),
+      renderError: ([error]) =>
+          new Text('Sorry, there was an error loading your Information'),
+      renderSuccess: ({data}) => (userType == 'Farmers')
           ? FloatingButton(
               label: 'Accept Request',
               icon: Icons.check,
@@ -112,13 +78,14 @@ class _InvestmentDetailsScreenState extends State<InvestmentDetailsScreen> {
                     return CustomDialogBox(
                       title: 'Accept Request',
                       descriptions:
-                          'Are you sure you want to accept the request.',
+                          'Are you Sure you want to Accept this Request?',
                       btn1Text: 'No',
                       btn2Text: 'Yes',
                       img: 'assets/images/person.png',
                       btn1Press: () {
                         Navigator.pop(context);
                       },
+                      btn2Press: updateInvestmentFunction(widget.investment),
                     );
                   },
                 );
@@ -137,6 +104,95 @@ class _InvestmentDetailsScreenState extends State<InvestmentDetailsScreen> {
               },
             ),
     );
+
+    return Scaffold(
+        //resizeToAvoidBottomPadding: false,
+        backgroundColor: Colors.white,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                ImageCarousel([...widget.investment.farmDetails['images']]),
+                Container(
+                  height: size.height * 0.70,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(15.0),
+                      topRight: Radius.circular(15.0),
+                    ),
+                  ),
+                  child: Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10.0),
+                            topRight: Radius.circular(10.0)),
+                        color: Colors.white,
+                      ),
+                      child: ListView(
+                        scrollDirection: Axis.vertical,
+                        padding: EdgeInsets.only(bottom: 80.0),
+                        children: [
+                          Container(
+                            child: InvestmentContent(
+                              input: widget.investment.input,
+                              payback: widget.investment.payback,
+                              farmDetails: widget.investment.farmDetails,
+                              farmerDetails: widget.investment.farmerDetails,
+                              inverstorDetails:
+                                  widget.investment.inverstorDetails,
+                              approved: widget.investment.approved,
+                              accepted: widget.investment.accepted,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        floatingActionButton: _asyncLoader);
+  }
+
+  updateInvestmentFunction(Investment investment) {
+    return () async {
+      if (mounted) {
+        setState(() {
+          isLoading = true;
+        });
+      }
+      try {
+        String userId = await SharedPrefs.getUserID();
+        String userData = await SharedPrefs.getUserData();
+        Map investor = json.decode(userData);
+        // String user=await SharedPrefs.getUserID();
+        User user = FirebaseAuth.instance.currentUser;
+        if (user != null || user.uid == investment.farmerDetails['farmerId']) {
+          Map<String, dynamic> update = {'accepted': true};
+          // Update from database
+          await DatabaseServices.updateDocument(
+              'Investments', investment.investmentID, update);
+          isLoading = false;
+          await showToast(context, fToast, Icons.check, primaryDark,
+              "Request Updated successfully");
+          Navigator.pop(context);
+        }
+      } catch (error) {
+        setState(() {
+          isLoading = false;
+          print('[$error]');
+        });
+      }
+
+      if (mounted) {
+        setState(() {
+          isLoading = false;
+        });
+      }
+    };
   }
 }
 

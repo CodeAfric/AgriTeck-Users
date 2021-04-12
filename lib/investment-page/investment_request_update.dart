@@ -174,16 +174,6 @@ class _InvestmentRequestUpdateState extends State<InvestmentRequestUpdate> {
       if (_formKey.currentState.validate()) {
         _formKey.currentState.save();
         try {
-          // Get farmer details
-          // farmerDetails = widget.investment['farmerDetails'];
-          // farmerDetails['farmerId'] = widget.investment['farmerId'];
-          // // Then farm details
-          // widget.investment.remove('farmerDetails');
-          // widget.investment.remove('farmState');
-          // widget.investment.remove('description');
-          // widget.investment.remove('farmerId');
-          // farmDetails = widget.investment;
-
           String userId = await SharedPrefs.getUserID();
           String userData = await SharedPrefs.getUserData();
           Map investor = json.decode(userData);

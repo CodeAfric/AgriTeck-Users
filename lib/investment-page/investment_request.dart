@@ -196,7 +196,7 @@ class _InvestmentRequestState extends State<InvestmentRequest> {
           );
           var snapshot = await DatabaseServices.saveData(
               'Investments', investment.toMap());
-          Map<String, dynamic> update = {'farmId': snapshot.id};
+          Map<String, dynamic> update = {'investmentID': snapshot.id};
           await DatabaseServices.updateDocument(
               'Investments', snapshot.id, update);
           isLoading = false;
