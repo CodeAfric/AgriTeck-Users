@@ -1,9 +1,20 @@
 # agriteck_user
 
-1. This application is a flutter app runing on firebase.
-2. User have to add firebase to the project.
-3. Add firebase SSH1 fingerprint or SSH525 to the firebase project.
-A new Flutter application.
+# Setting up the environment
+
+1. Clone the project to your local machine
+2. Open with favorite editor
+3. Run "flutter pub get" to download all dependencies.
+
+
+# Adding firebase to the project
+Create a new project in firebase and name it as "AgriTeck" if you have not created it yet.
+
+Add Android app in your firebase console from 'Project Overview'.
+Follow the steps involved in adding android app to firebase 
+Run the app to connect to firebase backend.
+
+
 
 ## Download the test-dataset from the project to test the disease detection model
 
