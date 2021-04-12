@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:agriteck_user/pojo-classes/farmers-data.dart';
 import 'package:agriteck_user/pojo-classes/farms-data.dart';
 import 'package:agriteck_user/pojo-classes/investors-data.dart';
+import 'package:agriteck_user/pojo-classes/product-data.dart';
 import 'package:agriteck_user/pojo-classes/vendors-data.dart';
 import 'package:agriteck_user/services/sharedPrefs.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -19,29 +20,16 @@ class UserServices {
         .set(data.toMap());
   }
 
-  // static Future<void> saveUser(String id, dynamic data) async {
-  //   FirebaseFirestore.instance.collection('Users').doc(id).set(data.toMap());
-  // }
-
-  // static Future<void> saveInvestorInfo(
-  //     String id, InvestorsData investors) async {
-  //   FirebaseFirestore.instance
-  //       .collection('Investors')
-  //       .doc(id)
-  //       .set(investors.toMap());
-  // }
-
-  // static Future<void> saveVendorInfo(String id, Vendors vendors) async {
-  //   FirebaseFirestore.instance
-  //       .collection('Vendors')
-  //       .doc(id)
-  //       .set(vendors.toMap());
-  // }
-
   static Future<DocumentReference> saveFarm(Farm farms) async {
     return await FirebaseFirestore.instance
         .collection("Farms")
         .add(farms.toMap());
+  }
+
+  static Future<DocumentReference> saveProduct(Product products) async {
+    return await FirebaseFirestore.instance
+        .collection("Products")
+        .add(products.toMap());
   }
 
   static Future<DocumentSnapshot> getDocument(String collection, String docId) {

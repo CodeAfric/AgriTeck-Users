@@ -7,6 +7,7 @@ import 'package:agriteck_user/commonly-used-widget/detect-disease.dart';
 import 'package:agriteck_user/commonly-used-widget/floating-buttton.dart';
 import 'package:agriteck_user/commonly-used-widget/floating-menu.dart';
 import 'package:agriteck_user/community-page/commuinity-page.dart';
+import 'package:agriteck_user/community-page/contribution_page.dart';
 import 'package:agriteck_user/crops-page/crops-page.dart';
 import 'package:agriteck_user/diseases-page/diseases-page.dart';
 import 'package:agriteck_user/farms-page/farm-page.dart';
@@ -244,22 +245,22 @@ class _MainPageState extends State<MainPage> {
             activeColor: primary,
             activeIconColor: primary,
           ),
-          if (userType == 'Farmers')
-            BottomIcons(
-              iconColor: Colors.grey,
-              text: 'Diseases',
-              bottomIcons:
-                  selectedPage == BottomButtons.Diseases ? true : false,
-              icons: 'assets/icons/cultivate.png',
-              textColor: primary,
-              onPressed: () {
-                setState(() {
-                  selectedPage = BottomButtons.Diseases;
-                });
-              },
-              activeColor: primary,
-              activeIconColor: primary,
-            ),
+          // if (userType == 'Farmers')
+          //   BottomIcons(
+          //     iconColor: Colors.grey,
+          //     text: 'Diseases',
+          //     bottomIcons:
+          //         selectedPage == BottomButtons.Diseases ? true : false,
+          //     icons: 'assets/icons/cultivate.png',
+          //     textColor: primary,
+          //     onPressed: () {
+          //       setState(() {
+          //         selectedPage = BottomButtons.Diseases;
+          //       });
+          //     },
+          //     activeColor: primary,
+          //     activeIconColor: primary,
+          //   ),
           if (userType == 'Farmers' || userType == 'Investors')
             BottomIcons(
               iconColor: Colors.grey,
@@ -373,6 +374,46 @@ class _MainPageState extends State<MainPage> {
                     Navigator.pop(context);
                     // Send to Crops Page
                     sendToPage(context, ProductFullScreen());
+                  },
+                ),
+                ListTile(
+                  leading: Image(
+                    width: 24,
+                    image: AssetImage('assets/icons/cultivate.png'),
+                    color: Colors.black54,
+                  ),
+                  trailing: Icon(Icons.arrow_forward),
+                  title: Text(
+                    'Diseases',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.black54,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    // Send to Diseases Page
+                    sendToPage(context, DiseasesScreen());
+                  },
+                ),
+                ListTile(
+                  leading: Image(
+                    width: 24,
+                    image: AssetImage('assets/icons/community.png'),
+                    color: Colors.black54,
+                  ),
+                  trailing: Icon(Icons.arrow_forward),
+                  title: Text(
+                    'Community Contributions',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.black54,
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.pop(context);
+                    // Send to Communtiy Contribution Page
+                    sendToPage(context, ContributionScreen());
                   },
                 ),
                 Divider(),

@@ -83,7 +83,7 @@ class WelcomeScreen extends StatelessWidget {
                         height: 30,
                       ),
                       Text(
-                        'Register As',
+                        'Continue As',
                         style: TextStyle(fontSize: 24.0, color: Colors.black54),
                       ),
                       SizedBox(height: 30),

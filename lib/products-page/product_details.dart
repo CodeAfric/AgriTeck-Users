@@ -1,14 +1,16 @@
 import 'package:agriteck_user/commonly-used-widget/image-carousel.dart';
+import 'package:agriteck_user/pojo-classes/product-data.dart';
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_pro/carousel_pro.dart';
+import 'package:intl/intl.dart';
 
 class ProductDetails extends StatelessWidget {
-  // final Product diseaseData;
+  final Product productData;
   // final String diseaseId;
 
   // todo: Get the details detal at the init state
-  // DiseaseDetailsScreen({this.diseaseData});
+  ProductDetails({this.productData});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class ProductDetails extends StatelessWidget {
         child: Column(
           children: [
             // todo: image from network
-            ImageCarousel([]),
+            ImageCarousel([...productData.images]),
             Container(
               height: size.height * 0.70,
               decoration: BoxDecoration(
@@ -30,27 +32,16 @@ class ProductDetails extends StatelessWidget {
                 ),
               ),
               child: SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: ProductContent(
-                    name_of_disease: 'Aphids LKSDkj',
-                    plant_types: 'Miaze, Banana, Barley, Bean, Bitter Gourd',
-                    disease_symptoms:
-                        'Curled and deformed leaves, Small Insects under leaves and shoots, Stunted growth',
-                    causes_of_disease:
-                        'Aphids, these are soft bodied insects with long legs',
-                    disease_prevention:
-                        'For example if one is coming out with a theory that '
-                        'cannibals lives longer than normal human beings, the researcher will use '
-                        'qualitative research to seek peoples belief on cannibalism, '
-                        'analyze the data and formulate his theory. After that the researcher'
-                        ' can use the quantitative research to deduce from people’s beliefs and arguments, '
-                        'express their views, test and come out with figures to prove his theory that really people '
-                        'who practice cannibalism live much longer than people who do not practice it.',
-                    disease_treatment:
-                        'For example if one is coming out with a theory that cannibals lives longer than normal'
-                        ' human beings, the researcher will use qualitative research to seek '
-                        'peoples belief on cannibalism, analyze',
-                  )),
+                scrollDirection: Axis.vertical,
+                child: ProductContent(
+                  productName: productData.productName,
+                  productDescription: productData.productDescription,
+                  timeStamp: productData.timeStamp,
+                  quantity: productData.quantity,
+                  price: productData.price,
+                  measure: productData.measure,
+                ),
+              ),
             ),
           ],
         ),
@@ -60,114 +51,107 @@ class ProductDetails extends StatelessWidget {
 }
 
 class ProductContent extends StatelessWidget {
-  final String name_of_disease;
-  final String plant_types;
-  final String disease_symptoms;
-  final String disease_prevention;
-  final String disease_treatment;
-  final String causes_of_disease;
+  final String productName;
+  final String productDescription;
+  final String timeStamp;
+  final int quantity;
+  final double price;
+  final String measure;
+  final TextStyle titleFontStyle = TextStyle(color: primaryDark, fontSize: 22);
+  final TextStyle textFontStyle = TextStyle(fontSize: 16, height: 1.5);
 
-  const ProductContent(
+  ProductContent(
       {Key key,
-      this.name_of_disease,
-      this.plant_types,
-      this.disease_symptoms,
-      this.disease_prevention,
-      this.disease_treatment,
-      this.causes_of_disease})
+      this.productName,
+      this.productDescription,
+      this.timeStamp,
+      this.quantity,
+      this.price,
+      this.measure})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            ...ListTile.divideTiles(color: primary, tiles: [
-              ListTile(
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                leading: Icon(
-                  Icons.crop_square,
-                  size: 15,
-                ),
-                title: Text(
-                  'Name of Disease',
-                  style: TextStyle(color: primaryDark),
-                ),
-                subtitle: Text(name_of_disease),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        ...ListTile.divideTiles(color: primary, tiles: [
+          ListTile(
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 4,
+            ),
+            title: Text(
+              'Product Name',
+              style: titleFontStyle,
+            ),
+            subtitle: Text(
+              productName,
+              style: textFontStyle,
+            ),
+          ),
+          ListTile(
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 4,
+            ),
+            title: Text(
+              'Description',
+              style: titleFontStyle,
+            ),
+            subtitle: Text(
+              productDescription,
+              style: textFontStyle,
+            ),
+          ),
+          ListTile(
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 4,
+            ),
+            title: Text(
+              'Time',
+              style: titleFontStyle,
+            ),
+            subtitle: Text(
+              DateFormat('MM/dd/yyyy').format(
+                DateTime.parse(timeStamp),
               ),
-              ListTile(
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                leading: Icon(
-                  Icons.crop_square,
-                  size: 15,
-                ),
-                title: Text(
-                  'Affected Plants',
-                  style: TextStyle(color: primaryDark),
-                ),
-                subtitle: Text(plant_types),
+            ),
+          ),
+          ListTile(
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 4,
+            ),
+            title: Text(
+              'Quantity',
+              style: titleFontStyle,
+            ),
+            subtitle: Text(quantity.toString()),
+          ),
+          ListTile(
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 20,
+                vertical: 4,
               ),
-              ListTile(
-                leading: Icon(
-                  Icons.crop_square,
-                  size: 15,
-                ),
-                title: Text(
-                  'Symptoms of Disease',
-                  style: TextStyle(color: primaryDark),
-                ),
-                subtitle: Text(
-                  disease_symptoms,
-                  style: TextStyle(fontSize: 16),
-                ),
+              title: Text(
+                'Price',
+                style: titleFontStyle,
               ),
-              ListTile(
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                leading: Icon(
-                  Icons.crop_square,
-                  size: 15,
-                ),
-                title: Text(
-                  'Causes of Disease',
-                  style: TextStyle(color: primaryDark),
-                ),
-                subtitle: Text(causes_of_disease),
+              subtitle: Text(price.toString())),
+          ListTile(
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 20,
+                vertical: 4,
               ),
-              ListTile(
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                leading: Icon(
-                  Icons.crop_square,
-                  size: 15,
-                ),
-                title: Text(
-                  'Disease Prevention',
-                  style: TextStyle(color: primaryDark),
-                ),
-                subtitle: Text(disease_prevention),
+              title: Text(
+                'Measure',
+                style: titleFontStyle,
               ),
-              ListTile(
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                leading: Icon(
-                  Icons.crop_square,
-                  size: 15,
-                ),
-                title: Text(
-                  'Disease Treatment',
-                  style: TextStyle(color: primaryDark),
-                ),
-                subtitle: Text(disease_treatment),
-              ),
-            ])
-          ],
-        ),
-      ),
+              subtitle: Text(measure)),
+        ]),
+      ],
     );
   }
 }
