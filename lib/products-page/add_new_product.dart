@@ -510,8 +510,8 @@ class _AddNewProductState extends State<AddNewProduct> {
             isLoading = false;
             await showToast(context, fToast, Icons.check, primaryDark,
                 "Product data Saved successfully");
-            // sendToPage(context, ProductFullScreen());
-            Navigator.pop(context);
+            sendToPage(context, ProductFullScreen());
+            // Navigator.pop(context);
           }
         } catch (error) {
           setState(() {

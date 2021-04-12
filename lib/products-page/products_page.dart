@@ -116,33 +116,67 @@ class _ProductFullScreenState extends State<ProductFullScreen> {
 }
 
 class ProductsMidScreen extends StatelessWidget {
+  final GlobalKey<AsyncLoaderState> _asyncLoaderStateProduct1 =
+      new GlobalKey<AsyncLoaderState>();
+  getData() async {
+    List productList;
+    var userType = await SharedPrefs.getUserType();
+    var snapshot;
+    if (userType == 'Farmers') {
+      var userId = await SharedPrefs.getUserID();
+      snapshot = await DatabaseServices.queryFromDatabaseByField(
+          'Products', 'farmer.farmerId', userId);
+    } else if (userType == 'Vendors') {
+      snapshot = await DatabaseServices.getDataFromDatabase('Products');
+    }
+
+    productList = snapshot.docs.toList();
+    return productList;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 5.0),
-            child: ListView.builder(
-                padding: EdgeInsets.only(bottom: 80.0),
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    child: CropCard(
-                      cropName: 'Tomatoes',
-                      cropImage: 'assets/diseases/tomatoes.jpg',
-                    ),
-                    onTap: () {
-                      sendToPage(
-                        context,
-                        ProductDetails(),
-                      );
-                    },
-                  );
-                }),
-          ),
+    var _asyncLoader = new AsyncLoader(
+      key: _asyncLoaderStateProduct1,
+      initState: () async => getData(),
+      renderLoad: () => Center(child: new CircularProgressIndicator()),
+      renderError: ([error]) => Center(
+        child: new Text('Sorry, there was an error loading your Information'),
+      ),
+      renderSuccess: ({data}) => ListView.builder(
+        padding: EdgeInsets.only(bottom: 80.0),
+        itemCount: data.length,
+        itemBuilder: (context, index) {
+          var product = Product.fromMapObject(data[index].data());
+          return InkWell(
+            child: Container(
+              child: ProductCard(
+                productImage:
+                    product.images.length > 0 ? product.images[0] : null,
+                productName: product.productName,
+                productDesc: product.productDescription,
+              ),
+            ),
+            onTap: () {
+              sendToPage(
+                context,
+                ProductDetails(productData: product),
+              );
+            },
+          );
+        },
+      ),
+    );
+
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height - 61,
+          color: Colors.white,
+          child: _asyncLoader,
         ),
-      ],
+      ),
     );
   }
 }

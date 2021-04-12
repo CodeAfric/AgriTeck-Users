@@ -117,38 +117,15 @@ class _MainPageState extends State<MainPage> {
                 icon: Icons.edit,
                 onPressHandler: () {},
               )
-            : selectedPage == BottomButtons.Market
-                ? FloatingMenu(
-                    // label: 'Post Product',
-                    animatedIcon: AnimatedIcons.menu_close,
-                    menuItems: [
-                      BubbleMenuItem.create(
-                        label: 'Vendors',
-                        icon: Icons.store,
-                        onPress: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => VendorScreen()));
-                        },
-                      ),
-                      BubbleMenuItem.create(
-                        label: 'Post Products',
-                        icon: Icons.add,
-                        onPress: () {},
-                      ),
-                    ],
-                    // onPressHandler: () {},
+            : selectedPage == BottomButtons.Diseases
+                ? FloatingButton(
+                    label: 'Detect Disease',
+                    icon: Icons.photo_camera,
+                    onPressHandler: () {
+                      detectDisease(context);
+                    },
                   )
-                : selectedPage == BottomButtons.Diseases
-                    ? FloatingButton(
-                        label: 'Detect Disease',
-                        icon: Icons.photo_camera,
-                        onPressHandler: () {
-                          detectDisease(context);
-                        },
-                      )
-                    : null;
+                : null;
   }
 
 //================================================================================
@@ -356,26 +333,27 @@ class _MainPageState extends State<MainPage> {
                     sendToPage(context, CropsScreen());
                   },
                 ),
-                ListTile(
-                  leading: Image(
-                    width: 24,
-                    image: AssetImage('assets/icons/market.png'),
-                    color: Colors.black54,
-                  ),
-                  trailing: Icon(Icons.arrow_forward),
-                  title: Text(
-                    'Market',
-                    style: TextStyle(
-                      fontSize: 18,
+                if (userType != 'Vendors')
+                  ListTile(
+                    leading: Image(
+                      width: 24,
+                      image: AssetImage('assets/icons/market.png'),
                       color: Colors.black54,
                     ),
+                    trailing: Icon(Icons.arrow_forward),
+                    title: Text(
+                      'Market',
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.black54,
+                      ),
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                      // Send to Crops Page
+                      sendToPage(context, ProductFullScreen());
+                    },
                   ),
-                  onTap: () {
-                    Navigator.pop(context);
-                    // Send to Crops Page
-                    sendToPage(context, ProductFullScreen());
-                  },
-                ),
                 ListTile(
                   leading: Image(
                     width: 24,
@@ -404,7 +382,7 @@ class _MainPageState extends State<MainPage> {
                   ),
                   trailing: Icon(Icons.arrow_forward),
                   title: Text(
-                    'Community Contributions',
+                    'Comm. Contributions',
                     style: TextStyle(
                       fontSize: 18,
                       color: Colors.black54,
