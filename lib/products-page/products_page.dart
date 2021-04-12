@@ -2,7 +2,7 @@ import 'package:agriteck_user/common-functions/helper-functions.dart';
 import 'package:agriteck_user/commonly-used-widget/custom_app_bar.dart';
 import 'package:agriteck_user/commonly-used-widget/floating-buttton.dart';
 import 'package:agriteck_user/commonly-used-widget/floating-menu.dart';
-import 'package:agriteck_user/investment-page/new-farm-page.dart';
+
 import 'package:agriteck_user/investors/investor.dart';
 import 'package:agriteck_user/pojo-classes/product-data.dart';
 import 'package:agriteck_user/products-page/add_new_product.dart';
