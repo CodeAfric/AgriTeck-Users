@@ -190,9 +190,8 @@ class _DiseaseCaptureState extends State<DiseaseCapture> {
                     child: Container(
                       height: 100,
                       width: 120,
-                      child: OutlineButton(
-                          borderSide: BorderSide(
-                              color: primary.withOpacity(0.8), width: 2.0),
+                      child: TextButton(
+
                           onPressed: () async {
                             //get image from gallery
                             getImage();
@@ -218,9 +217,8 @@ class _DiseaseCaptureState extends State<DiseaseCapture> {
                     child: Container(
                       height: 100,
                       width: 120,
-                      child: OutlineButton(
-                          borderSide: BorderSide(
-                              color: primary.withOpacity(0.8), width: 2.0),
+                      child: TextButton(
+
                           onPressed: () {},
                           child: ListTile(
                             title: Image.asset(
@@ -244,9 +242,7 @@ class _DiseaseCaptureState extends State<DiseaseCapture> {
                     child: Container(
                       height: 100,
                       width: 120,
-                      child: OutlineButton(
-                          borderSide: BorderSide(
-                              color: primary.withOpacity(0.8), width: 2.0),
+                      child: TextButton(
                           onPressed: () {},
                           child: ListTile(
                             title: Icon(

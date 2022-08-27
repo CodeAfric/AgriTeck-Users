@@ -16,6 +16,7 @@ class WelcomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     double _width = MediaQuery.of(context).size.width;
     double _height = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -39,7 +40,7 @@ class WelcomeScreen extends StatelessWidget {
                     children: [
                       RichText(
                         text: TextSpan(
-                          style: Theme.of(context).textTheme.display3,
+                          style: Theme.of(context).textTheme.displayMedium,
                           children: [
                             TextSpan(
                                 text: "Agri",

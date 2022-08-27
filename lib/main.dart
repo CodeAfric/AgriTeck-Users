@@ -4,7 +4,6 @@ import 'package:agriteck_user/services/user-services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'application-pages/authentication-screens/phone_verification.dart';
 import 'main-page.dart';
 
 void main() async {

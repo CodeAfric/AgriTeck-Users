@@ -75,7 +75,7 @@ class _PhoneVerificationState extends State<PhoneVerification> {
                     children: <Widget>[
                       RichText(
                         text: TextSpan(
-                          style: Theme.of(context).textTheme.display3,
+                          style: Theme.of(context).textTheme.displayMedium,
                           children: [
                             TextSpan(
                                 text: "Agri",

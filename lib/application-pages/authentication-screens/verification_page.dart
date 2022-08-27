@@ -15,7 +15,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:pinput/pin_put/pin_put.dart';
 import '../../main-page.dart';
 import 'farmer-login/registration-pages.dart';
 
@@ -125,24 +124,24 @@ class _OTPScreenState extends State<OTPScreen> {
                                 ),
                               ),
                               SizedBox(height: 30.0),
-                              PinPut(
-                                fieldsCount: 6,
-                                onSubmit: (String pin) => verifyOTP(pin),
-                                focusNode: _pinPutFocusNode,
-                                controller: _pinPutController,
-                                submittedFieldDecoration:
-                                    _pinPutDecoration.copyWith(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ),
-                                selectedFieldDecoration: _pinPutDecoration,
-                                followingFieldDecoration:
-                                    _pinPutDecoration.copyWith(
-                                  borderRadius: BorderRadius.circular(5.0),
-                                  border: Border.all(
-                                    color: primaryDark.withOpacity(.5),
-                                  ),
-                                ),
-                              ),
+                              // PinPut(
+                              //   fieldsCount: 6,
+                              //   onSubmit: (String pin) => verifyOTP(pin),
+                              //   focusNode: _pinPutFocusNode,
+                              //   controller: _pinPutController,
+                              //   submittedFieldDecoration:
+                              //       _pinPutDecoration.copyWith(
+                              //     borderRadius: BorderRadius.circular(20.0),
+                              //   ),
+                              //   selectedFieldDecoration: _pinPutDecoration,
+                              //   followingFieldDecoration:
+                              //       _pinPutDecoration.copyWith(
+                              //     borderRadius: BorderRadius.circular(5.0),
+                              //     border: Border.all(
+                              //       color: primaryDark.withOpacity(.5),
+                              //     ),
+                              //   ),
+                              // ),
                               const SizedBox(height: 30.0),
                               const Divider(),
                               Row(

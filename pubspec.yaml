@@ -11,32 +11,32 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  carousel_pro: ^0.0.13
-  flutter_staggered_grid_view: ^0.3.4
-  cupertino_icons: ^1.0.2
-  font_awesome_flutter: ^9.0.0
-  image_picker: ^0.7.4
-  image_cropper: ^1.4.0
-  fluttertoast: ^8.0.3
-  floating_action_bubble: ^1.1.2
+  carousel_pro: ^1.0.0
+  flutter_staggered_grid_view: ^0.6.2
+  cupertino_icons: ^1.0.5
+  font_awesome_flutter: ^10.1.0
+  image_picker: ^0.8.5+3
+  image_cropper: ^3.0.0
+  fluttertoast: ^8.0.9
+  floating_action_bubble: ^1.1.4
   tflite: any
   intl: ^0.17.0
-  async_loader: ^0.1.1
-  firebase_core: ^1.0.2
-  firebase_auth: ^1.0.1
-  pinput: ^1.2.0
-  shared_preferences: ^2.0.5
-  firebase_storage: ^8.0.1
-  cloud_firestore: ^1.0.3
-  steel_crypt: ^2.3.1+6
-  path_provider: ^2.0.1
-  google_fonts: ^2.0.0
-  geolocator: ^7.0.1
-  geocoding: ^2.0.0
-  cached_network_image: ^3.0.0
-  get: ^3.26.0
-  dio: ^4.0.0
-  syncfusion_flutter_charts: ^18.4.46
+  async_loader: ^0.1.2
+  firebase_core: ^1.21.1
+  firebase_auth: ^3.7.0
+  pinput: ^2.2.12
+  shared_preferences: ^2.0.15
+  firebase_storage: ^10.3.7
+  cloud_firestore: ^3.4.6
+  steel_crypt: ^3.0.0+1
+  path_provider: ^2.0.11
+  google_fonts: ^3.0.1
+  geolocator: ^9.0.1
+  geocoding: ^2.0.5
+  cached_network_image: ^3.2.1
+  get: ^4.6.5
+  dio: ^4.0.6
+  syncfusion_flutter_charts: ^20.2.45
 dev_dependencies:
   flutter_test:
     sdk: flutter

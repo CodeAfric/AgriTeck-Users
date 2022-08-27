@@ -1,5 +1,6 @@
 import 'package:agriteck_user/styles/app-colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class InputTextField extends StatelessWidget {
   final Function(String value) onSave;
@@ -72,7 +73,7 @@ class InputTextField extends StatelessWidget {
         ? TextFormField(
             keyboardType: type,
             controller: controller,
-            maxLengthEnforced: true,
+            maxLengthEnforcement: MaxLengthEnforcement.enforced,
             style:
                 TextStyle(fontWeight: FontWeight.w600, color: Colors.black87),
             validator: (value) => validation(value),
@@ -98,7 +99,7 @@ class InputTextField extends StatelessWidget {
             maxLines: maxLine,
             controller: controller,
             maxLength: maxLength,
-            maxLengthEnforced: true,
+             maxLengthEnforcement: MaxLengthEnforcement.enforced,
             style:
                 TextStyle(fontWeight: FontWeight.w600, color: Colors.black87),
             validator: (value) => validation(value),
@@ -126,7 +127,7 @@ class InputTextField extends StatelessWidget {
         ? TextFormField(
             keyboardType: type,
             controller: controller,
-            maxLengthEnforced: true,
+             maxLengthEnforcement: MaxLengthEnforcement.enforced,
             style:
                 TextStyle(fontWeight: FontWeight.w600, color: Colors.black87),
             onSaved: (value) => onSave(value),
@@ -151,7 +152,7 @@ class InputTextField extends StatelessWidget {
             maxLines: maxLine,
             controller: controller,
             maxLength: maxLength,
-            maxLengthEnforced: true,
+             maxLengthEnforcement: MaxLengthEnforcement.enforced,
             style:
                 TextStyle(fontWeight: FontWeight.w600, color: Colors.black87),
             validator: (value) => validation(value),
@@ -179,7 +180,7 @@ class InputTextField extends StatelessWidget {
         ? TextFormField(
             keyboardType: type,
             controller: controller,
-            maxLengthEnforced: true,
+             maxLengthEnforcement: MaxLengthEnforcement.enforced,
             style: TextStyle(fontWeight: FontWeight.w600, color: primary),
             validator: (value) => validation(value),
             onSaved: (value) => onSave(value),
@@ -204,7 +205,7 @@ class InputTextField extends StatelessWidget {
             controller: controller,
             maxLines: maxLine,
             maxLength: maxLength,
-            maxLengthEnforced: true,
+             maxLengthEnforcement: MaxLengthEnforcement.enforced,
             style:
                 TextStyle(fontWeight: FontWeight.w600, color: Colors.black87),
             validator: (value) => validation(value),
@@ -232,7 +233,7 @@ class InputTextField extends StatelessWidget {
         ? TextFormField(
             keyboardType: type,
             controller: controller,
-            maxLengthEnforced: true,
+             maxLengthEnforcement: MaxLengthEnforcement.enforced,
             style:
                 TextStyle(fontWeight: FontWeight.w600, color: Colors.black87),
             validator: (value) => validation(value),
@@ -258,7 +259,7 @@ class InputTextField extends StatelessWidget {
             controller: controller,
             maxLines: maxLine,
             maxLength: maxLength,
-            maxLengthEnforced: true,
+             maxLengthEnforcement: MaxLengthEnforcement.enforced,
             style:
                 TextStyle(fontWeight: FontWeight.w600, color: Colors.black87),
             validator: (value) => validation(value),
